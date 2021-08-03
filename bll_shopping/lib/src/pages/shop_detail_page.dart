@@ -1,0 +1,452 @@
+import 'dart:ui';
+
+import 'package:common/common.dart';
+import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shopping/src/actuator/shop_detail_actuator.dart';
+import 'package:shopping/src/widget/cart/shopping_cart_bar.dart';
+import 'package:shopping/src/controller/shopping_cart_controller.dart';
+import 'package:shopping/src/widget/item_shop_product_grid.dart';
+
+/**
+ * shop_detail_page.dart
+ * 商铺详情
+ * @author: Ruoyegz
+ * @date: 2021/7/1
+ */
+class ShopDetailPage extends StatefulWidget {
+  const ShopDetailPage({Key? key}) : super(key: key);
+
+  @override
+  _ShopDetailPageState createState() =>
+      _ShopDetailPageState(ShopDetailActuator());
+}
+
+class _ShopDetailPageState
+    extends RefreshableState<ShopDetailActuator, ShopDetailPage> {
+  final ShoppingCartBarController barController =
+      new ShoppingCartBarController();
+
+  _ShopDetailPageState(ShopDetailActuator actuator) : super(actuator);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    /// 外部传入的商铺参数
+    var args = ModalRoute.of(context)!.settings.arguments;
+    actuator.initShopDetail(args as Shop, barController);
+  }
+
+  @override
+  void dispose() {
+    if (actuator.isShoppingCartChanged && actuator.shopDetail != null) {
+      BusClient().fire(ShoppingCartEvent(actuator.shopDetail.id));
+    }
+    super.dispose();
+  }
+
+  /**
+   * 添加购物车操作
+   */
+  @override
+  void appendShopCart(Product product) {
+    barController.outsideAddProduct(product, actuator.shopDetail);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.white,
+      appBar: Toolbar(
+        title: actuator.shopDetail.name == null
+            ? ""
+            : TextHelper.clean(actuator.shopDetail.name),
+      ),
+      body: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          SmartRefresher(
+            physics: BouncingScrollPhysics(),
+            controller: refreshController,
+            header: WaterDropHeader(),
+            footer: ClassicFooter(),
+            enablePullDown: true,
+            enablePullUp: true,
+            onRefresh: () {
+              if (UserManager().delivery(actuator.shopDetail)) {
+                barController.refreshShoppingCart();
+                barController.closeShopCart();
+              }
+              actuator.pullDown();
+            },
+            onLoading: () {
+              barController.closeShopCart();
+              actuator.pullUp();
+            },
+            child: SingleChildScrollView(
+              child: actuator.isNotNormal()
+                  ? buildEmptyWidget(context)
+                  : buildShopBody(context),
+            ),
+          ),
+
+          /// 底部购物车
+          ShoppingCartBar(
+            isShowBar: UserManager().delivery(actuator.shopDetail),
+            isCartProducts: UserManager().delivery(actuator.shopDetail),
+            shopId: actuator.shopDetail.id,
+            controller: barController,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /**
+   * 商铺
+   */
+  Widget buildShopBody(BuildContext context) {
+    return Container(
+        alignment: Alignment.topCenter,
+        margin: EdgeInsets.symmetric(vertical: 16),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  /// 商铺背景
+                  buildShopBackground(context),
+
+                  /// 派送图标: shop.delivery
+                  /// buildDeliveryIcon(actuator.shopDetail.delivery),
+
+                  /// 商铺头像
+                  buildShopAvatar()
+                ],
+              ),
+
+              /// 商铺标题
+              Container(
+                margin: EdgeInsets.only(top: 12),
+                child: Text(
+                  actuator.shopDetail.nickName ?? "",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: AppColor.h1,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              /// 商铺评分
+              buildShopStars(actuator.shopDetail),
+
+              /// 商铺地址
+              buildShopAddress(),
+
+              /// 商铺电话
+              buildShopContact(),
+
+              /// 商铺介绍
+              buildShopDesc(),
+
+              Container(
+                height: 1,
+                margin: EdgeInsets.all(16),
+                color: AppColor.color08000,
+              ),
+
+              buildProductsTitle(),
+
+              /// 商铺商品列表
+              buildShopProducts(context)
+            ],
+          ),
+          onTap: () {
+            barController.closeShopCart();
+          },
+        ));
+  }
+
+  /**
+   * 构建商铺背景
+   */
+  Widget buildShopBackground(BuildContext context) {
+    return Container(
+        alignment: Alignment.topCenter,
+        margin: EdgeInsets.only(left: 16, right: 16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(milliseconds: 100),
+            imageUrl: TextHelper.clean(actuator.shopDetail.bg),
+            placeholder: (context, url) => Image.asset(
+                "res/images/def_shop_image.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 176,
+                gaplessPlayback: true,
+                width: MediaQuery.of(context).size.width),
+            errorWidget: (context, url, error) => Image.asset(
+                "res/images/def_shop_image.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 176,
+                gaplessPlayback: true,
+                width: MediaQuery.of(context).size.width),
+            height: 176,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+        ));
+  }
+
+  /**
+   * 构建商铺头像
+   */
+  Widget buildShopAvatar() {
+    return Container(
+      margin: EdgeInsets.only(top: 122),
+      alignment: Alignment.topCenter,
+      child: Container(
+        height: 105,
+        width: 105,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 3.82),
+            borderRadius: BorderRadius.circular(105)),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(105),
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(milliseconds: 100),
+            imageUrl: TextHelper.clean(actuator.shopDetail.avatarLink),
+            placeholder: (context, url) => Image.asset(
+              "res/images/def_avatar.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 105,
+              width: 105,
+              gaplessPlayback: true,
+            ),
+            errorWidget: (context, url, error) => Image.asset(
+                "res/images/def_avatar.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 105,
+                width: 105,
+                gaplessPlayback: true),
+            height: 105,
+            width: 105,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /**
+   * 外面图标
+   */
+  Container buildDeliveryIcon(bool? ableDelivery) {
+    if (ableDelivery != null && ableDelivery) {
+      return Container(
+        alignment: Alignment.topRight,
+        margin: EdgeInsets.only(top: 30, right: 30),
+        child: Image.asset(
+          "res/icons/ic_shop_delivery.png",
+          package: 'resources',
+          width: 20,
+          height: 20,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  /**
+   * 商铺评分
+   */
+  Widget buildShopStars(Shop shop) {
+    List<Widget> stars = [];
+
+    /// 评论个数
+    int comment = shop.getShopComment();
+    if (comment > 0) {
+      stars.add(Container(
+        margin: EdgeInsets.only(left: 5, right: 5),
+        child: Text(
+          "${comment}",
+          style: TextStyle(color: AppColor.colorBE, fontSize: 12),
+        ),
+      ));
+    }
+
+    /// 星
+    int star = shop.getShopStar();
+    for (int i = 1; i <= 5; i++) {
+      stars.add(buildSopStar(star >= i));
+    }
+
+    /// 等级
+    if (star > 0) {
+      stars.add(Container(
+        margin: EdgeInsets.only(left: 5, right: 5),
+        child: Text(
+          "(${star.toDouble()})",
+          style: TextStyle(color: AppColor.colorF7551D, fontSize: 12),
+        ),
+      ));
+    }
+    return IntrinsicWidth(
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.only(top: 12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: AppColor.colorBE, width: 1)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: stars,
+        ),
+      ),
+    );
+  }
+
+  Widget buildSopStar(bool isLight) {
+    if (isLight) {
+      return Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(horizontal: 1),
+          child: Image.asset(
+            "res/icons/ic_star_light.png",
+            package: 'resources',
+            width: 10,
+            height: 10,
+          ));
+    } else {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 1),
+        alignment: Alignment.center,
+        child: Image.asset(
+          "res/icons/ic_star_dark.png",
+          package: 'resources',
+          width: 10,
+          height: 10,
+        ),
+      );
+    }
+  }
+
+  /// 商铺地址
+  Widget buildShopAddress() {
+    return TextHelper.isNotEmpty(actuator.shopDetail.address)
+        ? Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
+            child: Text(
+              TextHelper.clean(actuator.shopDetail.address),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColor.colorBE, fontSize: 14),
+            ),
+          )
+        : Container();
+  }
+
+  Widget buildShopContact() {
+    return TextHelper.isNotEmpty(actuator.shopDetail.contact)
+        ? Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: Text(
+                TextHelper.clean(actuator.shopDetail.contact),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: AppColor.colorF7551D,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                if (TextHelper.isNotEmpty(actuator.shopDetail.contact!)) {
+                  launch("tel://${actuator.shopDetail.contact}");
+                }
+              },
+            ),
+          )
+        : Container();
+  }
+
+  /// 商铺详情
+  Widget buildShopDesc() {
+    return TextHelper.isNotEmpty(actuator.shopDetail.about)
+        ? Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
+            child: Text(
+              TextHelper.clean(actuator.shopDetail.about),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColor.black, fontSize: 14),
+            ),
+          )
+        : Container();
+  }
+
+  Widget buildProductsTitle() {
+    if (actuator.products != null && actuator.products.isNotEmpty) {
+      return Container(
+        margin: EdgeInsets.only(left: 16, right: 16),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          S.of(context).discover_product,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+              color: AppColor.black, fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  /**
+   * 构建商铺下的商品列表
+   */
+  Widget buildShopProducts(BuildContext context) {
+    return Container(
+      child: GridView.count(
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          crossAxisCount: 2,
+          mainAxisSpacing: 8,
+          physics: new NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisSpacing: 8,
+          childAspectRatio: 0.72,
+          children: actuator.products.map((product) {
+            return ItemShopProductGridWidget(
+                key: Key(
+                    "${product.name}-${product.id}-${DateTime.now().microsecond}"),
+                product: product,
+                event: (product) {
+                  appendShopCart(product);
+                },
+                showOptions: UserManager().delivery(actuator.shopDetail));
+          }).toList()),
+    );
+  }
+}
