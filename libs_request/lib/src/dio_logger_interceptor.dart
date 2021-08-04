@@ -10,31 +10,38 @@ class HttpLogDogInterceptor extends Interceptor {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    LogDog.d("");
-    LogDog.d(">>> Request http request info: ");
-    LogDog.d(">>> Request BaseUrl: ${options.baseUrl}");
-    LogDog.d(">>> Request Path: ${options.path}");
-    LogDog.d(">>> Request Method:${options.method}");
-    LogDog.d(">>> Request Headers:${options.headers.toString()}");
-    LogDog.d(">>> Request Data:${options.data}");
-    LogDog.d(">>> Request QueryParameters:${options.queryParameters}");
-    LogDog.d("");
+    try {
+      LogDog.d(">>> Request Uri: ${options.method} : ${options.uri.toString()}");
+      LogDog.d(">>> Request Headers:${options.headers.toString()}");
+
+      if (options.data is FormData) {
+        FormData data = options.data as FormData;
+        if (data.fields != null && data.fields.isNotEmpty) {
+          LogDog.d(">>> Request Data-fields:${data.fields}");
+        }
+        if (data.files != null && data.files.isNotEmpty) {
+          LogDog.d(">>> Request Data-files:${data.files}");
+        }
+      }
+    } catch (e) {
+      LogDog.d("HttpLogDogInterceptor, onRequest, Error: ", e);
+    }
+
     return super.onRequest(options, handler);
   }
 
   @override
   Future onResponse(
       Response response, ResponseInterceptorHandler handler) async {
-    LogDog.d("");
-    LogDog.d(">>> Response http response info: ");
-    LogDog.d(">>> Response StatusCode: ${response.statusCode}");
-    LogDog.d(">>> Response StatusMessage: ${response.statusMessage}");
-    LogDog.d(">>> Response BaseUrl: ${response.requestOptions.baseUrl}");
-    LogDog.d(">>> Response Path: ${response.requestOptions.path}");
-    LogDog.d(">>> Response Method: ${response.requestOptions.method}");
-    LogDog.d(">>> Response Headers: ${response.headers.toString()}");
-    LogDog.d(">>> Response Data-encode: ${json.encode(response.data)}");
-    LogDog.d("");
+    try {
+      LogDog.d(
+          ">>> Response StatusMessage: ${response.statusCode} : ${response.statusMessage}");
+      LogDog.d(">>> Response RealUri: ${response.realUri.toString()}");
+      LogDog.d(">>> Response Headers: ${response.headers.toString()}");
+      LogDog.d(">>> Response Data-encode: ${json.encode(response.data)}");
+    } catch (e) {
+      LogDog.d("HttpLogDogInterceptor, onResponse, Error: ", e);
+    }
     return super.onResponse(response, handler);
   }
 }

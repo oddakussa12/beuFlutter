@@ -3,7 +3,7 @@ import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shopping/src/widget/item_order_detail_product.dart';
+import 'package:shopping/src/items/item_order_detail_product.dart';
 
 /**
  * ItemOrderDetailWidget

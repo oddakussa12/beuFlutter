@@ -104,9 +104,6 @@ class DioClient {
         }
       }
 
-      LogDog.i("DioClient-baseUrl: ${this._dio.options.baseUrl}");
-      LogDog.i("DioClient-getUrl: ${url}");
-
       Response response = await _dio.get(url,
           queryParameters: query,
           options: options, onReceiveProgress: (count, total) {
@@ -122,9 +119,6 @@ class DioClient {
           }
         } else {
           T result = parser.call(response);
-
-          LogDog.d("DioClient, get-result: ${result}");
-
           if (success != null) {
             success.call(result);
           }
@@ -160,9 +154,6 @@ class DioClient {
         }
       }
 
-      LogDog.i("DioClient-baseUrl: ${this._dio.options.baseUrl}");
-      LogDog.i("DioClient-postUrl: ${url}");
-
       response = await _dio.post(url,
           queryParameters: query,
           data: body,
@@ -179,9 +170,6 @@ class DioClient {
           }
         } else {
           T result = parser.call(response);
-
-          LogDog.d("DioClient, get-result: ${result}");
-
           if (success != null) {
             success.call(result);
           }
@@ -216,9 +204,6 @@ class DioClient {
         }
       }
 
-      LogDog.i("DioClient-baseUrl: ${this._dio.options.baseUrl}");
-      LogDog.i("DioClient-postUrl: ${url}");
-
       response = await _dio.patch(url,
           queryParameters: query,
           data: body,
@@ -235,9 +220,6 @@ class DioClient {
           }
         } else {
           T result = parser.call(response);
-
-          LogDog.d("DioClient, get-result: ${result}");
-
           if (success != null) {
             success.call(result);
           }
@@ -272,9 +254,6 @@ class DioClient {
         }
       }
 
-      LogDog.i("DioClient-baseUrl: ${this._dio.options.baseUrl}");
-      LogDog.i("DioClient-getUrl: ${url}");
-
       Response response = await _dio.put(url,
           queryParameters: query,
           data: body,
@@ -291,9 +270,6 @@ class DioClient {
           }
         } else {
           T result = parser.call(response);
-
-          LogDog.d("DioClient, get-result: ${result}");
-
           if (success != null) {
             success.call(result);
           }

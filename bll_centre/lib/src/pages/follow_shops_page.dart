@@ -1,5 +1,5 @@
 import 'package:centre/src/actuator/follow_shops_actuator.dart';
-import 'package:centre/src/widget/item_follow_shop.dart';
+import 'package:centre/src/items/item_follow_shop.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 

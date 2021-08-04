@@ -2,7 +2,7 @@ import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/my_orders_actuator.dart';
-import 'package:shopping/src/widget/item_my_orders_order.dart';
+import 'package:shopping/src/items/item_my_orders_order.dart';
 
 import '../controller/my_orders_controller.dart';
 

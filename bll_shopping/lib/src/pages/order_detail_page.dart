@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/order_detail_actuator.dart';
-import 'package:shopping/src/widget/item_order_detail.dart';
+import 'package:shopping/src/items/item_order_detail.dart';
 
 /**
  * order_detail_page.dart

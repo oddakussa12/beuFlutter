@@ -1,5 +1,8 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:shopping/src/actuator/delivery_address_actuator.dart';
+import 'package:shopping/src/entity/user_address.dart';
 
 /**
  * delivery_address_page.dart
@@ -9,64 +12,58 @@ import 'package:flutter/material.dart';
  * @date: 2021/7/3
  */
 class DeliveryAddressPage extends StatefulWidget {
-  /**
-   * 用户派送信息
-   */
-  final String? name;
-  final String? phone;
-  final String? address;
-
-  const DeliveryAddressPage(
-      {Key? key, this.name = "", this.phone = "", this.address = ""})
-      : super(key: key);
+  const DeliveryAddressPage({Key? key}) : super(key: key);
 
   @override
   _DeliveryAddressPageState createState() =>
-      _DeliveryAddressPageState(name, phone, address);
+      _DeliveryAddressPageState(DeliveryAddressActuator());
 }
 
-class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
-  /**
-   * 用户派送信息
-   */
-  String? name;
-  String? phone;
-  String? address;
+class _DeliveryAddressPageState
+    extends RetryableState<DeliveryAddressActuator, DeliveryAddressPage> {
+  _DeliveryAddressPageState(DeliveryAddressActuator actuator) : super(actuator);
 
-  _DeliveryAddressPageState(this.name, this.phone, this.address);
+  @override
+  void initState() {
+    super.initState();
+
+    actuator.startLocation(fail: (LocationClient client, LFailType type) {
+      if (client != null && type != null) {
+        if (LFailType.ServiceUnusable == type) {
+          client.openLocationSettings();
+        } else if (LFailType.Denied == type) {
+          client.openSettings();
+        } else if (LFailType.DeniedForever == type) {
+          client.openSettings();
+        }
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var args = ModalRoute.of(context)!.settings.arguments;
+    if (args != null && args is UserAddress) {
+      actuator.init(args);
+    }
+  }
 
   /**
    * 提交用户信息
    */
   void confirmUserInfo() {
-    if (TextHelper.isEmpty(name!) || name!.length < 2 || name!.length > 32) {
-      toast(message: S.of(context).confirm_name_rule);
-      return;
-    }
-
-    if (TextHelper.isEmpty(phone!) || phone!.length < 7 || phone!.length > 14) {
-      toast(message: S.of(context).confirm_phone_rule);
-      return;
-    }
-
-    if (TextHelper.isEmpty(address!) ||
-        address!.length < 10 ||
-        address!.length > 100) {
-      toast(message: S.of(context).confirm_address_rule);
-      return;
-    }
-
-    List<String> result = [name!, phone!, address!];
-    Navigator.pop(context, result);
+    actuator.confirmUserInfo((UserAddress result) {
+      Navigator.pop(context, result);
+    }, start: () {
+      LoadingDialog.show(context);
+    }, end: () {
+      Navigator.pop(context);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Constants.isTesting) {
-      name = "XMT-beU";
-      phone = "1314520999";
-      address = "太阳系地球村中国北京市";
-    }
     return Scaffold(
       appBar: Toolbar(
         title: S.of(context).confirm_information,
@@ -82,6 +79,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
               })),
+      bottomNavigationBar: buildConfirmButton(context),
     );
   }
 
@@ -175,9 +173,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                 fontSize: 12,
                 fontWeight: FontWeight.bold),
           )),
-
-      /// 提交按钮
-      buildConfirm(context),
     ]);
   }
 
@@ -212,16 +207,16 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         cursorRadius: Radius.circular(2),
         style: TextStyle(color: AppColor.black, fontSize: 16),
         onChanged: (text) {
-          name = text;
+          actuator.name = text;
         },
         controller: TextEditingController.fromValue(TextEditingValue(
             //判断 name 是否为空
-            text: '${this.name == null ? "" : this.name}',
+            text: '${this.actuator.name == null ? "" : this.actuator.name}',
             // 保持光标在最后
 
             selection: TextSelection.fromPosition(TextPosition(
                 affinity: TextAffinity.downstream,
-                offset: '${this.name}'.length)))),
+                offset: '${this.actuator.name}'.length)))),
       ),
     );
   }
@@ -257,16 +252,16 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         textAlign: TextAlign.left,
         style: TextStyle(color: AppColor.black, fontSize: 16),
         onChanged: (text) {
-          phone = text;
+          actuator.phone = text;
         },
         controller: TextEditingController.fromValue(TextEditingValue(
             //判断 phone 是否为空
-            text: '${this.phone == null ? "" : this.phone}',
+            text: '${this.actuator.phone == null ? "" : this.actuator.phone}',
             // 保持光标在最后
 
             selection: TextSelection.fromPosition(TextPosition(
                 affinity: TextAffinity.downstream,
-                offset: '${this.phone}'.length)))),
+                offset: '${this.actuator.phone}'.length)))),
       ),
     );
   }
@@ -301,16 +296,17 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         textAlign: TextAlign.left,
         style: TextStyle(color: AppColor.black, fontSize: 16),
         onChanged: (text) {
-          address = text;
+          actuator.address = text;
         },
         controller: TextEditingController.fromValue(TextEditingValue(
             //判断 phone 是否为空
-            text: '${this.address == null ? "" : this.address}',
+            text:
+                '${this.actuator.address == null ? "" : this.actuator.address}',
             // 保持光标在最后
 
             selection: TextSelection.fromPosition(TextPosition(
                 affinity: TextAffinity.downstream,
-                offset: '${this.address}'.length)))),
+                offset: '${this.actuator.address}'.length)))),
       ),
     );
   }
@@ -318,32 +314,47 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   /**
    * 提交按钮
    */
-  Widget buildConfirm(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-          height: 44,
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 60, bottom: 20),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(44),
-              gradient: LinearGradient(
-                  colors: [Color(0xFFFF8913), Color(0xFFFF0080)],
-                  begin: FractionalOffset(1, 0),
-                  end: FractionalOffset(0, 1))),
-          child: Text(
-            S.of(context).button_confirm,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: AppColor.white,
-                fontSize: 14,
-                fontWeight: FontWeight.bold),
-          )),
-      onTap: () {
-        confirmUserInfo();
-      },
-    );
+  Widget buildConfirmButton(BuildContext context) {
+    return Container(
+        height: 64,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          boxShadow: [
+            BoxShadow(
+                color: AppColor.bg,
+                offset: Offset(2.0, 2.0),
+                blurRadius: 5.0,
+                spreadRadius: 0.6),
+            BoxShadow(color: AppColor.bg, offset: Offset(1.0, 1.0)),
+            BoxShadow(color: AppColor.bg)
+          ],
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+              height: 44,
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(44),
+                  gradient: LinearGradient(
+                      colors: [Color(0xFFFF8913), Color(0xFFFF0080)],
+                      begin: FractionalOffset(1, 0),
+                      end: FractionalOffset(0, 1))),
+              child: Text(
+                S.of(context).button_confirm,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: AppColor.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              )),
+          onTap: () {
+            confirmUserInfo();
+          },
+        ));
   }
 }

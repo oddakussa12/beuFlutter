@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 import 'package:shopping/src/actuator/shopping_my_bag_actuator.dart';
-import 'package:shopping/src/widget/item_my_bag_shop.dart';
+import 'package:shopping/src/items/item_my_bag_shop.dart';
 
 /**
  * my_bag_page.dart

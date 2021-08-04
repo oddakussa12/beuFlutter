@@ -1,5 +1,5 @@
 import 'package:centre/src/actuator/my_orders_actuator.dart';
-import 'package:centre/src/widget/item_my_orders_order.dart';
+import 'package:centre/src/items/item_my_orders_order.dart';
 import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

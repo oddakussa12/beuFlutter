@@ -6,7 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shopping/src/actuator/shop_detail_actuator.dart';
 import 'package:shopping/src/widget/cart/shopping_cart_bar.dart';
 import 'package:shopping/src/controller/shopping_cart_controller.dart';
-import 'package:shopping/src/widget/item_shop_product_grid.dart';
+import 'package:shopping/src/items/item_shop_product_grid.dart';
 
 /**
  * shop_detail_page.dart

@@ -26,4 +26,6 @@ class ShoppingUrl {
   /// 获取用户信息
   static final String getUserInfo = "/api/user/";
 
+  /// 计算配送费用
+  static final String calcDeliveryCost = "/api/business/delivery_cost";
 }

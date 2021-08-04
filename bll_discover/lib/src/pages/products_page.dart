@@ -1,6 +1,6 @@
 import 'package:common/common.dart';
 import 'package:discover/src/actuator/product_actuator.dart';
-import 'package:discover/src/widget/item_product_grid.dart';
+import 'package:discover/src/items/item_product_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

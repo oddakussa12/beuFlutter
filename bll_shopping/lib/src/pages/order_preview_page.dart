@@ -2,10 +2,9 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/order_preview_actuator.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
-import 'package:shopping/src/widget/item_order_preview.dart';
-import 'package:shopping/src/widget/item_order_price.dart';
-
-import 'delivery_address_page.dart';
+import 'package:shopping/src/entity/user_address.dart';
+import 'package:shopping/src/items/item_order_preview.dart';
+import 'package:shopping/src/items/item_order_price.dart';
 
 /**
  * OrderPreviewPage
@@ -43,27 +42,22 @@ class _OrderPreviewPageState
    * 打开编辑地址页
    */
   void openDeliveryAddressPage(BuildContext context) {
-    Navigator.push(
-        context,
-        PageTransition(
-            type: TransitionType.rightToLeft,
-            child: DeliveryAddressPage(
-              name: actuator.orderP.name,
-              phone: actuator.orderP.phone,
-              address: actuator.orderP.address,
-            ))).then((value) => processAddressResult(value));
+    actuator.prepareDeliveryAddress((result) {
+      Navigator.pushNamed(context, Routes.shopping.DeliveryAddress,
+              arguments: result)
+          .then((value) => processAddressResult(value));
+    });
   }
 
   /**
    * 处理返回的地址信息
    */
   void processAddressResult(dynamic value) {
-    LogDog.d("resultCall: ${value}");
-    if (value != null && value is List<String>) {
-      List<String> result = value as List<String>;
-      actuator.orderP.name = result[0];
-      actuator.orderP.phone = result[1];
-      actuator.orderP.address = result[2];
+    if (value != null && value is UserAddress) {
+      UserAddress result = value as UserAddress;
+      actuator.orderP.name = result.name;
+      actuator.orderP.phone = result.phone;
+      actuator.orderP.address = result.address;
 
       setState(() {});
     }
@@ -339,7 +333,7 @@ class _OrderPreviewPageState
                         actuator.orderP.address == ""
                             ? S.of(context).confirm_address
                             : TextHelper.clean(actuator.orderP.address),
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: AppColor.black, fontSize: 14),
                       ))),

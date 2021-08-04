@@ -52,9 +52,15 @@ class AppRoutes {
         type: TransitionType.rightToLeft,
         settings: settings,
       );
-    }else if (Routes.shopping.OrderPreview == settings.name) {
+    } else if (Routes.shopping.OrderPreview == settings.name) {
       return PageTransition(
         child: OrderPreviewPage(),
+        type: TransitionType.rightToLeft,
+        settings: settings,
+      );
+    } else if (Routes.shopping.DeliveryAddress == settings.name) {
+      return PageTransition(
+        child: DeliveryAddressPage(),
         type: TransitionType.rightToLeft,
         settings: settings,
       );

@@ -54,5 +54,20 @@
             <string>itms-beta</string>
             <string>itms</string>
     </array>
+
+    <key>UIBackgroundModes</key>
+    <array>
+    	<string>location</string>
+    </array>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>是否允许在使用过程中获取您的定位信息用于展示附近商家？</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Because</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
+
 </dict>
 </plist>

@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:dio/dio.dart';
 import 'package:shopping/shopping.dart';
+import 'package:shopping/src/entity/user_address.dart';
 
 /**
  * OrderPreviewActuator
@@ -24,6 +25,24 @@ class OrderPreviewActuator extends RetryActuator {
   @override
   void toRetry() {}
 
+  /// 跳转地址编辑页前的准备
+  void prepareDeliveryAddress(Success<UserAddress> success) async {
+    UserAddress params = UserAddress(
+        name: orderP.name, phone: orderP.phone, address: orderP.address);
+    if (orderItems.isNotEmpty) {
+      List<String> shopIds = [];
+      orderItems.forEach((item) {
+        if (item.shop != null) {
+          shopIds.add(item.shop!.id);
+        }
+      });
+      if (shopIds.isNotEmpty) {
+        params.shopIds = shopIds;
+      }
+    }
+    success.call(params);
+  }
+
   /**
    * 加载我的购物车
    */
@@ -37,18 +56,19 @@ class OrderPreviewActuator extends RetryActuator {
 
     FormData requestBody = FormData.fromMap({"goods": idNumbers});
     DioClient().post(ShoppingUrl.orderPreview,
-        (response) => PreviewOrdersBody.fromJson(response.data),
+            (response) => PreviewOrdersBody.fromJson(response.data),
         body: requestBody, success: (PreviewOrdersBody body) {
-      if (body != null && body.data != null && body.data.isNotEmpty) {
-        orderItems.clear();
-        orderItems.addAll(body.data);
-        orderP.data = orderItems;
-        _processOrderInfo();
-      }
-    }, complete: () {
-      emptyStatus = orderItems.isEmpty ? EmptyStatus.Empty : EmptyStatus.Normal;
-      notifySetState();
-    });
+          if (body != null && body.data != null && body.data.isNotEmpty) {
+            orderItems.clear();
+            orderItems.addAll(body.data);
+            orderP.data = orderItems;
+            _processOrderInfo();
+          }
+        }, complete: () {
+          emptyStatus =
+          orderItems.isEmpty ? EmptyStatus.Empty : EmptyStatus.Normal;
+          notifySetState();
+        });
   }
 
   /**
@@ -67,9 +87,11 @@ class OrderPreviewActuator extends RetryActuator {
       order.total = (order.subTotal! + order.coast!);
       previewTotal += order.total!;
 
-      order.formatSubTotal = "${format.format(order.subTotal)} ${order.currency}";
+      order.formatSubTotal =
+      "${format.format(order.subTotal)} ${order.currency}";
       order.formatCoast = "${format.format(order.coast)} ${order.currency}";
-      order.formatPackageFee = "${format.format(order.packageFee)} ${order.currency}";
+      order.formatPackageFee =
+      "${format.format(order.packageFee)} ${order.currency}";
       order.formatTotal = "${format.format(order.total)} ${order.currency}";
 
       /// 是否相同币种
@@ -95,7 +117,9 @@ class OrderPreviewActuator extends RetryActuator {
   void checkoutPreviewOrder(Complete complete) async {
     /// 检查预览订单信息
     if (orderP == null || orderItems == null || orderItems.isEmpty) {
-      toast(message: S.of(context).alltip_loading_error);
+      toast(message: S
+          .of(context)
+          .alltip_loading_error);
       return;
     }
 
@@ -103,7 +127,9 @@ class OrderPreviewActuator extends RetryActuator {
     if (TextHelper.isEmpty(orderP.name!) ||
         TextHelper.isEmpty(orderP.phone!) ||
         TextHelper.isEmpty(orderP.address!)) {
-      toast(message: S.of(context).confirm_address_no);
+      toast(message: S
+          .of(context)
+          .confirm_address_no);
       return;
     }
 
@@ -125,18 +151,20 @@ class OrderPreviewActuator extends RetryActuator {
       "goods": idNumbers,
     });
     DioClient().post(ShoppingUrl.apiOrder,
-        (response) => PreviewOrdersBody.fromJson(response.data),
+            (response) => PreviewOrdersBody.fromJson(response.data),
         body: requestBody, success: (PreviewOrdersBody body) {
-      if (body != null && body.data != null) {
-        LogDog.d("checkoutPreviewOrder-Response: ${body}");
+          if (body != null && body.data != null) {
+            LogDog.d("checkoutPreviewOrder-Response: ${body}");
 
-        /// 订单创建完成
-        complete.call();
-      } else {
-        toast(message: S.of(context).alltip_loading_error);
-      }
-    }, fail: (message, error) {
-      notifyToasty(message);
-    });
+            /// 订单创建完成
+            complete.call();
+          } else {
+            toast(message: S
+                .of(context)
+                .alltip_loading_error);
+          }
+        }, fail: (message, error) {
+          notifyToasty(message);
+        });
   }
 }
