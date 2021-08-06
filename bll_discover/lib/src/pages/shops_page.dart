@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:discover/src/actuator/shops_actuator.dart';
 import 'package:discover/src/items/item_shop_grid_stateless.dart';
+import 'package:discover/src/pages/special_discover_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -11,6 +12,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
  * @date: 2021/6/29
  */
 class ShopsPage extends StatefulWidget {
+  RetrySpecialCallback? callback;
+
+  ShopsPage({this.callback});
+
   @override
   State<ShopsPage> createState() => new _ShopsState(ShopsActuator());
 }
@@ -21,6 +26,12 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    actuator.callback = widget.callback;
+  }
 
   @override
   void didChangeDependencies() {
@@ -35,10 +46,9 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
 
     return SmartRefresher(
         controller: refreshController,
-        physics: BouncingScrollPhysics(),
         header: WaterDropHeader(),
         footer: ClassicFooter(),
-        enablePullDown: actuator.emptyStatus == EmptyStatus.Normal,
+        enablePullDown: false,
         enablePullUp: actuator.emptyStatus == EmptyStatus.Normal,
         onRefresh: () {
           actuator.pullDown();

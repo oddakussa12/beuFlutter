@@ -33,6 +33,7 @@ PreOrder _$PreOrderFromJson(Map<String, dynamic> json) {
     coast: (json['deliveryCoast'] as num?)?.toDouble(),
     packageFee: (json['packagingCost'] as num?)?.toDouble(),
     currency: json['currency'] as String?,
+    subDisTotal: (json['subDiscountedTotal'] as num?)?.toDouble(),
   );
 }
 
@@ -41,8 +42,9 @@ Map<String, dynamic> _$PreOrderToJson(PreOrder instance) => <String, dynamic>{
       'goods': instance.goods,
       'subTotal': instance.subTotal,
       'deliveryCoast': instance.coast,
-      'packagingCost': instance.packageFee,
       'currency': instance.currency,
+      'packagingCost': instance.packageFee,
+      'subDiscountedTotal': instance.subDisTotal,
     };
 
 MyOrdersBody _$MyOrdersBodyFromJson(Map<String, dynamic> json) {

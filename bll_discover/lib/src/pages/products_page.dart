@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:discover/src/actuator/product_actuator.dart';
 import 'package:discover/src/items/item_product_grid.dart';
+import 'package:discover/src/pages/special_discover_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -11,6 +12,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
  * @date: 2021/6/29
  */
 class ProductsPage extends StatefulWidget {
+  RetrySpecialCallback? callback;
+
+  ProductsPage({this.callback});
+
   @override
   State<ProductsPage> createState() =>
       new _ProductsPageState(ProductsActuator());
@@ -25,6 +30,12 @@ class _ProductsPageState
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+    actuator.callback = widget.callback;
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     actuator.pullDown();
@@ -36,11 +47,10 @@ class _ProductsPageState
     LogDog.d("ProductsPage-build");
 
     return SmartRefresher(
-        physics: BouncingScrollPhysics(),
         controller: refreshController,
         header: WaterDropHeader(),
         footer: ClassicFooter(),
-        enablePullDown: true,
+        enablePullDown: false,
         enablePullUp: true,
         onRefresh: () {
           actuator.pullDown();
@@ -81,6 +91,7 @@ class _ProductsPageState
   }
 
   void clickProduct(BuildContext context, Product product) {
-    Navigator.pushNamed(context, Routes.shopping.ProductDetail, arguments: product.id);
+    Navigator.pushNamed(context, Routes.shopping.ProductDetail,
+        arguments: product.id);
   }
 }

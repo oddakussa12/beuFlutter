@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
  * @author: Ruoyegz
  * @date: 2021/6/29
  */
+@deprecated
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({Key? key}) : super(key: key);
 
@@ -33,8 +34,12 @@ class DiscoverPageState extends State<DiscoverPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    tabNames.add(S.of(context).discover_shops);
-    tabNames.add(S.of(context).discover_product);
+    tabNames.add(S
+        .of(context)
+        .discover_shops);
+    tabNames.add(S
+        .of(context)
+        .discover_product);
 
     _tabController = TabController(length: _pageWidgets.length, vsync: this);
   }
@@ -74,8 +79,9 @@ class DiscoverPageState extends State<DiscoverPage>
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+
           /// logo
-          Container(
+          GestureDetector(child: Container(
             alignment: Alignment.centerLeft,
             child: Image.asset(
               "res/images/ic_launcher.png",
@@ -83,18 +89,22 @@ class DiscoverPageState extends State<DiscoverPage>
               width: 32,
               height: 32,
             ),
-          ),
+          ), onTap: () {
+            Navigator.pushNamed(context, Routes.special.SpecialProducts);
+          },),
 
           /// app name
           Expanded(
               child: Container(
-            margin: EdgeInsets.only(left: 8, right: 8),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              S.of(context).app_name,
-              style: TextStyle(color: AppColor.black, fontSize: 19),
-            ),
-          )),
+                margin: EdgeInsets.only(left: 8, right: 8),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  S
+                      .of(context)
+                      .app_name,
+                  style: TextStyle(color: AppColor.black, fontSize: 19),
+                ),
+              )),
 
           /// tab 样式
           buildTab()
@@ -106,7 +116,10 @@ class DiscoverPageState extends State<DiscoverPage>
   /// tab 样式
   Widget buildTab() {
     return Container(
-        width: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width / 2,
         alignment: Alignment.centerRight,
         child: PreferredSize(
           child: TabBar(

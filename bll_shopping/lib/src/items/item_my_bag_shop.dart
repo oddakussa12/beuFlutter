@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
-import 'package:shopping/src/pages/shop_detail_page.dart';
 import 'package:shopping/src/items/item_my_bag_product.dart';
 
 /**

@@ -1,4 +1,3 @@
-import 'package:centre/src/widget/agreement_bar_widget.dart';
 import 'package:common/common.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +63,7 @@ class LoginDialog extends StatelessWidget {
 
           Container(
             margin: EdgeInsets.only(top: 16),
-            child: AgreementBarWidget(),
+            child: buildAgreementBarWidget(context),
           )
         ],
       ),
@@ -120,6 +119,58 @@ class LoginDialog extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
         Navigator.pushNamed(context, Routes.centre.Register);
+      },
+    );
+  }
+
+  Widget buildAgreementBarWidget(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Expanded(
+            child: buildUserAgreement(context),
+          ),
+          Expanded(
+            child: buildPrivacyPolicy(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildUserAgreement(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 30,
+        child: Text(
+          S.of(context).textview_useragree,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColor.colorA8, fontSize: 13),
+        ),
+      ),
+      onTap: () {
+        /// 打开协议页
+        Navigator.pushNamed(context, Routes.common.WebPage,
+            arguments: {"title": "用户协议", "url": Constants.UserAgreement});
+      },
+    );
+  }
+
+  Widget buildPrivacyPolicy(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+          height: 30,
+          child: Text(
+            S.of(context).textview_secret,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColor.colorA8, fontSize: 13),
+          )),
+      onTap: () {
+        Navigator.pushNamed(context, Routes.common.WebPage,
+            arguments: {"title": "隐私协议", "url": Constants.PrivacyPolicy});
       },
     );
   }

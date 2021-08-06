@@ -8,6 +8,7 @@ class Routes {
   static final common = _Common();
   static final discover = _Discover();
   static final shopping = _Shopping();
+  static final special = _Special();
   static final centre = _Centre();
 }
 
@@ -66,6 +67,14 @@ class _Shopping {
 
   /// 订单详情
   final String OrderDetail = _Module + "OrderDetail";
+}
+
+class _Special {
+  static final String _Module = "Shopping/";
+
+  /// 订单详情
+  final String SpecialProducts = _Module + "SpecialProducts";
+
 }
 
 /**

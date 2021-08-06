@@ -44,17 +44,12 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
   _ItemOrderPreviewState(
       this.orderNumber, this.shop, this.orderItem, this.provider);
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   /**
    * 打开商铺详情
    */
   void clickOpenShopDetail(BuildContext context) {
-    Navigator.pushNamed(context, Routes.shopping.ShopDetail, arguments: orderItem.shop);
+    Navigator.pushNamed(context, Routes.shopping.ShopDetail,
+        arguments: orderItem.shop);
   }
 
   @override
@@ -296,15 +291,15 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-                TextHelper.clean(orderItem.formatPackageFee),
-                maxLines: 1,
-                textAlign: TextAlign.right,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: AppColor.black,
-                  fontSize: 14,
-                ),
-              ))
+            TextHelper.clean(orderItem.formatPackageFee),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.black,
+              fontSize: 14,
+            ),
+          ))
         ],
       ),
     );

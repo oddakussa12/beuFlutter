@@ -44,7 +44,7 @@ class _ItemOrderPriceWidgetState extends State<ItemOrderPriceWidget> {
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: AppColor.black,
+              color: AppColor.colorBE,
               fontSize: 14,
             ),
           ))

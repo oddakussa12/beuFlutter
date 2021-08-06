@@ -6,6 +6,20 @@ part of 'delivery_coast_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+ReqDeliveryCoastBody _$ReqDeliveryCoastBodyFromJson(Map<String, dynamic> json) {
+  return ReqDeliveryCoastBody(
+    (json['location'] as List<dynamic>)
+        .map((e) => DeliveryParam.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$ReqDeliveryCoastBodyToJson(
+        ReqDeliveryCoastBody instance) =>
+    <String, dynamic>{
+      'location': instance.location,
+    };
+
 DeliveryParam _$DeliveryParamFromJson(Map<String, dynamic> json) {
   return DeliveryParam(
     json['shop_id'] as String,

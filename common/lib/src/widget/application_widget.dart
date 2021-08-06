@@ -47,6 +47,8 @@ class AppStatelessWidget extends StatelessWidget {
         child: MaterialApp(
             title: title,
             color: AppColor.white,
+            /// 不显示右上角 Debug
+            debugShowCheckedModeBanner: false,
             //routes: routes ?? {},
 
             onGenerateRoute: onGenerateRoute,

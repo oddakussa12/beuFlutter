@@ -44,6 +44,10 @@ dependencies:
   shopping:
     path: ../bll_shopping/
 
+  # 特价商品
+  special:
+    path: ../bll_special/
+
   # 订单
   orders:
     path: ../bll_orders/
@@ -51,6 +55,8 @@ dependencies:
   # 个人中心
   centre:
     path: ../bll_centre/
+
+
 
   ### Business 相关的 Module ###
 

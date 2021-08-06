@@ -3,6 +3,7 @@ import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/shopping.dart';
+import 'package:special/special.dart';
 
 /**
  * app_routes.dart
@@ -61,6 +62,12 @@ class AppRoutes {
     } else if (Routes.shopping.DeliveryAddress == settings.name) {
       return PageTransition(
         child: DeliveryAddressPage(),
+        type: TransitionType.rightToLeft,
+        settings: settings,
+      );
+    } else if (Routes.special.SpecialProducts == settings.name) {
+      return PageTransition(
+        child: SpecialProductsPage(),
         type: TransitionType.rightToLeft,
         settings: settings,
       );

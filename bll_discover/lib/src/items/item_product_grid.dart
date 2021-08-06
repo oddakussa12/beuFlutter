@@ -146,7 +146,7 @@ class ItemProductGridWidget extends StatelessWidget {
    */
   Widget buildProductStars(Product product) {
     List<Widget> stars = [];
-    int star = product.averagePoint.toInt();
+    int star = product.averagePoint!.toInt();
 
     for (int i = 1; i <= 5; i++) {
       stars.add(buildProductStar(star >= i));
@@ -190,7 +190,7 @@ class ItemProductGridWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(top: 10, left: 5),
       child: Text(
-        product.name,
+        product.name!,
         textAlign: TextAlign.left,
         maxLines: PlatformSupport.ios() ? 2 : 1,
         overflow: TextOverflow.ellipsis,

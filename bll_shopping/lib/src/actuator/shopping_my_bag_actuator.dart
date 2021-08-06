@@ -280,7 +280,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
             product.isChecked = isCheckByProductId(product.id);
             if (product.isChecked!) {
               currency = currency == "" ? shop.currency! : currency;
-              total += product.price * product.goodsNumber!;
+              total += product.price! * product.goodsNumber!;
 
               /// 不同的币种【对每个商品都需要检查】
               if (currency != "" &&

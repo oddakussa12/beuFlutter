@@ -2,7 +2,23 @@ import 'package:origin/origin.dart';
 
 part 'delivery_coast_entity.g.dart';
 
+/**
+ * delivery_coast_entity.dart
+ * 外面配送费请求参数
+ * @author: Ruoyegz
+ * @date: 2021/8/4
+ */
+@JsonSerializable()
+class ReqDeliveryCoastBody {
+  final List<DeliveryParam> location;
 
+  ReqDeliveryCoastBody(this.location);
+
+  factory ReqDeliveryCoastBody.fromJson(Map<String, dynamic> json) =>
+      _$ReqDeliveryCoastBodyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReqDeliveryCoastBodyToJson(this);
+}
 
 /**
  * 派送费
@@ -11,7 +27,6 @@ part 'delivery_coast_entity.g.dart';
  */
 @JsonSerializable()
 class DeliveryParam {
-
   final String shop_id;
   final List<double> start;
 
@@ -21,6 +36,11 @@ class DeliveryParam {
       _$DeliveryParamFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeliveryParamToJson(this);
+
+  @override
+  String toString() {
+    return "${toJson()}";
+  }
 }
 
 /// start : {"location":[889316202809372.9,3843035958634248.5,1282498147233044.2,-7728274101097449],"name":"*@O(iF(TrL"}
@@ -38,7 +58,6 @@ class DeliveryCoastBody {
 
   factory DeliveryCoastBody.fromJson(Map<String, dynamic> json) =>
       _$DeliveryCoastBodyFromJson(json);
-
 }
 
 @JsonSerializable()

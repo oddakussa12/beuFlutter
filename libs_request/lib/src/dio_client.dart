@@ -1,3 +1,4 @@
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:origin/origin.dart';
 import 'package:request/src/dio_logger_interceptor.dart';
@@ -14,6 +15,10 @@ typedef Parser<T> = T Function(Response response);
  * @date: 2021/7/23
  */
 class DioClient {
+  /// 抓包用的 http 域名
+  static final String CAUGHT_TEST_BASE_URL =
+      "https://test.api.helloo.mantouhealth.com";
+
   /// 测试 url
   static final String TEST_BASE_URL =
       "https://test.api.helloo.mantouhealth.com";
@@ -59,6 +64,21 @@ class DioClient {
       )
       ..interceptors.add(headerInterceptor!)
       ..interceptors.add(HttpLogDogInterceptor());
+
+    /// 抓包配置【必须在开发环境，线上打死也不用这几行代码，切记】
+    if (Constants.isDevelop && Constants.isTesting && Constants.isCaught) {
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.findProxy = (uri) {
+          LogDog.w("DioClient，findProxy: ${uri}");
+
+          if (uri.isScheme("https")) {
+            return "DIRECT";
+          }
+          return "PROXY 192.168.31.200:8888";
+        };
+      };
+    }
   }
 
   static DioClient self() {
@@ -68,6 +88,9 @@ class DioClient {
   /// 动态获取 url
   static String defBaseUrl() {
     if (Constants.isDevelop || Constants.isTesting) {
+      if (Constants.isCaught) {
+        return CAUGHT_TEST_BASE_URL;
+      }
       return TEST_BASE_URL;
     } else {
       return PRO_BASE_URL;

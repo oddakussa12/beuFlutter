@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:discover/src/discover_config.dart';
+import 'package:discover/src/pages/special_discover_page.dart';
 
 /**
  * shops_actuator.dart
@@ -10,11 +11,21 @@ import 'package:discover/src/discover_config.dart';
 class ShopsActuator extends RefreshActuator {
   /// 发现商铺
   List<Shop> shops = [];
+  late RetrySpecialCallback? callback;
 
   @override
   void dispose() {
     super.dispose();
     shops.clear();
+  }
+
+  @override
+  void toRetry() {
+    super.toRetry();
+    if(callback != null){
+      callback!.call();
+    }
+    pullDown();
   }
 
   @override
@@ -26,7 +37,7 @@ class ShopsActuator extends RefreshActuator {
   @override
   void onLoadMoreSource(int page, PullType type) {
     LogDog.d("ShopsPresenter-onLoadMoreSource");
-    loadLiveShops(page, type);
+    loadDiscoveryBusiness(page, type);
   }
 
   /**
@@ -37,20 +48,13 @@ class ShopsActuator extends RefreshActuator {
       changeStatusForLoading();
     }
 
-    String url = DiscoverUrl.discoveryBusiness + "?type=shop&order=popular";
-    DioClient()
-        .get(url, (response) => DiscoveryShopBody.fromJson(response.data),
-            success: (DiscoveryShopBody body) {
+    String url = DiscoverUrl.discoveryIndex + "?page=${page}&type=shop&order=popular";
+    DioClient().get(url, (response) => ShopList.fromJson(response.data), success: (ShopList body) {
       if (body != null && body.data != null) {
         if (page <= 1) {
           shops.clear();
         }
-        if (body.data.deliveries != null && !body.data.deliveries!.isEmpty) {
-          shops.addAll(body.data.deliveries!);
-        }
-        if (body.data.lives != null && !body.data.lives!.isEmpty) {
-          shops.addAll(body.data.lives!);
-        }
+        shops.addAll(body.data);
       }
     }, complete: () {
       emptyStatus = shops.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
@@ -61,6 +65,7 @@ class ShopsActuator extends RefreshActuator {
   /**
    * 加载普通商铺
    */
+  @deprecated
   void loadLiveShops(int page, PullType type) async {
     String url =
         DiscoverUrl.discoveryShops + "?page=${page}&type=shop&order=popular";

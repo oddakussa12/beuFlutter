@@ -290,7 +290,7 @@ class _ProductDetailPageState
    * 商品的星级
    */
   Widget buildProductStar() {
-    int star = actuator.product.averagePoint.toInt();
+    int star = actuator.product.averagePoint!.toInt();
     List<Widget> stars = [];
     for (int i = 1; i <= 5; i++) {
       stars.add(buildSopStar(star >= i));

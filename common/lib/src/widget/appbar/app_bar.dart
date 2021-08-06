@@ -13,52 +13,56 @@ class Toolbar extends StatefulWidget implements PreferredSizeWidget {
   /// 标题
   final String? title;
 
+  final Widget? back;
+
+  /// 标题栏背景
+  final Color? backgroundColor;
+
   /// 菜单
   final List<Widget>? actions;
 
-  const Toolbar({Key? key, this.title = "", this.actions}) : super(key: key);
+  const Toolbar(
+      {Key? key,
+      this.title = "",
+      this.back,
+      this.backgroundColor = AppColor.white,
+      this.actions})
+      : super(key: key);
 
   @override
-  _ToolbarState createState() => _ToolbarState(title, actions);
+  _ToolbarState createState() => _ToolbarState();
 
   @override
   Size get preferredSize => Size.fromHeight(50);
 }
 
 class _ToolbarState extends State<Toolbar> {
-  /// 标题
-  final String? title;
-
-  /// 菜单
-  final List<Widget>? actions;
-
-  _ToolbarState(this.title, this.actions);
-
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
         child: AppBar(
           elevation: AppSizes.elevation,
-          backgroundColor: AppColor.white,
+          backgroundColor: widget.backgroundColor,
           centerTitle: true,
           leading: GestureDetector(
             behavior: HitTestBehavior.opaque,
             child: Container(
               padding: EdgeInsets.all(13),
-              child: Image.asset(
-                "res/icons/ic_back_dark.png",
-                package: 'resources',
-              ),
+              child: widget.back ??
+                  Image.asset(
+                    "res/icons/ic_back_dark.png",
+                    package: 'resources',
+                  ),
             ),
             onTap: () => Navigator.pop(context),
           ),
           title: Text(
-            "${title}",
+            "${widget.title}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: Colors.black, fontSize: 19),
           ),
-          actions: [],
+          actions: widget.actions,
         ),
         preferredSize: Size.fromHeight(50));
   }

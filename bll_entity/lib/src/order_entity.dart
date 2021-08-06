@@ -37,6 +37,27 @@ class PreviewOrdersBody {
   @JsonKey(ignore: true)
   String? formatTotal;
 
+  /// 1.1.0：订单商品包装费
+  @JsonKey(ignore: true)
+  double? packageTotal;
+
+  @JsonKey(ignore: true)
+  String? formatPackageTotal = "";
+
+  /// 1.1.0：订单商品派送费
+  @JsonKey(ignore: true)
+  double? deliveryTotal;
+
+  @JsonKey(ignore: true)
+  String? formatDeliveryTotal;
+
+  /// 1.1.0：新增
+  @JsonKey(ignore: true)
+  double? discountTotal;
+
+  @JsonKey(ignore: true)
+  String? formatDiscountTotal;
+
   bool? diffCurrency = false;
 
   PreviewOrdersBody(this.data,
@@ -46,6 +67,12 @@ class PreviewOrdersBody {
       this.address = "",
       this.total = 0.0,
       this.formatTotal = "",
+      this.packageTotal = 0.0,
+      this.formatPackageTotal = "",
+      this.discountTotal = 0.0,
+      this.formatDiscountTotal = "",
+      this.deliveryTotal = 0.0,
+      this.formatDeliveryTotal = "",
       this.diffCurrency = false});
 
   factory PreviewOrdersBody.fromJson(Map<String, dynamic> json) =>
@@ -70,10 +97,6 @@ class PreOrder {
   @JsonKey(name: "deliveryCoast")
   double? coast;
 
-  /// 订单商品包装费
-  @JsonKey(name: "packagingCost")
-  double? packageFee;
-
   String? currency;
 
   @JsonKey(ignore: true)
@@ -83,13 +106,24 @@ class PreOrder {
   String? formatCoast = "";
 
   @JsonKey(ignore: true)
-  String? formatPackageFee = "";
-
-  @JsonKey(ignore: true)
   double? total = 0;
 
   @JsonKey(ignore: true)
   String? formatTotal = "";
+
+  /// 1.1.0：订单商品包装费
+  @JsonKey(name: "packagingCost")
+  double? packageFee;
+
+  @JsonKey(ignore: true)
+  String? formatPackageFee = "";
+
+  /// 1.1.0：新增
+  @JsonKey(name: "subDiscountedTotal")
+  double? subDisTotal;
+
+  @JsonKey(ignore: true)
+  String? formatSubDisTotal = "";
 
   PreOrder(
       {this.shop,
@@ -99,8 +133,10 @@ class PreOrder {
       this.packageFee,
       this.currency = "",
       this.formatSubTotal = "",
-      this.formatPackageFee,
+      this.formatPackageFee = "",
       this.formatCoast = "",
+      this.subDisTotal = 0.0,
+      this.formatSubDisTotal = "",
       this.total = 0.0,
       this.formatTotal = ""});
 

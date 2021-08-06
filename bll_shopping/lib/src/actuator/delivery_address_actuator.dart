@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:common/common.dart';
 import 'package:location/location.dart';
@@ -99,19 +100,26 @@ class DeliveryAddressActuator extends RetryActuator {
       start.call();
     }
 
-    List<DeliveryParam> params = [];
+    List<Map<String, dynamic>> shops = [];
     shopIds!.forEach((id) {
-      params.add(
-          DeliveryParam(id, [locAddress!.longitude, locAddress!.latitude]));
+      Map<String, Object> args = {};
+      args["shop_id"] = id;
+      args["start"] = [locAddress!.longitude, locAddress!.latitude];
+      shops.add(args);
     });
-    FormData requestBody = FormData.fromMap({"location": params});
+
+    Map<String, List<Map<String, dynamic>>> params = {"location": shops};
 
     UserAddress result =
         UserAddress(name: name, phone: phone, address: address);
     DioClient().post(ShoppingUrl.calcDeliveryCost,
         (response) => DeliveryCoastBody.fromJson(response.data),
-        body: requestBody, success: (DeliveryCoastBody body) {
+        options: Options(
+          headers: {"Content-Type": "application/json; charset=UTF-8"},
+        ),
+        body: jsonEncode(params), success: (DeliveryCoastBody body) {
       if (body != null && body.data != null && body.data.isNotEmpty) {
+        /// {"data":[{"start":{"location":[116.2869045,40.0585996],"name":""},"end":{"location":[0,0],"name":""},"shop_id":"1245541166","distance":-1,"delivery_cost":100,"currency":"USD"}]}
         Map<String, Object> params = {};
         body.data.forEach((item) {
           if (item.shopId != null) {

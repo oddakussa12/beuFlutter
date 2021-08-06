@@ -9,7 +9,6 @@ import 'package:shopping/src/items/item_order_price.dart';
 /**
  * OrderPreviewPage
  * 订单预览
- *
  * @author: Ruoyegz
  * @date: 2021/7/2
  */
@@ -29,13 +28,21 @@ class _OrderPreviewPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    String type = "";
     Map<String, String> productIdNumbers = {};
     var args = ModalRoute.of(context)!.settings.arguments;
-    if (args != null && args is Map<String, String>) {
-      productIdNumbers = args;
+    if (args != null && args is Map<String, dynamic>) {
+      if (args.containsKey("type")) {
+        type = args["type"];
+      }
+      if (args.containsKey("goods")) {
+        productIdNumbers = args["goods"];
+      } else {
+        productIdNumbers = args as Map<String, String>;
+      }
     }
 
-    actuator.loadPreviewOrder(productIdNumbers);
+    actuator.loadPreviewOrder(type, productIdNumbers);
   }
 
   /**
@@ -152,10 +159,59 @@ class _OrderPreviewPageState
           /// 支付方式
           buildPaymentMethod(),
 
+          /// 分割线
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+            color: AppColor.color08000,
+          ),
+
+          /// Promo code【优惠码】
+          Stack(
+            children: [
+              buildPromoCodeField(context),
+
+              /// 应用按钮
+              Positioned(child: buildApplyButton(), right: 16, top: 16),
+            ],
+          ),
+
+          /// Promo code【优惠码说明】
+          Container(
+            height: 40,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 16, right: 16, top: 8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(colors: [
+                  Color(0xFFB57A30),
+                  Color(0xFFB57A30),
+                  Color(0xFF973F0E)
+                ], begin: FractionalOffset(1, 0), end: FractionalOffset(0, 1))),
+            child: Text(
+              "20% off for all products over BIRR 300",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColor.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+
+          /// 分割线
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+            color: AppColor.color08000,
+          ),
+
           /// 所有订单总价信息【Order Summary】
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 30),
+            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
             child: Text(
               S.of(context).order_summary,
               maxLines: 1,
@@ -169,6 +225,15 @@ class _OrderPreviewPageState
 
           /// 各订单总价
           buildOrderPriceList(),
+
+          /// 订单包装费总价
+          buildOrdersPackageTotal(),
+
+          /// 派送费
+          buildOrdersDeliveryTotal(),
+
+          ///
+          buildOrdersDiscountTotal(),
 
           /// 预览订单总价
           buildOrdersTotal(),
@@ -383,6 +448,76 @@ class _OrderPreviewPageState
     );
   }
 
+  /// Promo code 输入框
+  Widget buildPromoCodeField(BuildContext context) {
+    return Expanded(
+      child: Container(
+          height: 44,
+          padding: EdgeInsets.only(right: 76),
+          margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+          decoration: BoxDecoration(
+              color: AppColor.color08000,
+              border: Border.all(color: AppColor.color1A000, width: 1),
+              borderRadius: BorderRadius.circular(8)),
+          child: TextField(
+            decoration: InputDecoration(
+                border: OutlineInputBorder(borderSide: BorderSide.none),
+                contentPadding:
+                    EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+                counterText: "",
+                hintText: "Promo code",
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  color: AppColor.hint,
+                )),
+            maxLines: 1,
+            maxLength: 14,
+            keyboardType: TextInputType.phone,
+            cursorColor: AppColor.colorF7551D,
+            cursorWidth: 2,
+            cursorRadius: Radius.circular(2),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColor.black, fontSize: 16),
+            onChanged: (text) {
+              if (!TextHelper.isEqual(actuator.promoCode, text)) {
+                actuator.promoCode = text;
+              }
+            },
+            controller: TextEditingController.fromValue(TextEditingValue(
+                //判断 name 是否为空
+                text:
+                    '${this.actuator.promoCode == null ? "" : this.actuator.promoCode}',
+                // 保持光标在最后
+
+                selection: TextSelection.fromPosition(TextPosition(
+                    affinity: TextAffinity.downstream,
+                    offset: '${this.actuator.promoCode}'.length)))),
+          )),
+    );
+  }
+
+  /// Promo code apply
+  Widget buildApplyButton() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 44,
+        width: 100,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: AppColor.black, borderRadius: BorderRadius.circular(8)),
+        child: Text(
+          S.of(context).discover_filter_apply,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColor.white, fontSize: 14),
+        ),
+      ),
+      onTap: () {
+        notifyToasty("别点，会崩的");
+      },
+    );
+  }
+
   /**
    * 订单价格列表
    */
@@ -406,6 +541,118 @@ class _OrderPreviewPageState
   }
 
   /**
+   * 所有的订单包装费总价
+   */
+  Widget buildOrdersPackageTotal() {
+    /// 不同币种不计算订单总价
+    if (actuator.orderP.diffCurrency!) {
+      return Container();
+    }
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: 16, right: 16, top: 14),
+      child: Row(
+        children: [
+          Text(
+            "Packaging Total",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorBE,
+              fontSize: 14,
+            ),
+          ),
+          Expanded(
+              child: Text(
+            TextHelper.clean(actuator.orderP.formatTotal),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorBE,
+              fontSize: 14,
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  /**
+   * 所有的订单派送费总价
+   */
+  Widget buildOrdersDeliveryTotal() {
+    /// 不同币种不计算订单总价
+    if (actuator.orderP.diffCurrency!) {
+      return Container();
+    }
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: 16, right: 16, top: 14),
+      child: Row(
+        children: [
+          Text(
+            "Delivery Total",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorBE,
+              fontSize: 14,
+            ),
+          ),
+          Expanded(
+              child: Text(
+            TextHelper.clean(actuator.orderP.formatDeliveryTotal),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorBE,
+              fontSize: 14,
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  ///
+  Widget buildOrdersDiscountTotal() {
+    /// 不同币种不计算订单总价
+    if (actuator.orderP.diffCurrency!) {
+      return Container();
+    }
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: 16, right: 16, top: 14),
+      child: Row(
+        children: [
+          Text(
+            "Discount",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorF7551D,
+              fontSize: 14,
+            ),
+          ),
+          Expanded(
+              child: Text(
+            TextHelper.clean(actuator.orderP.formatDiscountTotal),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorF7551D,
+              fontSize: 14,
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  /**
    * 所有的订单总价
    */
   Widget buildOrdersTotal() {
@@ -423,9 +670,9 @@ class _OrderPreviewPageState
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: AppColor.colorBE,
-              fontSize: 14,
-            ),
+                color: AppColor.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
           Expanded(
               child: Text(
@@ -435,7 +682,7 @@ class _OrderPreviewPageState
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: AppColor.black,
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.bold),
           ))
         ],

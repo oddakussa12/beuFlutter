@@ -35,6 +35,7 @@ export 'src/architecture/react_actuator.dart';
 /// dialog
 export 'src/dialog/message_dialog.dart';
 export 'src/dialog/loading_dialog.dart';
+export 'src/dialog/login_dialog.dart';
 
 /// event
 export 'src/event/bus_client.dart';

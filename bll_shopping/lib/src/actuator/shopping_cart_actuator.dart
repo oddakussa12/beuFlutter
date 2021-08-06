@@ -70,7 +70,7 @@ class ShoppingCartActuator extends ReactActuator {
           currency = currency == "" ? shop.currency! : currency;
           shop.goods!.forEach((product) {
             cartProducts[product.id] = product;
-            total += product.price * product.goodsNumber!;
+            total += product.price! * product.goodsNumber!;
             productNumber += product.goodsNumber!;
             if (target != null && target.id == product.id) {
               target.goodsNumber = product.goodsNumber;

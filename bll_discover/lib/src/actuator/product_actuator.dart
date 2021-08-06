@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:discover/src/discover_config.dart';
+import 'package:discover/src/pages/special_discover_page.dart';
 
 /**
  * Products
@@ -10,10 +11,23 @@ import 'package:discover/src/discover_config.dart';
 class ProductsActuator extends RefreshActuator {
   /// 商品列表
   List<Product> products = [];
+  late RetrySpecialCallback? callback;
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  void tapRetry() {
+    // TODO: implement tapRetry
+    super.tapRetry();
+    if (callback != null) {
+      callback!.call();
+    }
+    if (products.isEmpty) {
+      pullDown();
+    }
   }
 
   @override
@@ -43,7 +57,8 @@ class ProductsActuator extends RefreshActuator {
         products.addAll(body.data);
       }
     }, complete: () {
-      emptyStatus = products.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
+      emptyStatus =
+          products.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
       notifySetState();
     });
   }

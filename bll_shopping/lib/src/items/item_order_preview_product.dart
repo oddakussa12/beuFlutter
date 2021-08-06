@@ -1,12 +1,11 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 
 /**
- * item_my_bag_product.dart
- * 购物车商品下商品项
+ * ItemOrderPreviewProductWidget
+ * 预览订单商品下商品项
  * @author: Ruoyegz
  * @date: 2021/7/2
  */
@@ -51,70 +50,57 @@ class _ItemOrderPreviewProductState
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          /// 购物车商品图片
-          buildCartProductImage(),
+          /// 订单商品图片
+          buildOrderProductImage(),
 
-          /// 购物车商品信息
-          buildCartProductInfo(),
+          /// 订单商品信息
+          buildOrderProductInfo(),
 
-          /// 购物车商品数量
-          buildProductNumber()
+          /// 订单商品数量
+          buildOrderProductNumber()
         ],
       ),
     );
   }
 
   /**
-   * 购物车商品选择
+   * 订单商品图片
    */
-  Widget buildCartProductCheck() {
-    return Container(
-      width: 20,
-      height: 60,
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 10, right: 10),
-      child: Checkbox(
-          value: product.isChecked,
-          activeColor: AppColor.colorF7551D,
-          onChanged: (checked) {
-            product.isChecked = checked;
-            if (checked! && !shop.isChecked!) {
-              shop.isChecked = checked;
-            }
-            if (provider != null) {
-              provider.checkShopProduct(shop, product);
-            }
-          }),
-    );
-  }
-
-  /**
-   * 购物车商品图片
-   */
-  Widget buildCartProductImage() {
+  Widget buildOrderProductImage() {
     return Container(
       margin: EdgeInsets.only(left: 8, top: 4),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: FadeInImage.assetNetwork(
-          height: 60,
-          width: 60,
-          fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 100),
-          placeholder: "packages/resources/res/images/def_cover_1_1.png",
-          image: product.productImage(),
-          imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset("res/images/def_cover_1_1.png", package: "resources",);
-          },
-        ),
-      ),
+          borderRadius: BorderRadius.circular(16),
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(milliseconds: 100),
+            imageUrl: TextHelper.clean(product.productImage()),
+            placeholder: (context, url) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 64,
+              width: 64,
+              gaplessPlayback: true,
+            ),
+            errorWidget: (context, url, error) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 64,
+              width: 64,
+              gaplessPlayback: true,
+            ),
+            height: 64,
+            width: 64,
+            fit: BoxFit.cover,
+          )),
     );
   }
 
   /**
-   * 购物车商品信息
+   * 商品信息
    */
-  Widget buildCartProductInfo() {
+  Widget buildOrderProductInfo() {
     return Expanded(
         child: Container(
       height: 60,
@@ -132,6 +118,8 @@ class _ItemOrderPreviewProductState
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
               )),
+
+          /// 原价
           Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               alignment: Alignment.topLeft,
@@ -139,14 +127,30 @@ class _ItemOrderPreviewProductState
                 TextHelper.clean(product.formatPrice),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColor.colorBE, fontSize: 16),
-              ))
+                style: TextStyle(
+                    color: AppColor.colorBE,
+                    fontSize: 16,
+                    decorationThickness: 2,
+                    decoration: product.specPrice != null && product.specPrice! > 0 ? TextDecoration.lineThrough : TextDecoration.none,
+                    decorationStyle: TextDecorationStyle.solid),
+              )),
+          product.specPrice != null && product.specPrice! > 0
+              ? Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "${ValueFormat.formatDouble(product.specPrice)}${product.currency}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: AppColor.colorBE, fontSize: 16),
+                  ))
+              : Container()
         ],
       ),
     ));
   }
 
-  Widget buildProductNumber() {
+  Widget buildOrderProductNumber() {
     return Container(
         height: 24,
         width: 30,
@@ -160,83 +164,5 @@ class _ItemOrderPreviewProductState
           style: TextStyle(
               color: AppColor.black, fontSize: 14, fontWeight: FontWeight.bold),
         ));
-  }
-
-  /**
-   * 购物车商品加减操作
-   */
-  Container buildProductOptions() {
-    return Container(
-      alignment: Alignment.bottomRight,
-      child: Row(
-        children: [
-          Container(
-            width: 24,
-            height: 24,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
-            ),
-            child: IconButton(
-                onPressed: () {
-                  if (provider != null) {
-                    provider.minusProduct(product, shop);
-                  }
-                },
-                icon: Image.asset(
-                  "res/icons/ic_option_minus.png",
-                  package: "resources",
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.cover,
-                )),
-          ),
-          Container(
-              height: 24,
-              width: 27,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(4),
-              margin: EdgeInsets.only(left: 1, right: 1),
-              decoration: BoxDecoration(
-                color: AppColor.white,
-              ),
-              child: Text(
-                "${product.goodsNumber}",
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColor.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
-              )),
-          Container(
-              width: 24,
-              height: 24,
-              margin: EdgeInsets.only(right: 8),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColor.white,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomRight: Radius.circular(8)),
-              ),
-              child: IconButton(
-                  onPressed: () {
-                    if (provider != null) {
-                      provider.addProduct(product, shop);
-                    }
-                  },
-                  icon: Image.asset(
-                    "res/icons/ic_option_add.png",
-                    package: "resources",
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.fill,
-                  )))
-        ],
-      ),
-    );
   }
 }

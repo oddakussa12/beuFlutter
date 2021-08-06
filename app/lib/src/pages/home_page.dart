@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage>
 
   /// tabs 对应的页面列表
   List<Widget> pageWidgets = [
-    DiscoverPage(key: PageStorageKey<String>("DiscoverPage")),
+    SpecialDiscoverPage(key: PageStorageKey<String>("DiscoverPage")),
     ShoppingMyBagPage(
       key: PageStorageKey<String>("ShoppingMyBagPage"),
     ),
@@ -82,22 +82,20 @@ class _HomePageState extends State<HomePage>
 
     return Scaffold(
       backgroundColor: AppColor.white,
-      body: SafeArea(
-        child: PageView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            itemCount: pageWidgets.length,
-            onPageChanged: (index) {
-              if (pageIndex != index) {
-                setState(() {
-                  pageIndex = index;
-                });
-              }
-            },
-            itemBuilder: (context, index) {
-              return pageWidgets[index];
-            }),
-      ),
+      body: PageView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          itemCount: pageWidgets.length,
+          onPageChanged: (index) {
+            if (pageIndex != index) {
+              setState(() {
+                pageIndex = index;
+              });
+            }
+          },
+          itemBuilder: (context, index) {
+            return pageWidgets[index];
+          }),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
