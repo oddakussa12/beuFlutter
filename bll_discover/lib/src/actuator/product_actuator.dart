@@ -44,7 +44,7 @@ class ProductsActuator extends RefreshActuator {
     loadProducts(page, type);
   }
 
-  void loadProducts(int page, PullType type) async {
+  loadProducts(int page, PullType type) async {
     String url =
         DiscoverUrl.discoveryShops + "?page=${page}&type=product&order=rated";
     DioClient().get(url, (response) => ProductList.fromJson(response.data),
@@ -57,6 +57,7 @@ class ProductsActuator extends RefreshActuator {
         products.addAll(body.data);
       }
     }, complete: () {
+      refreshCompleted(type);
       emptyStatus =
           products.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
       notifySetState();

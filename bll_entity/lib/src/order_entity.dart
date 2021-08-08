@@ -1,8 +1,69 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:origin/origin.dart';
 
 import '../entity.dart';
 
 part 'order_entity.g.dart';
+
+/**
+ * RespPromoBody
+ * 打折码
+ * @author: Ruoyegz
+ * @date: 2021/8/7
+ */
+@JsonSerializable()
+class RespPromoBody {
+  RespPromoCode? data;
+
+  RespPromoBody({this.data});
+
+  factory RespPromoBody.fromJson(Map<String, dynamic> json) => _$RespPromoBodyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RespPromoBodyToJson(this);
+}
+
+/**
+ * RespPromoCode
+ * 打折码
+ * @author: Ruoyegz
+ * @date: 2021/8/7
+ */
+@JsonSerializable()
+class RespPromoCode {
+  @JsonKey(name: "promo_code")
+  String? promoCode;
+
+  @JsonKey(name: "free_delivery")
+  bool? freeDelivery;
+
+  @JsonKey(name: "discount_type")
+  String? discountType;
+
+  @JsonKey(name: "percentage")
+  double? percentAge;
+
+  String? deadline;
+  String? description;
+
+  double? reduction;
+  double? limit;
+
+
+  RespPromoCode(
+      this.promoCode,
+      this.freeDelivery,
+      this.discountType,
+      this.percentAge,
+      this.deadline,
+      this.description,
+      this.reduction,
+      this.limit);
+
+  factory RespPromoCode.fromJson(Map<String, dynamic> json) =>
+      _$RespPromoCodeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RespPromoCodeToJson(this);
+}
 
 /**
  * order_entity.dart
@@ -12,6 +73,13 @@ part 'order_entity.g.dart';
  */
 @JsonSerializable()
 class PreviewOrdersBody {
+  /// 状态码：200：显示 message
+  /// 0：显示错误消息
+  int? code;
+
+  /// promo code 显示消息
+  String? message;
+
   List<PreOrder> data;
 
   /**
@@ -95,46 +163,40 @@ class PreOrder {
   double? subTotal;
 
   @JsonKey(name: "deliveryCoast")
-  double? coast;
+  double? deliveryCoast;
+
+  String? formatDeliveryCoast = "";
 
   String? currency;
 
-  @JsonKey(ignore: true)
   String? formatSubTotal = "";
 
-  @JsonKey(ignore: true)
-  String? formatCoast = "";
-
-  @JsonKey(ignore: true)
   double? total = 0;
 
-  @JsonKey(ignore: true)
   String? formatTotal = "";
 
   /// 1.1.0：订单商品包装费
   @JsonKey(name: "packagingCost")
   double? packageFee;
 
-  @JsonKey(ignore: true)
   String? formatPackageFee = "";
 
   /// 1.1.0：新增
   @JsonKey(name: "subDiscountedTotal")
   double? subDisTotal;
 
-  @JsonKey(ignore: true)
-  String? formatSubDisTotal = "";
+  String? formatSubDisTotal;
 
   PreOrder(
       {this.shop,
       this.goods,
       this.subTotal = 0.0,
-      this.coast = 0.0,
+      this.deliveryCoast = 0.0,
       this.packageFee,
       this.currency = "",
       this.formatSubTotal = "",
       this.formatPackageFee = "",
-      this.formatCoast = "",
+      this.formatDeliveryCoast = "",
       this.subDisTotal = 0.0,
       this.formatSubDisTotal = "",
       this.total = 0.0,

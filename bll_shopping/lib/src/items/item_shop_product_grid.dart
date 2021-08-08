@@ -42,7 +42,7 @@ class _ItemShopProductGridWidgetState extends State<ItemShopProductGridWidget> {
       child: Container(
         alignment: Alignment.topCenter,
         decoration: BoxDecoration(
-            color: AppColor.colorFB, borderRadius: BorderRadius.circular(16)),
+            color: AppColor.white, borderRadius: BorderRadius.circular(16)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +89,8 @@ class _ItemShopProductGridWidgetState extends State<ItemShopProductGridWidget> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(product.image![0].url),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_cover_1_1.png",
@@ -153,7 +154,8 @@ class _ItemShopProductGridWidgetState extends State<ItemShopProductGridWidget> {
         textAlign: TextAlign.left,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColor.hint, fontSize: 14),
+        style: TextStyle(
+            color: AppColor.hint, fontSize: 14, fontWeight: FontWeight.bold),
       ),
     ));
   }
@@ -211,7 +213,8 @@ class _ItemShopProductGridWidgetState extends State<ItemShopProductGridWidget> {
         textAlign: TextAlign.left,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColor.h1, fontSize: 16),
+        style: TextStyle(
+            color: AppColor.h1, fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }

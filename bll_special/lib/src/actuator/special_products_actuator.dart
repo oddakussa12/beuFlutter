@@ -36,7 +36,7 @@ class SpecialProductsActuator extends RefreshActuator {
     loadSpecialProducts(page, type);
   }
 
-  void loadSpecialProducts(int page, PullType type) async {
+  loadSpecialProducts(int page, PullType type) async {
     if (products.isEmpty) {
       changeStatusForLoading();
     }
@@ -54,6 +54,7 @@ class SpecialProductsActuator extends RefreshActuator {
     }, complete: () {
       emptyStatus =
           products.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
+      refreshCompleted(type);
       notifySetState();
     });
   }

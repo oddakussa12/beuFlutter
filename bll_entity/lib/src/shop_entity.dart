@@ -287,6 +287,8 @@ class Shop {
 
   bool? likeState;
 
+  bool? followState;
+
   double? rank;
 
   double? score;
@@ -321,7 +323,9 @@ class Shop {
       this.shop,
       this.answer,
       this.activation,
+      this.isFriend = false,
       this.delivery = false,
+      this.followState,
       this.userPoint,
       this.currency,
       this.coast,
@@ -338,6 +342,7 @@ class Shop {
         name: shop.name,
         country: shop.country,
         bg: shop.bg == null ? "" : shop.bg,
+        isFriend: false,
         delivery: shop.delivery,
         currency: shop.currency,
         avatarLink: shop.avatarLink,

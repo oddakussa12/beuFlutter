@@ -23,15 +23,8 @@ class UserCentrePage extends StatefulWidget {
 
 class UserCentreState
     extends RefreshableState<UserCentreActuator, UserCentrePage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   UserCentreState(UserCentreActuator actuator) : super(actuator);
-
-  /// 退出登录
-  void logout() async {
-    Navigator.push(context,
-        PageTransition(type: TransitionType.rightToLeft, child: LoginPage()));
-    UserManager().logout();
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -39,6 +32,7 @@ class UserCentreState
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     LogDog.w("UserCentrePage, build");
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -161,7 +155,8 @@ class UserCentreState
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(actuator.user.bg),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_cover_8_5.png",
@@ -195,12 +190,14 @@ class UserCentreState
         height: 105,
         width: 105,
         decoration: BoxDecoration(
+            color: AppColor.colorEF,
             border: Border.all(color: Colors.white, width: 3.82),
             borderRadius: BorderRadius.circular(105)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(105),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(actuator.user.avatarLink),
             placeholder: (context, url) => Image.asset(
               "res/images/def_avatar.png",

@@ -1,4 +1,5 @@
 import 'package:centre/src/actuator/user_update_actuator.dart';
+import 'package:centre/src/actuator/x_user_update_actuator.dart';
 import 'package:centre/src/dialog/photo_select_dialog.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,17 @@ class _UserUpdateState
       actuator.pickAvatarFromAlbum();
     } else {
       actuator.pickAvatarFromCamera();
+    }
+  }
+
+  void prepareUpdateUser() {
+    if (actuator != null) {
+      FocusScope.of(context).requestFocus(FocusNode());
+      actuator.tabUpdate(start: () {
+        LoadingDialog.show(context);
+      }, end: () {
+        Navigator.of(context).pop();
+      });
     }
   }
 
@@ -164,7 +176,8 @@ class _UserUpdateState
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
-              fadeInDuration: const Duration(milliseconds: 100),
+              fadeInDuration: const Duration(milliseconds: 50),
+              fadeOutDuration: const Duration(milliseconds: 50),
               imageUrl: TextHelper.clean(actuator.user.bg),
               placeholder: (context, url) => Image.asset(
                   "res/images/def_cover_8_5.png",
@@ -247,33 +260,40 @@ class _UserUpdateState
           height: 40,
           width: 40,
           decoration: BoxDecoration(
+              color: AppColor.colorEF,
               border: Border.all(color: Colors.white, width: 2),
               borderRadius: BorderRadius.circular(40)),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(40),
-            child: FadeInImage.assetNetwork(
-              fadeInDuration: const Duration(milliseconds: 100),
-              placeholder: "packages/resources/res/images/def_avatar.png",
-              imageErrorBuilder: (context, error, stackTrace) => Container(
-                height: 40,
-                color: AppColor.color0D000,
-                alignment: Alignment.center,
-                width: 40,
-                child: Image.asset(
-                  "res/icons/ic_gray_camera.png",
-                  package: 'resources',
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
-                  height: 12,
-                  width: 14,
+              borderRadius: BorderRadius.circular(40),
+              child: CachedNetworkImage(
+                fadeInDuration: const Duration(milliseconds: 50),
+                fadeOutDuration: const Duration(milliseconds: 50),
+                imageUrl: TextHelper.clean(actuator.user.avatarLink),
+                placeholder: (context, url) => Image.asset(
+                    "res/images/def_cover_8_5.png",
+                    package: 'resources',
+                    fit: BoxFit.cover,
+                    height: 40,
+                    gaplessPlayback: true,
+                    width: MediaQuery.of(context).size.width),
+                errorWidget: (context, url, error) => Container(
+                  height: 40,
+                  color: AppColor.color0D000,
+                  alignment: Alignment.center,
+                  width: 40,
+                  child: Image.asset(
+                    "res/icons/ic_gray_camera.png",
+                    package: 'resources',
+                    fit: BoxFit.cover,
+                    gaplessPlayback: true,
+                    height: 12,
+                    width: 14,
+                  ),
                 ),
-              ),
-              image: TextHelper.clean(actuator.user.avatarLink),
-              fit: BoxFit.cover,
-              height: 40,
-              width: 40,
-            ),
-          ),
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover,
+              )),
         ),
         onTap: () {
           PhotoSelectDialog.showDialog(context,
@@ -429,12 +449,12 @@ class _UserUpdateState
         color: AppColor.white,
         boxShadow: [
           BoxShadow(
-              color: AppColor.bg,
+              color: AppColor.colorBE,
               offset: Offset(2.0, 2.0),
               blurRadius: 5.0,
               spreadRadius: 0.6),
-          BoxShadow(color: AppColor.bg, offset: Offset(1.0, 1.0)),
-          BoxShadow(color: AppColor.bg)
+          BoxShadow(color: AppColor.colorBE, offset: Offset(1.0, 1.0)),
+          BoxShadow(color: AppColor.colorBE)
         ],
       ),
       child: GestureDetector(
@@ -457,9 +477,7 @@ class _UserUpdateState
                   fontWeight: FontWeight.bold)),
         ),
         onTap: () {
-          if (actuator != null) {
-            actuator.tabUpdate();
-          }
+          prepareUpdateUser();
         },
       ),
     );

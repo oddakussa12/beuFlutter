@@ -27,19 +27,19 @@ class LogDog {
   );
 
   static void d(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (Constants.isDebug || Constants.isDevelop) {
+    if (Constants.isDebug) {
       _logger.d(message, error, stackTrace);
     }
   }
 
   static void i(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (Constants.isDebug || Constants.isDevelop) {
+    if (Constants.isDebug) {
       _logger.i(message, error, stackTrace);
     }
   }
 
   static void w(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (Constants.isDebug || Constants.isDevelop) {
+    if (Constants.isDebug) {
       _logger.w(message, error, stackTrace);
     }
   }

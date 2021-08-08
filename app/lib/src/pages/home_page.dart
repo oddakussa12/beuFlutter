@@ -28,15 +28,15 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   int pageIndex = 0;
 
-  late PageController _pageController = PageController(keepPage: true);
+  PageController _pageController = PageController(keepPage: true);
 
   /// tabs 对应的页面列表
   List<Widget> pageWidgets = [
-    SpecialDiscoverPage(key: PageStorageKey<String>("DiscoverPage")),
+    /*SpecialDiscoverPage(key: PageStorageKey<String>("DiscoverPage")),
     ShoppingMyBagPage(
       key: PageStorageKey<String>("ShoppingMyBagPage"),
     ),
-    UserCentrePage(key: PageStorageKey<String>("UserCentrePage"))
+    UserCentrePage(key: PageStorageKey<String>("UserCentrePage"))*/
   ];
 
   @override
@@ -73,6 +73,19 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (pageWidgets.isEmpty) {
+      pageWidgets.add(
+          SpecialDiscoverPage(key: PageStorageKey<String>("DiscoverPage")));
+      pageWidgets.add(
+          ShoppingMyBagPage(key: PageStorageKey<String>("ShoppingMyBagPage")));
+      pageWidgets
+          .add(UserCentrePage(key: PageStorageKey<String>("UserCentrePage")));
+    }
+  }
+
+  @override
   bool get wantKeepAlive => true;
 
   @override
@@ -104,7 +117,7 @@ class _HomePageState extends State<HomePage>
     LogDog.d("Home-bottomNavigator");
 
     return BottomNavigationBar(
-      elevation: 8,
+      elevation: 5,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       backgroundColor: AppColor.white,

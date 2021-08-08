@@ -3,7 +3,6 @@ import 'package:common/src/architecture/react_actuator.dart';
 import 'package:flutter/material.dart';
 
 import '../architecture/architecture.dart';
-import '../architecture/retry_actuator.dart';
 
 /**
  * retryable state
@@ -17,9 +16,19 @@ abstract class ReactableState<A extends ReactActuator, T extends StatefulWidget>
   ReactableState(this.actuator);
 
   @override
+  void initState() {
+    super.initState();
+    LogDog.w(this.runtimeType.toString() + ", initState");
+
+    actuator.attachViewer(this);
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    actuator.attach(context, this);
+    LogDog.w(this.runtimeType.toString() + ", didChangeDependencies");
+
+    actuator.attachContext(context);
   }
 
   @override

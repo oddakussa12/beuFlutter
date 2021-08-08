@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 
 /**
  * platform_support.dart
@@ -7,8 +8,7 @@ import 'package:flutter/foundation.dart';
  * @date: 2021/7/19
  */
 class PlatformSupport {
-
-  static bool web(){
+  static bool web() {
     return false;
     // return !ios() && !android();
   }
@@ -18,7 +18,6 @@ class PlatformSupport {
   }
 
   static bool android() {
-
     return defaultTargetPlatform == TargetPlatform.android;
   }
 
@@ -36,5 +35,10 @@ class PlatformSupport {
 
   static bool fuchsia() {
     return defaultTargetPlatform.index == TargetPlatform.fuchsia;
+  }
+
+  static Future<String> deviceId() async {
+    String? deviceId = await PlatformDeviceId.getDeviceId;
+    return deviceId ?? "";
   }
 }

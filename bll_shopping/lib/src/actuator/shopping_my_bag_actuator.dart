@@ -1,6 +1,5 @@
 import 'package:common/common.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/shopping_cart_actuator.dart';
 import 'package:shopping/src/shopping_config.dart';
 
@@ -21,8 +20,8 @@ class ShoppingMyBagActuator extends RefreshActuator {
   final ShoppingCart shopCart = ShoppingCart.create();
 
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
 
     /// 事件总线监听购物车变化
     appendSubscribe(
@@ -66,10 +65,6 @@ class ShoppingMyBagActuator extends RefreshActuator {
         .subscribe<ShoppingCartUpdateEvent>((event) => loadMyShopCart()));
   }
 
-  void updateMyShoppingCart() {
-    loadMyShopCart();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -92,7 +87,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
   void onLoadMoreSource(int page, PullType type) {}
 
   bool isNoneShoppingCart() {
-    return shopCart == null || shopCart.data == null || shopCart.data.isEmpty;
+    return shopCart.data == null || shopCart.data.isEmpty;
   }
 
   //// 退出登录后清理购物车
@@ -133,17 +128,22 @@ class ShoppingMyBagActuator extends RefreshActuator {
   /**
    * 加载我的购物车
    */
-  void loadMyShopCart() async {
+  loadMyShopCart() async {
     if (isNoneShoppingCart()) {
       changeStatusForLoading();
     }
+
     DioClient().get(ShoppingUrl.optionCart,
         (response) => ShoppingCart.fromJson(response.data),
         success: (ShoppingCart body) {
       if (body != null) {
         shopCart.data = body.data;
       }
+    }, fail: (message, error) {
+      LogDog.w("loadMyShopCart, error: ${message}");
     }, complete: () {
+      refreshCompleted(PullType.Both);
+
       /// 计算购物车金额
       _processShoppingCartInfo();
     });
@@ -197,18 +197,20 @@ class ShoppingMyBagActuator extends RefreshActuator {
       "type": "update"
     });
 
+    bool needSetState = true;
     DioClient().post(ShoppingUrl.optionCart,
         (response) => ShoppingCart.fromJson(response.data), body: requestBody,
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车
         processCartUpdateSuccessResult(body, shop, product);
-        LogDog.d("appendProduct: ${shopCart}");
+        needSetState = false;
       } else {
         processCartUpdateFailureResult(isAppend, shop, product);
       }
     }, fail: (message, error) {
       processCartUpdateFailureResult(isAppend, shop, product);
+      notifyToasty(message);
     }, complete: () {
       notifySetState();
     });
@@ -265,7 +267,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
   /**
    * 计算购物车金额
    */
-  void _processShoppingCartInfo() {
+  void _processShoppingCartInfo() async {
     if (shopCart.data == null || shopCart.data.isEmpty) {
       shopCart.formatTotal = "";
       shopCart.currency = "";
@@ -306,12 +308,12 @@ class ShoppingMyBagActuator extends RefreshActuator {
         }
       }
     }
-
     if (isNoneShoppingCart()) {
       emptyStatus = EmptyStatus.Empty;
     } else {
       emptyStatus = EmptyStatus.Normal;
     }
+
     notifySetState();
   }
 

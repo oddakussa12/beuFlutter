@@ -65,9 +65,14 @@ class DeliveryCoast {
   Coordinate? start;
   Coordinate? end;
 
+  @JsonKey(name: "shop_id")
   String? shopId;
+
   double? distance;
+
+  @JsonKey(name: "delivery_cost")
   double? deliveryCost;
+
   String? currency;
 
   DeliveryCoast(

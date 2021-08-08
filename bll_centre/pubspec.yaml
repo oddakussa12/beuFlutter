@@ -29,8 +29,11 @@ dependencies:
     path: ../common/
 
   # image_picker:
-  image_picker:
-    path: ../libs_image_picker/
+  # image_picker:
+    # path: ../libs_image_picker/
+
+  picker:
+    path: ../picker/
 
 
   # The following adds the Cupertino Icons font to your application.

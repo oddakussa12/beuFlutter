@@ -27,27 +27,32 @@ class RefreshProvider {
    * 刷新数据源
    */
   void refreshSource() async {
-    LogDog.i("RefreshProvider, refreshSource: ${page} : ${pullType}");
-
     page = 1;
     pullType = PullType.Down;
+
+    LogDog.i("RefreshProvider, refreshSource: ${page} : ${pullType}");
+
     refreshable.onRefreshSource(page, pullType);
-    if (refreshComplete != null) {
-      refreshComplete.call(pullType);
-    }
   }
 
   /**
    * 加载数据源
    */
   void loadMoreSource() async {
-    LogDog.i("RefreshProvider, loadMoreSource: ${page} : ${pullType}");
-
     page++;
     pullType = PullType.Up;
-    refreshable.onLoadMoreSource(page, pullType);
+
+    LogDog.i("RefreshProvider, loadMoreSource: ${page} : ${pullType}");
+
+    await refreshable.onLoadMoreSource(page, pullType);
+  }
+
+  /**
+   * 刷新完成，通知更新 UI
+   */
+  void refreshCompleted(PullType type) {
     if (refreshComplete != null) {
-      refreshComplete.call(pullType);
+      refreshComplete.call(type);
     }
   }
 }

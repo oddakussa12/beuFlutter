@@ -1,4 +1,3 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
@@ -34,59 +33,59 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
 
     LogDog.d("ItemShopGrid-shop: ${widget.shop.id}");
     return Container(
-        alignment: Alignment.topCenter,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                /// 商铺背景
-                buildShopBackgroundByCache(widget.shop, context),
+      alignment: Alignment.topCenter,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              /// 商铺背景
+              buildShopBackgroundByCache(widget.shop, context),
 
-                /// 派送图标
-                buildDeliveryIcon(widget.shop.mayDelivery()),
+              /// 派送图标
+              buildDeliveryIcon(widget.shop.mayDelivery()),
 
-                /// 商铺头像
-                buildShopAvatar(widget.shop)
-              ],
+              /// 商铺头像
+              buildShopAvatar(widget.shop)
+            ],
+          ),
+
+          /// 商铺标题
+          Container(
+            margin: EdgeInsets.only(top: 5),
+            child: Text(
+              TextHelper.clean(widget.shop.nickName),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColor.h1,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
+          ),
 
-            /// 商铺标题
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              child: Text(
-                TextHelper.clean(widget.shop.nickName),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: AppColor.h1,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
+          /// 商铺评分
+          buildShopStars(widget.shop),
+
+          /// 商铺地址
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+            child: Text(
+              TextHelper.clean(widget.shop.address),
+              textAlign: TextAlign.center,
+              maxLines: PlatformSupport.ios() ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColor.color80000, fontSize: 12),
             ),
-
-            /// 商铺评分
-            buildShopStars(widget.shop),
-
-            /// 商铺地址
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-              child: Text(
-                TextHelper.clean(widget.shop.address),
-                textAlign: TextAlign.center,
-                maxLines: PlatformSupport.ios() ? 2 : 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColor.color80000, fontSize: 12),
-              ),
-            )
-          ],
-        ),
-      );
+          )
+        ],
+      ),
+    );
   }
 
   Container buildDeliveryIcon(bool ableDelivery) {
@@ -113,7 +112,8 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(shop.bg),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_cover_8_5.png",
@@ -138,33 +138,6 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
   }
 
   /**
-   * 构建商铺背景
-   */
-  Container buildShopBackground(Shop shop, BuildContext context) {
-    return Container(
-        alignment: Alignment.topCenter,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: FadeInImage.assetNetwork(
-            fadeInDuration: const Duration(milliseconds: 100),
-            placeholder: "packages/resources/res/images/def_cover_8_5.png",
-            imageErrorBuilder: (context, error, stackTrace) {
-              return Image.asset("res/images/def_cover_8_5.png",
-                  package: 'resources',
-                  fit: BoxFit.cover,
-                  height: 100,
-                  gaplessPlayback: true,
-                  width: MediaQuery.of(context).size.width);
-            },
-            image: TextHelper.clean(shop.bg),
-            height: 100,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-        ));
-  }
-
-  /**
    * 构建商铺头像
    */
   Container buildShopAvatar(Shop shop) {
@@ -180,10 +153,12 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(64),
           child: FadeInImage.assetNetwork(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             placeholder: "packages/resources/res/images/def_avatar.png",
             imageErrorBuilder: (context, error, stackTrace) {
-              return Image.asset("res/images/def_avatar.png", package: 'resources');
+              return Image.asset("res/images/def_avatar.png",
+                  package: 'resources');
             },
             image: TextHelper.clean(shop.avatarLink),
             height: 64,

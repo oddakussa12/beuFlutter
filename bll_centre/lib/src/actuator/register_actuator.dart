@@ -23,8 +23,8 @@ typedef NextStepCallback = void Function();
  */
 class RegisterStepOneActuator extends ReactActuator {
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
 
     /// 注册成功事件【关闭页面】
     appendSubscribe(BusClient().subscribe<SignUpEvent>((event) {
@@ -61,8 +61,8 @@ class RegisterStepOneActuator extends ReactActuator {
  */
 class RegisterStepTwoActuator extends ReactActuator {
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
 
     /// 注册成功事件【关闭页面】
     appendSubscribe(BusClient().subscribe<SignUpEvent>((event) {
@@ -125,7 +125,7 @@ class RegisterStepThreeActuator extends ReactActuator {
       "registration_type": "user",
     });
     DioClient().post(
-        CentreUrl.signIn, (response) => UserToken.fromJson(response.data),
+        CentreUrl.signUp, (response) => UserToken.fromJson(response.data),
         body: requestBody, success: (UserToken body) {
       if (body != null && TextHelper.isNotEmpty(body.token)) {
         UserManager().saveToken(body);

@@ -47,6 +47,7 @@ class AppStatelessWidget extends StatelessWidget {
         child: MaterialApp(
             title: title,
             color: AppColor.white,
+
             /// 不显示右上角 Debug
             debugShowCheckedModeBanner: false,
             //routes: routes ?? {},
@@ -58,7 +59,7 @@ class AppStatelessWidget extends StatelessWidget {
             ),
 
             /// 全局字体配置
-            builder: transitionBuilder ??
+            /*builder: transitionBuilder ??
                 (context, widget) {
                   return MediaQuery(
                     // 设置文字大小不随系统设置改变
@@ -66,7 +67,7 @@ class AppStatelessWidget extends StatelessWidget {
                         textScaleFactor: PlatformSupport.ios() ? 1.0 : 1.0),
                     child: widget!,
                   );
-                },
+                },*/
             locale: locale,
 
             /// 获取当前设备的语种
@@ -129,6 +130,7 @@ class AppStatelessWidget extends StatelessWidget {
   }
 
   void initPackage() async {
+    Constants.deviceId = await PlatformSupport.deviceId();
     PackageInfo info = await PackageInfo.fromPlatform();
     Constants.appVersion = info.version;
   }

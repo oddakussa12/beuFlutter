@@ -67,6 +67,8 @@ export 'src/widget/empty/classics_empty_widget.dart';
 export 'src/widget/empty/classics_loading_indicator.dart';
 export 'src/widget/empty/classics_loading_widget.dart';
 export 'src/widget/empty/empty_widget.dart';
+export 'src/widget/progress_bar_button.dart';
+export 'src/widget/progress_bar_icon.dart';
 
 /// toolbar
 export 'src/widget/appbar/app_bar.dart';

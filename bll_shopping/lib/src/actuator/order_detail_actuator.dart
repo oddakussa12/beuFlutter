@@ -38,9 +38,9 @@ class OrderDetailActuator extends RetryActuator {
 
         /// 计算订单价格
         order.currency = TextHelper.clean(order.currency);
-        order.formatCoast =
-            "${ValueFormat.formatDouble(order.coast)} ${order.currency}";
-        order.total = order.price + order.coast;
+        order.formatDeliveryCoast =
+            "${ValueFormat.formatDouble(order.deliveryCoast)} ${order.currency}";
+        order.total = order.price + order.deliveryCoast;
         order.formatTotal =
             "${ValueFormat.formatDouble(order.total)} ${order.currency}";
       }

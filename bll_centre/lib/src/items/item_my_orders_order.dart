@@ -26,30 +26,16 @@ class ItemMyOrdersOrderWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ItemMyOrdersOrderState createState() =>
-      _ItemMyOrdersOrderState(orderNumber, shop, order);
+  _ItemMyOrdersOrderState createState() => _ItemMyOrdersOrderState();
 }
 
 class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
-  final Shop shop;
-
-  /// 订单序号
-  final int orderNumber;
-  final Order order;
-
-  _ItemMyOrdersOrderState(this.orderNumber, this.shop, this.order);
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   /**
    * 打开商铺详情
    */
   void clickOpenShopDetail(BuildContext context, Shop target) {
-    Navigator.pushNamed(context, Routes.shopping.ShopDetail, arguments: shop);
+    Navigator.pushNamed(context, Routes.shopping.ShopDetail,
+        arguments: widget.shop);
   }
 
   @override
@@ -95,7 +81,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(shop.name),
+                TextHelper.clean(widget.shop.name),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -110,23 +96,23 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.only(right: 4),
               child: Text(
-                order.status == 0
+                widget.order.status == 0
                     ? S.of(context).shopcart_progress
-                    : order.status == 1
+                    : widget.order.status == 1
                         ? S.of(context).shopcart_completed
                         : S.of(context).shopcart_canceled,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   /// 已取消时显示下划线
-                  decoration: order.status == 2
+                  decoration: widget.order.status == 2
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
 
                   /// 0:进行中,1:已完成;2:已取消
-                  color: order.status == 0
+                  color: widget.order.status == 0
                       ? AppColor.colorF7551D
-                      : order.status == 1
+                      : widget.order.status == 1
                           ? AppColor.color14B82F
                           : AppColor.colorBE,
                   fontSize: 14,
@@ -136,9 +122,9 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
           ],
         ),
         onTap: () {
-          if (shop != null) {
+          if (widget.shop != null) {
             /// 打开商铺详情
-            clickOpenShopDetail(context, shop);
+            clickOpenShopDetail(context, widget.shop);
           }
         },
       ),
@@ -148,28 +134,26 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
   /**
    * 购物车中商品列表
    */
-  ListView buildShopProducts() {
-    if (shop.isChecked == null) {
-      shop.isChecked = false;
+  Widget buildShopProducts() {
+    if (widget.shop.isChecked == null) {
+      widget.shop.isChecked = false;
     }
     return ListView.builder(
-
-        /// 禁用滑动事件
-        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: order.goods!.isEmpty ? 0 : order.goods!.length,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.order.goods!.isEmpty ? 0 : widget.order.goods!.length,
         itemBuilder: (context, index) {
-          var product = order.goods![index];
+          var product = widget.order.goods![index];
           return GestureDetector(
               behavior: HitTestBehavior.opaque,
               child: ItemMyOrdersProductWidget(
-                key: Key(
-                    "${shop.id}-${product.id}-${DateTime.now().microsecond}"),
-                shop: shop,
+                key: Key("${widget.shop.id}-${product.id}"),
+                shop: widget.shop,
                 product: product,
               ),
               onTap: () {
-                Navigator.pushNamed(context, Routes.shopping.OrderDetail, arguments: order.id);
+                Navigator.pushNamed(context, Routes.shopping.OrderDetail,
+                    arguments: widget.order.id);
               });
         });
   }

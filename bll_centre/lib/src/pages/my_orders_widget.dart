@@ -33,6 +33,7 @@ class MyOrdersWidgetState
   void initState() {
     super.initState();
     if (widget.orderController != null) {
+      refreshComplete = widget.orderController.refreshComplete;
       widget.orderController.initState(this);
     }
   }
@@ -40,7 +41,7 @@ class MyOrdersWidgetState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    actuator.pullDown();
+    actuator.toRetry();
   }
 
   @override
@@ -48,30 +49,27 @@ class MyOrdersWidgetState
 
   @override
   Widget build(BuildContext context) {
-    if (actuator.myOrders == null || actuator.myOrders.isEmpty) {
-      return buildEmptyWidget(
-        context,
-        message: S.of(context).alltip_nodata,
-      );
-    }
+    super.build(context);
 
-    return Container(
-      child: ListView.builder(
-          padding: EdgeInsets.only(top: 16, bottom: 16),
-          shrinkWrap: true,
-          itemCount: actuator.myOrders.length,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            var order = actuator.myOrders[index];
-            return Container(
-              child: ItemMyOrdersOrderWidget(
-                key: Key("${order.id}-${DateTime.now().microsecond}"),
+    return actuator.myOrders.isEmpty
+        ? buildEmptyWidget(
+            context,
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.22),
+          )
+        : ListView.builder(
+            padding: EdgeInsets.only(top: 16, bottom: 16),
+            shrinkWrap: true,
+            itemCount: actuator.myOrders.length,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              var order = actuator.myOrders[index];
+              return ItemMyOrdersOrderWidget(
+                key: Key("${order.id}"),
                 shop: order.shop!,
                 order: order,
                 orderNumber: index,
-              ),
-            );
-          }),
-    );
+              );
+            });
   }
 }

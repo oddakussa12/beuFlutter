@@ -1,4 +1,3 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -67,19 +66,29 @@ class _ItemMyOrdersProductState extends State<ItemMyOrdersProductWidget> {
     return Container(
       margin: EdgeInsets.only(left: 10, top: 4),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: FadeInImage.assetNetwork(
-          height: 64,
-          width: 64,
-          fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 100),
-          placeholder: "packages/resources/res/images/def_cover_1_1.png",
-          image: product.productImage(),
-          imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset("res/images/def_cover_1_1.png", package: 'resources',);
-          },
-        ),
-      ),
+          borderRadius: BorderRadius.circular(16),
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
+            imageUrl: product.productImage(),
+            placeholder: (context, url) => Image.asset(
+                "res/images/def_cover_1_1.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 64,
+                gaplessPlayback: true,
+                width: 64),
+            errorWidget: (context, url, error) => Image.asset(
+                "res/images/def_cover_1_1.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 64,
+                gaplessPlayback: true,
+                width: 64),
+            height: 64,
+            width: 64,
+            fit: BoxFit.cover,
+          )),
     );
   }
 

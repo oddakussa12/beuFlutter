@@ -54,6 +54,21 @@ class _ShopDetailPageState
     barController.outsideAddProduct(product, actuator.shopDetail);
   }
 
+  /// 收藏店铺
+  void prepareFollowShop() {
+    if (UserManager().isLogin()) {
+      if (!actuator.shopDetail.followState!) {
+        actuator.followShop(start: () {
+          LoadingDialog.show(context);
+        }, complete: () {
+          Navigator.pop(context);
+        });
+      }
+    } else {
+      LoginDialog.show(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,6 +171,9 @@ class _ShopDetailPageState
               /// 商铺介绍
               buildShopDesc(),
 
+              /// Follow
+              buildFollowButton(),
+
               Container(
                 height: 1,
                 margin: EdgeInsets.all(16),
@@ -184,7 +202,8 @@ class _ShopDetailPageState
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(actuator.shopDetail.bg),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_shop_image.png",
@@ -218,12 +237,14 @@ class _ShopDetailPageState
         height: 105,
         width: 105,
         decoration: BoxDecoration(
+            color: AppColor.colorEF,
             border: Border.all(color: Colors.white, width: 3.82),
             borderRadius: BorderRadius.circular(105)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(105),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(actuator.shopDetail.avatarLink),
             placeholder: (context, url) => Image.asset(
               "res/images/def_avatar.png",
@@ -405,6 +426,39 @@ class _ShopDetailPageState
             ),
           )
         : Container();
+  }
+
+  /// Follow 关注
+  Widget buildFollowButton() {
+    if (actuator.shopDetail.followState == null) {
+      return Container();
+    }
+    return GestureDetector(
+      child: Container(
+        height: 40,
+        margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+        alignment: Alignment.center,
+        decoration: actuator.shopDetail.followState!
+            ? BoxDecoration(
+                color: AppColor.colorEF,
+                borderRadius: BorderRadius.circular(44))
+            : BoxDecoration(
+                border: Border.all(
+                    color: AppColor.colorBE, width: AppSizes.divider),
+                borderRadius: BorderRadius.circular(44)),
+        child: Text(
+          actuator.shopDetail.followState!
+              ? S.of(context).shopcenter_followed
+              : S.of(context).shopcenter_follow,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: AppColor.black, fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+      ),
+      onTap: () {
+        prepareFollowShop();
+      },
+    );
   }
 
   Widget buildProductsTitle() {

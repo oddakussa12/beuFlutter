@@ -26,12 +26,6 @@ class DiscoverPageState extends State<DiscoverPage>
   final List<Widget> _pageWidgets = [ShopsPage(), ProductsPage()];
 
   @override
-  void initState() {
-    super.initState();
-    LogDog.e("Discover-initState");
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     tabNames.add(S

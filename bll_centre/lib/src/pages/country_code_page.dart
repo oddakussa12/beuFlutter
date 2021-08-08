@@ -41,7 +41,7 @@ class _CountryCodePageState
               itemBuilder: (context, index) {
                 var country = actuator.codes[index];
                 return ItemCountryCodeWidget(
-                  key: Key("${country.name}-${DateTime.now().microsecond}"),
+                  key: Key("${country.name}-${country.areaCode}"),
                   country: country,
                   onTap: () {
                     Navigator.pop(context, [country]);

@@ -62,7 +62,7 @@ class _MyOrdersPageState
                 var order = actuator.myOrders[index];
                 return Container(
                   child: ItemMyOrdersOrderWidget(
-                    key: Key("${order.id}-${DateTime.now().microsecond}"),
+                    key: Key("${order.id}"),
                     shop: order.shop!,
                     order: order,
                     orderNumber: index,

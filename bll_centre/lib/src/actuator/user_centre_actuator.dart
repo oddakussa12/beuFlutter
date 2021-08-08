@@ -1,7 +1,6 @@
 import 'package:centre/src/centre_config.dart';
 import 'package:centre/src/controller/my_orders_controller.dart';
 import 'package:common/common.dart';
-import 'package:flutter/material.dart';
 
 /**
  * UserCentreActuator
@@ -17,13 +16,17 @@ class UserCentreActuator extends RefreshActuator {
   MyOrderController controller = MyOrderController();
 
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
+    controller.appendComplete((type) {
+      refreshCompleted(type);
+    });
     appendSubscribe(BusClient().subscribe<SignUpEvent>((event) {
       if (event != null) {
         notifySetState(() {
           user = UserManager().getUser();
         });
+        controller.refresh();
       }
     }));
     appendSubscribe(BusClient().subscribe<SignInEvent>((event) {
@@ -45,10 +48,10 @@ class UserCentreActuator extends RefreshActuator {
     /// 退出登录事件
     appendSubscribe(BusClient().subscribe<LogoutEvent>((event) {
       if (event != null) {
+        controller.cleanOrdersByLogout();
         notifySetState(() {
           user = UserManager().getUser();
         });
-        controller.cleanOrdersByLogout();
       }
     }));
 
@@ -75,15 +78,19 @@ class UserCentreActuator extends RefreshActuator {
   @override
   void onRefreshSource(int page, PullType type) {
     updateUserInfo();
-    controller.refresh();
+    if (controller != null) {
+      controller.refresh();
+    }
   }
 
   @override
   void onLoadMoreSource(int page, PullType type) {
-    controller.loadMore();
+    if (controller != null) {
+      controller.loadMore();
+    }
   }
 
-  void updateUserInfo() {
+  updateUserInfo() async {
     loadUserInfo((state) {
       if (state == 1) {
         toast(message: S.of(context).alltip_loading_error);
@@ -108,7 +115,7 @@ class UserCentreActuator extends RefreshActuator {
       }
     }, fail: (message, error) {
       callUserProfileFail(changed);
-    }, complete: () {});
+    });
   }
 
   void callUserProfileFail(StateChanged changed) {

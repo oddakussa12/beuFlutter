@@ -18,9 +18,18 @@ abstract class RefreshActuator<V extends Viewer> extends RetryActuator<V>
     refreshProvider = RefreshProvider(this, complete);
   }
 
+  /**
+   * 刷新完成，通知更新 UI
+   */
+  void refreshCompleted(PullType type) {
+    if (refreshProvider != null) {
+      refreshProvider.refreshCompleted(type);
+    }
+  }
+
   /// 下拉调用
   void pullDown() {
-    LogDog.i("pullDown");
+    LogDog.i(this.runtimeType.toString() + ", pullDown");
     if (refreshProvider != null) {
       refreshProvider.refreshSource();
     }
@@ -28,7 +37,7 @@ abstract class RefreshActuator<V extends Viewer> extends RetryActuator<V>
 
   /// 上拉调用
   void pullUp() {
-    LogDog.i("pullUp");
+    LogDog.i(this.runtimeType.toString() + ", pullUp");
     if (refreshProvider != null) {
       refreshProvider.loadMoreSource();
     }
@@ -36,7 +45,6 @@ abstract class RefreshActuator<V extends Viewer> extends RetryActuator<V>
 
   @override
   void toRetry() {
-    LogDog.i("toRetry");
-    pullDown();
+    LogDog.i(this.runtimeType.toString() + ", toRetry");
   }
 }

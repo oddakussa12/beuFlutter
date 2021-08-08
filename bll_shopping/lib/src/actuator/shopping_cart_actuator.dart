@@ -175,6 +175,7 @@ class ShoppingCartActuator extends ReactActuator {
       }
     }, fail: (message, error) {
       processCartUpdateFailureResult(context, isAppend, shop, product);
+      notifyToasty(message);
     }, complete: () {
       notifySetState();
     });

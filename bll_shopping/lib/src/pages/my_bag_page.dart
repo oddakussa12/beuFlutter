@@ -135,7 +135,7 @@ class _MyBagPageState extends RefreshableState<MyBagActuator, MyBagPageWidget>
             var shop = actuator.shopCart.data[index];
             return Container(
               child: ItemMyBagShopWidget(
-                key: Key("${shop.id}-${DateTime.now().microsecond}"),
+                key: Key("${shop.id}"),
                 shop: shop,
                 provider: this,
               ),

@@ -21,18 +21,16 @@ class ShoppingMyBagPage extends StatefulWidget {
 
 class _ShoppingMyBagState
     extends RefreshableState<ShoppingMyBagActuator, ShoppingMyBagPage>
-    with AutomaticKeepAliveClientMixin, ProductOptionProvider {
+    with
+        AutomaticKeepAliveClientMixin,
+        SingleTickerProviderStateMixin,
+        ProductOptionProvider {
   _ShoppingMyBagState(actuator) : super(actuator);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     actuator.pullDown();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -55,98 +53,64 @@ class _ShoppingMyBagState
     actuator.appendCartProduct(shop, product);
   }
 
-  /**
-   * 商铺下的商品数量减减
-   */
+  /// 商铺下的商品数量减减
   @override
   void minusProduct(Product product, Shop shop) {
     super.minusProduct(product, shop);
     actuator.minusCartProduct(shop, product);
   }
 
-  /**
-   * ItemMyBagWidget
-   */
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    LogDog.w("ShoppingMyBagPage, build");
+
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: ToolbarOnlyTitle(
         title: S.of(context).shopcart_shopping,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-              child: SmartRefresher(
-                  physics: BouncingScrollPhysics(),
-                  controller: refreshController,
-                  header: WaterDropHeader(),
-                  enablePullDown: true,
-                  enablePullUp: false,
-                  onRefresh: () {
-                    actuator.pullDown();
-                  },
+      body: SmartRefresher(
+          physics: BouncingScrollPhysics(),
+          controller: refreshController,
+          header: WaterDropHeader(),
+          enablePullDown: true,
+          enablePullUp: false,
+          onRefresh: () {
+            actuator.pullDown();
+          },
 
-                  /// 购物车商品列表
-                  child: actuator.isNotNormal()
-                      ? buildEmptyWidget(context)
-                      : SingleChildScrollView(
-                          child: ListView.builder(
-                              padding: EdgeInsets.only(top: 16, bottom: 16),
-                              shrinkWrap: true,
-                              itemCount: actuator.shopCart.data.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                var shop = actuator.shopCart.data[index];
-                                return Container(
-                                  child: ItemMyBagShopWidget(
-                                    key: Key(
-                                        "${shop.id}-${DateTime.now().microsecond}"),
-                                    shop: shop,
-                                    provider: this,
-                                  ),
-                                );
-                              })))),
-
-          /// 购物车计价条
-          buildCartMeter()
-        ],
-      ),
+          /// 购物车商品列表
+          child: actuator.isNotNormal()
+              ? buildEmptyWidget(context)
+              : buildCartProducts()),
+      bottomNavigationBar: buildCartMeter(),
     );
   }
 
   /**
    * 购物车商品列表
    */
-  Container buildCartProducts() {
-    return Container(
-      child: ListView.builder(
-          padding: EdgeInsets.only(top: 8, bottom: 8),
-          shrinkWrap: true,
-          itemCount: actuator.shopCart.data.length,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            var shop = actuator.shopCart.data[index];
-            return Container(
-              child: ItemMyBagShopWidget(
-                key: Key("${shop.id}-${DateTime.now().microsecond}"),
-                shop: shop,
-                provider: this,
-              ),
-            );
-          }),
+  Widget buildCartProducts() {
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 16, bottom: 10),
+      itemCount: actuator.shopCart.data.length,
+      itemBuilder: (context, index) {
+        var shop = actuator.shopCart.data[index];
+        return ItemMyBagShopWidget(
+          key: Key("${shop.id}-${shop.name}"),
+          shop: shop,
+          provider: this,
+        );
+      },
     );
   }
 
   /**
    * 购物车计价条
    */
-  Container buildCartMeter() {
+  Widget buildCartMeter() {
     if (actuator.isNoneShoppingCart()) {
-      return Container();
+      return Container(height: 1,);
     }
     return Container(
       height: 60,
@@ -154,6 +118,11 @@ class _ShoppingMyBagState
       decoration: BoxDecoration(
         color: AppColor.white,
         boxShadow: [
+          BoxShadow(
+              color: AppColor.bg,
+              offset: Offset(8.0, 1.0),
+              blurRadius: 5.0,
+              spreadRadius: 0.6),
           BoxShadow(color: AppColor.bg, offset: Offset(1.0, 1.0)),
         ],
       ),
@@ -193,18 +162,20 @@ class _ShoppingMyBagState
   /**
    * 下单按钮
    */
-  Container buildCartBuy() {
-    return Container(
-        height: 44,
-        width: 140,
-        margin: EdgeInsets.only(right: 16),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(44),
-            gradient: LinearGradient(
-                colors: [Color(0xFFFF8913), Color(0xFFFF0080)],
-                begin: FractionalOffset(1, 0),
-                end: FractionalOffset(0, 1))),
-        child: TextButton(
+  Widget buildCartBuy() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+          height: 44,
+          width: 140,
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(right: 16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(44),
+              gradient: LinearGradient(
+                  colors: [Color(0xFFFF8913), Color(0xFFFF0080)],
+                  begin: FractionalOffset(1, 0),
+                  end: FractionalOffset(0, 1))),
           child: Text(
             S.of(context).shopcart_buy,
             textAlign: TextAlign.center,
@@ -213,13 +184,13 @@ class _ShoppingMyBagState
                 color: AppColor.white,
                 fontSize: 14,
                 fontWeight: FontWeight.bold),
-          ),
-          onPressed: () {
-            actuator.previewOrder((context, Map<String, String> idNumbers) {
-              Navigator.pushNamed(context, Routes.shopping.OrderPreview,
-                  arguments: idNumbers);
-            });
-          },
-        ));
+          )),
+      onTap: () {
+        actuator.previewOrder((context, Map<String, String> idNumbers) {
+          Navigator.pushNamed(context, Routes.shopping.OrderPreview,
+              arguments: idNumbers);
+        });
+      },
+    );
   }
 }

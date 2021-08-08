@@ -28,4 +28,9 @@ class ShoppingUrl {
 
   /// 计算配送费用
   static final String calcDeliveryCost = "/api/business/delivery_cost";
+
+  /// 促销码查询
+  static String promoCode(String promo) => "/api/promo_code/${promo}";
+
+  static final String followShop = "/api/follow";
 }

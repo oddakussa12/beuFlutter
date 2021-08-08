@@ -18,8 +18,8 @@ class ProductDetailActuator extends RetryActuator {
   bool isNeedRefreshDetail = false;
 
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
     /// 监听订单创建完成的事件，并刷新数据
     appendSubscribe(BusClient().subscribe<OrderCreatedEvent>((event) {
       if (event != null) {

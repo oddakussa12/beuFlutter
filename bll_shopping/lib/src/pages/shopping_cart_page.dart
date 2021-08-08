@@ -54,6 +54,7 @@ class ShoppingCartPageState extends State<ShoppingCartPageWidget>
     }
 
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         elevation: AppSizes.elevation,
         centerTitle: true,

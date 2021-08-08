@@ -42,8 +42,15 @@ dependencies:
   # Sentry
   sentry_flutter: ^5.1.0
 
-  # 加密算法
+  # AES 加密算法
   encrypt: ^5.0.0
+
+  # JWT 解析器
+  jwt_decoder: ^2.0.1
+
+  # Device Id
+  platform_device_id: ^1.0.1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

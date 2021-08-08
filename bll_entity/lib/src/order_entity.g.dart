@@ -6,17 +6,59 @@ part of 'order_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+RespPromoBody _$RespPromoBodyFromJson(Map<String, dynamic> json) {
+  return RespPromoBody(
+    data: json['data'] == null
+        ? null
+        : RespPromoCode.fromJson(json['data'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$RespPromoBodyToJson(RespPromoBody instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
+RespPromoCode _$RespPromoCodeFromJson(Map<String, dynamic> json) {
+  return RespPromoCode(
+    json['promo_code'] as String?,
+    json['free_delivery'] as bool?,
+    json['discount_type'] as String?,
+    (json['percentage'] as num?)?.toDouble(),
+    json['deadline'] as String?,
+    json['description'] as String?,
+    (json['reduction'] as num?)?.toDouble(),
+    (json['limit'] as num?)?.toDouble(),
+  );
+}
+
+Map<String, dynamic> _$RespPromoCodeToJson(RespPromoCode instance) =>
+    <String, dynamic>{
+      'promo_code': instance.promoCode,
+      'free_delivery': instance.freeDelivery,
+      'discount_type': instance.discountType,
+      'percentage': instance.percentAge,
+      'deadline': instance.deadline,
+      'description': instance.description,
+      'reduction': instance.reduction,
+      'limit': instance.limit,
+    };
+
 PreviewOrdersBody _$PreviewOrdersBodyFromJson(Map<String, dynamic> json) {
   return PreviewOrdersBody(
     (json['data'] as List<dynamic>)
         .map((e) => PreOrder.fromJson(e as Map<String, dynamic>))
         .toList(),
     diffCurrency: json['diffCurrency'] as bool?,
-  );
+  )
+    ..code = json['code'] as int?
+    ..message = json['message'] as String?;
 }
 
 Map<String, dynamic> _$PreviewOrdersBodyToJson(PreviewOrdersBody instance) =>
     <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
       'data': instance.data,
       'diffCurrency': instance.diffCurrency,
     };
@@ -30,10 +72,16 @@ PreOrder _$PreOrderFromJson(Map<String, dynamic> json) {
         ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
         .toList(),
     subTotal: (json['subTotal'] as num?)?.toDouble(),
-    coast: (json['deliveryCoast'] as num?)?.toDouble(),
+    deliveryCoast: (json['deliveryCoast'] as num?)?.toDouble(),
     packageFee: (json['packagingCost'] as num?)?.toDouble(),
     currency: json['currency'] as String?,
+    formatSubTotal: json['formatSubTotal'] as String?,
+    formatPackageFee: json['formatPackageFee'] as String?,
+    formatDeliveryCoast: json['formatDeliveryCoast'] as String?,
     subDisTotal: (json['subDiscountedTotal'] as num?)?.toDouble(),
+    formatSubDisTotal: json['formatSubDisTotal'] as String?,
+    total: (json['total'] as num?)?.toDouble(),
+    formatTotal: json['formatTotal'] as String?,
   );
 }
 
@@ -41,10 +89,16 @@ Map<String, dynamic> _$PreOrderToJson(PreOrder instance) => <String, dynamic>{
       'shop': instance.shop,
       'goods': instance.goods,
       'subTotal': instance.subTotal,
-      'deliveryCoast': instance.coast,
+      'deliveryCoast': instance.deliveryCoast,
+      'formatDeliveryCoast': instance.formatDeliveryCoast,
       'currency': instance.currency,
+      'formatSubTotal': instance.formatSubTotal,
+      'total': instance.total,
+      'formatTotal': instance.formatTotal,
       'packagingCost': instance.packageFee,
+      'formatPackageFee': instance.formatPackageFee,
       'subDiscountedTotal': instance.subDisTotal,
+      'formatSubDisTotal': instance.formatSubDisTotal,
     };
 
 MyOrdersBody _$MyOrdersBodyFromJson(Map<String, dynamic> json) {

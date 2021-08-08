@@ -11,7 +11,9 @@ class MyOrdersActuator extends RefreshActuator {
   /// 我的订单列表
   List<Order> myOrders = [];
 
-  void cleanMyOrders(){
+  bool hasUpdated = false;
+
+  void cleanMyOrders() {
     myOrders.clear();
     notifySetState();
   }
@@ -25,30 +27,47 @@ class MyOrdersActuator extends RefreshActuator {
   @override
   void toRetry() {
     super.toRetry();
+    if (myOrders.isEmpty) {
+      changeStatusForLoading();
+      pullDown();
+    }
   }
 
   @override
   void onRefreshSource(int page, PullType type) {
-    _loadMyOrders(page, type);
+    if (myOrders.isEmpty) {
+      changeStatusForLoading();
+    }
+    loadMyOrders(page, type);
   }
 
   @override
   void onLoadMoreSource(int page, PullType type) {
-    _loadMyOrders(page, type);
+    if (myOrders.isNotEmpty) {
+      loadMyOrders(page, type);
+    } else {
+      toRetry();
+    }
   }
 
-  void _loadMyOrders(int page, PullType type) async {
+  void loadMyOrders(int page, PullType type) async {
+    hasUpdated = false;
     DioClient().get("${CentreUrl.myOrders}?page=${page}",
         (response) => MyOrdersBody.fromJson(response.data),
         success: (MyOrdersBody body) {
-      if (body != null && body.data != null) {
+      if (body != null && body.data != null && body.data.isNotEmpty) {
+        hasUpdated = true;
         if (page <= 1) {
           myOrders.clear();
         }
         myOrders.addAll(body.data);
       }
     }, complete: () {
-      notifySetState();
+      refreshCompleted(type);
+      if (hasUpdated || isNotNormal()) {
+        emptyStatus = myOrders.isEmpty ? EmptyStatus.Empty : EmptyStatus.Normal;
+        notifySetState(() {});
+      }
     });
   }
 }

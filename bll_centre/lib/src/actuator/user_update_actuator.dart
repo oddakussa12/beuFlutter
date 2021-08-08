@@ -1,8 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
+/*
 import 'package:centre/src/centre_config.dart';
 import 'package:common/common.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateType {
@@ -11,12 +10,14 @@ class UpdateType {
   static final String NICK_NAME = "user_nick_name";
 }
 
+*/
 /**
  * UpdateUserActuator
  * 更新用户信息
  * @author: Ruoyegz
  * @date: 2021/7/27
- */
+ *//*
+
 class UpdateUserActuator extends ReactActuator {
   /// 待更新的 昵称
   String nickName = "";
@@ -32,7 +33,15 @@ class UpdateUserActuator extends ReactActuator {
   /// 是否需要更新用户信息
   bool isNeedNotifyUpdate = false;
 
+  /// 更新用户名成功
+  bool successForName = false;
+
+  /// 更新其他信息成功
+  bool successForOther = false;
+
   Dio uploadDio = new Dio();
+
+  ImagePicker picker = ImagePicker();
 
   UpdateUserActuator() {
     uploadDio
@@ -159,9 +168,11 @@ class UpdateUserActuator extends ReactActuator {
     }, complete: () {});
   }
 
-  /**
+  */
+/**
    * 上传图片到桶
-   */
+   *//*
+
   void uploadImage(
       String type, String name, String path, UploadResBody resBody) async {
     FormData requestBody = FormData();
@@ -183,7 +194,6 @@ class UpdateUserActuator extends ReactActuator {
         MapEntry("file", MultipartFile.fromFileSync(path, filename: name)));
 
     try {
-      /// <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PostResponse><Location>https://helloo-avatar.s3.cn-north-1.amazonaws.com.cn/de5b1eea0688d75f95764707782d7149%2F20210729%2F261250831251144704.jpeg</Location><Bucket>helloo-avatar</Bucket><Key>de5b1eea0688d75f95764707782d7149/20210729/261250831251144704.jpeg</Key><ETag>\"d02ca7e71e020d7b44175fa9956a3c05\"</ETag></PostResponse>
       Response response =
           await uploadDio.post(resBody.action!, data: requestBody);
       if (response != null &&
@@ -200,7 +210,7 @@ class UpdateUserActuator extends ReactActuator {
         if (TextHelper.isNotEmpty(amzDomain) && TextHelper.isNotEmpty(key)) {
           finalUrl = "${amzDomain}${key}";
           Map<String, String> params = {type: finalUrl};
-          updateUserInfo(params);
+          updateUserInfo(false, params);
         }
       }
     } on DioError catch (e) {
@@ -209,8 +219,12 @@ class UpdateUserActuator extends ReactActuator {
   }
 
   /// 点击更新
-  void tabUpdate() {
+  void tabUpdate({Actioned? start, Actioned? end}) {
+    successForName = false;
+    successForOther = false;
     Map<String, String> params = {};
+
+    bool needUpdateName = false;
 
     /// 名称
     if (!TextHelper.isEqual(name, user.name)) {
@@ -219,8 +233,14 @@ class UpdateUserActuator extends ReactActuator {
         toast(message: S.of(context).alltip_usernamerule);
         return;
       } else {
-        updateUserName();
+        needUpdateName = true;
+        if (start != null) {
+          start.call();
+        }
+        updateUserName(end: end);
       }
+    } else {
+      successForName = true;
     }
 
     /// 昵称
@@ -230,6 +250,7 @@ class UpdateUserActuator extends ReactActuator {
           nickName.length < 2 ||
           nickName.length > 32) {
         toast(message: S.of(context).alltip_nikenamerule);
+        successForOther = true;
         return;
       } else {
         params["user_nick_name"] = nickName;
@@ -243,20 +264,32 @@ class UpdateUserActuator extends ReactActuator {
           description.length < 1 ||
           description.length >= 100) {
         toast(message: S.of(context).alltip_biorule);
+        successForOther = true;
         return;
       } else {
         params["user_about"] = description;
       }
     }
 
-    /// 更新用户信息
-    updateUserInfo(params);
+    /// 用户名和其他信息都没有变化就不更新
+    if (params.isNotEmpty) {
+      if (!needUpdateName) {
+        if (start != null) {
+          start.call();
+        }
+      }
+
+      /// 更新用户信息
+      updateUserInfo(!needUpdateName, params, end: end);
+    }
   }
 
-  /**
+  */
+/**
    * 更新用户昵称
-   */
-  void updateUserName() async {
+   *//*
+
+  void updateUserName({Actioned? end}) async {
     isNeedNotifyUpdate = true;
     Map<String, String> params = {"user_name": name};
     DioClient().patch(CentreUrl.updateName, (response) => response,
@@ -264,22 +297,35 @@ class UpdateUserActuator extends ReactActuator {
       if (body != null && body.statusCode! >= 200 && body.statusCode! < 300) {
         user.name = name;
         UserManager().saveUser(user);
+        successForName = true;
       }
     }, fail: (message, error) {
       notifyToasty(message);
     }, complete: () {
+      if (end != null) {
+        end.call();
+      }
+
       notifySetState();
+
+      if (successForName && successForOther) {
+        Navigator.pop(context);
+      }
     });
   }
 
-  /**
+  */
+/**
    * 更新用户信息
-   */
-  void updateUserInfo(Map<String, String> params) async {
+   *//*
+
+  void updateUserInfo(bool needHideLoading, Map<String, String> params,
+      {Actioned? end}) async {
     if (params.isEmpty) {
       return;
     }
     isNeedNotifyUpdate = true;
+
     DioClient().put(
         CentreUrl.updateUser, (response) => UserBody.fromJson(response.data),
         body: params, success: (UserBody body) {
@@ -288,11 +334,21 @@ class UpdateUserActuator extends ReactActuator {
         user = UserManager().getUser();
         nickName = user.nickName!;
         description = user.about!;
+        successForOther = true;
       }
     }, fail: (message, error) {
       notifyToasty(message);
     }, complete: () {
+      if (needHideLoading && end != null) {
+        end.call();
+      }
+
       notifySetState();
+
+      if (successForName && successForOther) {
+        Navigator.pop(context);
+      }
     });
   }
 }
+*/

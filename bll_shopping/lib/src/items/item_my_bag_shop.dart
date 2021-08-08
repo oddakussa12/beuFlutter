@@ -1,5 +1,4 @@
 import 'package:common/common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 import 'package:shopping/src/items/item_my_bag_product.dart';
@@ -22,7 +21,8 @@ class ItemMyBagShopWidget extends StatefulWidget {
   _ItemMyBagShopState createState() => _ItemMyBagShopState(shop, provider);
 }
 
-class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
+class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
+    with AutomaticKeepAliveClientMixin {
   final Shop shop;
   final ProductOptionProvider provider;
 
@@ -36,9 +36,14 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, bottom: 10),
+      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
       padding: EdgeInsets.only(bottom: 6),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
@@ -107,15 +112,13 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
       shop.isChecked = false;
     }
     return ListView.builder(
-
-        /// 禁用滑动事件
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: shop.goods!.isEmpty ? 0 : shop.goods!.length,
         itemBuilder: (context, index) {
           var product = shop.goods![index];
           return ItemMyBagProductWidget(
-            key: Key("${shop.id}-${product.id}-${DateTime.now().microsecond}"),
+            key: Key("${shop.id}-${product.id}"),
             shop: shop,
             product: product,
             provider: provider,

@@ -36,7 +36,7 @@ class SpecialDiscoverPageState
   @override
   void initState() {
     super.initState();
-    LogDog.e("Discover-initState");
+    actuator.loadSpecialGoods();
   }
 
   @override
@@ -58,8 +58,6 @@ class SpecialDiscoverPageState
     }
 
     _tabController = TabController(length: _pageWidgets.length, vsync: this);
-
-    actuator.loadSpecialGoods();
   }
 
   @override
@@ -89,13 +87,14 @@ class SpecialDiscoverPageState
     super.build(context);
     LogDog.e("SpecialDiscover-build");
     return Scaffold(
+      backgroundColor: AppColor.white,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             expandedHeight: 310,
             pinned: true,
-            floating: false,
-            leading: Constants.isDevelop
+            floating: Constants.isTesting ? false : true,
+            leading: Constants.isTesting
                 ? Container(
                     margin: EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
@@ -107,7 +106,7 @@ class SpecialDiscoverPageState
                     ),
                   )
                 : null,
-            title: Constants.isDevelop ? buildSearchBar() : null,
+            title: Constants.isTesting ? buildSearchBar() : null,
             flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 background: GestureDetector(
@@ -140,8 +139,9 @@ class SpecialDiscoverPageState
                 color: AppColor.white,
                 child: TabBar(
                   indicatorColor: AppColor.black,
+                  indicatorWeight: 1.3,
                   indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorPadding: EdgeInsets.symmetric(horizontal: 6),
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: 16),
                   unselectedLabelColor: AppColor.colorBE,
                   labelColor: AppColor.color0F0F17,
                   labelStyle:
@@ -151,7 +151,7 @@ class SpecialDiscoverPageState
                   tabs: tabNames.map((e) => Tab(text: e)).toList(),
                 ),
               ),
-              preferredSize: Size.fromHeight(48),
+              preferredSize: Size.fromHeight(50),
             ),
           ),
         ],

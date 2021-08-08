@@ -33,18 +33,21 @@ abstract class RetryActuator<V extends Viewer> extends ReactActuator<V>
   }
 
   @override
-  void attach(BuildContext context, V view) {
-    super.attach(context, view);
-
+  void attachContext(BuildContext context) {
+    this.context = context;
     /// 初始化重试器
-    retryProvider = new RetryProvider(
-        message: S.of(context).alltip_loading_error,
-        retryCall: () {
-          changeStatusForLoading();
+    if(retryProvider == null) {
+      retryProvider = new RetryProvider(
+          message: S
+              .of(context)
+              .alltip_loading_error,
+          retryCall: () {
+            changeStatusForLoading();
 
-          /// 执行具体的重试逻辑
-          toRetry();
-        });
+            /// 执行具体的重试逻辑
+            toRetry();
+          });
+    }
   }
 
   @override
@@ -57,7 +60,7 @@ abstract class RetryActuator<V extends Viewer> extends ReactActuator<V>
 
   /// 点击重试【重试事件的发起】
   void tapRetry() {
-    LogDog.i("RetryActuator, tapRetry");
+    LogDog.i(this.runtimeType.toString() + ", tapRetry");
     if (retryProvider != null) {
       retryProvider!.toRetry();
     }

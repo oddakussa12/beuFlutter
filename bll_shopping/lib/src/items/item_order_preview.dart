@@ -111,7 +111,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           buildPackagingFee(),
 
           /// 订单派送费
-          buildOrderCoast(),
+          buildOrderDeliveryCoast(),
 
           /// 订单总价
           buildOrderTotalPrice()
@@ -180,7 +180,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
         itemBuilder: (context, index) {
           var product = orderItem.goods![index];
           return ItemOrderPreviewProductWidget(
-            key: Key("${shop.id}-${product.id}-${DateTime.now().microsecond}"),
+            key: Key("${shop.id}-${product.id}"),
             shop: shop,
             product: product,
             provider: provider,
@@ -211,7 +211,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
   Container buildOrderSubTotalPrice() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 10, right: 10, top: 16),
+      margin: EdgeInsets.only(left: 10, right: 10, top: 12),
       child: Row(
         children: [
           Text(
@@ -225,6 +225,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
+          orderItem.subDisTotal != 0 ? TextHelper.clean(orderItem.formatSubDisTotal) :
             TextHelper.clean(orderItem.formatSubTotal),
             maxLines: 1,
             textAlign: TextAlign.right,
@@ -242,10 +243,10 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
   /**
    * 订单派送费
    */
-  Widget buildOrderCoast() {
+  Widget buildOrderDeliveryCoast() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 10, right: 10, top: 16),
+      margin: EdgeInsets.only(left: 10, right: 10, top: 12),
       child: Row(
         children: [
           Text(
@@ -259,7 +260,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-            TextHelper.clean(orderItem.formatCoast),
+            TextHelper.clean(orderItem.formatDeliveryCoast),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
@@ -277,7 +278,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
   Widget buildPackagingFee() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 10, right: 10, top: 16),
+      margin: EdgeInsets.only(left: 10, right: 10, top: 12),
       child: Row(
         children: [
           Text(
@@ -311,7 +312,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
   Container buildOrderTotalPrice() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
+      margin: EdgeInsets.only(left: 10, right: 10, top: 12, bottom: 12),
       child: Row(
         children: [
           Text(

@@ -15,6 +15,8 @@ export 'src/helper/text_helper.dart';
 export 'src/helper/value_helper.dart';
 export 'src/helper/storage_helper.dart';
 export 'src/helper/aes_helper.dart';
+export 'src/helper/jwt_helper.dart';
+export 'src/helper/sentry_helper.dart';
 
 /// logger
 export 'src/logger/logger.dart';

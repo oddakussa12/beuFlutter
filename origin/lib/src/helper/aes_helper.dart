@@ -1,32 +1,38 @@
 import 'dart:convert';
 
 import 'package:encrypt/encrypt.dart';
+import 'package:origin/origin.dart';
 
+/**
+ * AESHelper
+ * AES 加解密
+ * @author: Ruoyegz
+ * @date: 2021/8/6
+ */
 class AESHelper {
-  //aes加密
+
+  /// AES 加密
   static String encrypt(String secret, String content) {
     try {
-      final key = Key.fromBase64(base64Encode(secret.codeUnits));
-      final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
-      final encrypted = encrypter.encrypt(content,
-          iv: IV.fromBase64(base64Encode(secret.codeUnits)));
-      return encrypted.base64;
-    } catch (err) {
-      print("aes encode error:$err");
-      return content;
+      final key = Key.fromUtf8(secret);
+      final cipher = Encrypter(AES(key, mode: AESMode.cbc));
+      final result = cipher.encrypt(content, iv: IV.fromUtf8(secret));
+      return result.base64;
+    } on Error catch (err) {
+      LogDog.e("AESHelper, encrypt err: ${err}", err, err.stackTrace);
+      return "";
     }
   }
 
-  //aes解密
+  /// AES 解密
   static dynamic decrypt(String secret, dynamic base64) {
     try {
-      final key = Key.fromBase64(base64Encode(secret.codeUnits));
-      final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
-      return encrypter.decrypt64(base64,
-          iv: IV.fromBase64(base64Encode(secret.codeUnits)));
-    } catch (err) {
-      print("aes decode error:$err");
-      return base64;
+      final key = Key.fromUtf8(secret);
+      final cipher = Encrypter(AES(key, mode: AESMode.cbc));
+      return cipher.decrypt64(base64, iv: IV.fromUtf8(secret));
+    } on Error catch (err) {
+      LogDog.e("AESHelper, encrypt err: ${err}", err, err.stackTrace);
+      return null;
     }
   }
 }

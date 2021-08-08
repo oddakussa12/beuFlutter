@@ -23,10 +23,11 @@ class HttpHeaderInterceptor extends Interceptor {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    options.headers["deviceId"] = "";
+    options.headers["deviceId"] = Constants.deviceId;
     options.headers["paltid"] = "android-lite";
     options.headers["HellooLiteVersion"] = "1.1.0";
     options.headers["Accept-Language"] = Constants.languageCode;
+
     /// 1.1.0 过于复杂的 post 请求的参数后台无法解析
     /// options.headers["Content-Type"] = "application/x-www-form-urlencoded";
     options.headers["Content-Type"] = "application/json; charset=UTF-8";

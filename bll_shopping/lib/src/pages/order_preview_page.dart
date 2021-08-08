@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shopping/src/actuator/order_preview_actuator.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 import 'package:shopping/src/entity/user_address.dart';
@@ -22,27 +23,36 @@ class OrderPreviewPage extends StatefulWidget {
 
 class _OrderPreviewPageState
     extends RetryableState<OrderPreviewActuator, OrderPreviewPage>
-    with ProductOptionProvider {
+    with ProductOptionProvider, AutomaticKeepAliveClientMixin {
   _OrderPreviewPageState(OrderPreviewActuator actuator) : super(actuator);
+
+  var args;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    String type = "";
-    Map<String, String> productIdNumbers = {};
-    var args = ModalRoute.of(context)!.settings.arguments;
-    if (args != null && args is Map<String, dynamic>) {
-      if (args.containsKey("type")) {
-        type = args["type"];
-      }
-      if (args.containsKey("goods")) {
-        productIdNumbers = args["goods"];
-      } else {
-        productIdNumbers = args as Map<String, String>;
+    if (args == null) {
+      args = ModalRoute.of(context)!.settings.arguments;
+      if (args != null && args is Map<String, dynamic>) {
+        if (args.containsKey("type")) {
+          actuator.type = args["type"];
+        }
+        if (args.containsKey("goods")) {
+          actuator.idNumbers = args["goods"];
+        } else {
+          actuator.idNumbers = args as Map<String, String>;
+        }
+        actuator.loadPreviewOrder();
       }
     }
-
-    actuator.loadPreviewOrder(type, productIdNumbers);
   }
 
   /**
@@ -60,18 +70,18 @@ class _OrderPreviewPageState
    * 处理返回的地址信息
    */
   void processAddressResult(dynamic value) {
-    if (value != null && value is UserAddress) {
-      UserAddress result = value as UserAddress;
-      actuator.orderP.name = result.name;
-      actuator.orderP.phone = result.phone;
-      actuator.orderP.address = result.address;
+    LogDog.w("processAddressResult, value: ${value}");
 
-      setState(() {});
+    if (value != null) {
+      UserAddress result = value as UserAddress;
+      actuator.updateDeliveryAddress(result);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    LogDog.w("OrderPreviewPage, build");
+
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: PreferredSize(
@@ -98,6 +108,22 @@ class _OrderPreviewPageState
           buildOrderList(),
 
           /// 分割线
+          !actuator.isSpecial()
+              ? Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                  color: AppColor.color08000,
+                )
+              : Container(),
+
+          /// Promo code【优惠码】
+          buildPromoCodeLayout(),
+
+          /// Promo code【优惠码说明】
+          buildPromoCodeMessage(),
+
+          /// 分割线
           Container(
             height: 1,
             width: MediaQuery.of(context).size.width,
@@ -108,7 +134,7 @@ class _OrderPreviewPageState
           /// 派送用户信息地址
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+            margin: EdgeInsets.only(left: 16, right: 16, top: 16),
             child: Text(
               S.of(context).order_beneficiary,
               maxLines: 1,
@@ -167,47 +193,6 @@ class _OrderPreviewPageState
             color: AppColor.color08000,
           ),
 
-          /// Promo code【优惠码】
-          Stack(
-            children: [
-              buildPromoCodeField(context),
-
-              /// 应用按钮
-              Positioned(child: buildApplyButton(), right: 16, top: 16),
-            ],
-          ),
-
-          /// Promo code【优惠码说明】
-          Container(
-            height: 40,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 8),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(colors: [
-                  Color(0xFFB57A30),
-                  Color(0xFFB57A30),
-                  Color(0xFF973F0E)
-                ], begin: FractionalOffset(1, 0), end: FractionalOffset(0, 1))),
-            child: Text(
-              "20% off for all products over BIRR 300",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          /// 分割线
-          Container(
-            height: 1,
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
-            color: AppColor.color08000,
-          ),
-
           /// 所有订单总价信息【Order Summary】
           Container(
             alignment: Alignment.centerLeft,
@@ -227,13 +212,13 @@ class _OrderPreviewPageState
           buildOrderPriceList(),
 
           /// 订单包装费总价
-          buildOrdersPackageTotal(),
+          // buildOrdersPackageTotal(),
 
           /// 派送费
-          buildOrdersDeliveryTotal(),
+          //buildOrdersDeliveryTotal(),
 
-          ///
-          buildOrdersDiscountTotal(),
+          /// 折扣费
+          // buildOrdersDiscountTotal(),
 
           /// 预览订单总价
           buildOrdersTotal(),
@@ -253,6 +238,7 @@ class _OrderPreviewPageState
     );
   }
 
+  /// 订单列表
   ListView buildOrderList() {
     return ListView.builder(
         padding: EdgeInsets.only(top: 8),
@@ -272,6 +258,146 @@ class _OrderPreviewPageState
             ),
           );
         });
+  }
+
+  /// 优惠码布局
+  Widget buildPromoCodeLayout() {
+    return !actuator.isSpecial()
+        ? Stack(
+            children: [
+              buildPromoCodeField(context),
+
+              /// 应用按钮
+              Positioned(child: buildApplyButton(), right: 16, top: 16),
+            ],
+          )
+        : Container();
+  }
+
+  /// Promo code 输入框
+  Widget buildPromoCodeField(BuildContext context) {
+    return Container(
+        height: 44,
+        padding: EdgeInsets.only(right: 76),
+        margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+        decoration: BoxDecoration(
+            color: AppColor.color08000,
+            border: Border.all(color: AppColor.color1A000, width: 1),
+            borderRadius: BorderRadius.circular(8)),
+        child: TextField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+              contentPadding:
+                  EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+              counterText: "",
+              hintText: "Promo code",
+              hintStyle: TextStyle(
+                fontSize: 14,
+                color: AppColor.hint,
+              )),
+          maxLines: 1,
+          maxLength: 100,
+          keyboardType: TextInputType.text,
+          cursorColor: AppColor.colorF7551D,
+          cursorWidth: 2,
+          cursorRadius: Radius.circular(2),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColor.black, fontSize: 16),
+
+          /// 只支持英文字母和数字
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9A-Za-z]'))
+          ],
+          onChanged: (text) {
+            if (!TextHelper.isEqual(actuator.promoCode, text)) {
+              actuator.promoCode = text;
+            }
+          },
+          controller: TextEditingController.fromValue(TextEditingValue(
+              //判断 name 是否为空
+              text:
+                  '${this.actuator.promoCode == null ? "" : this.actuator.promoCode}',
+              // 保持光标在最后
+
+              selection: TextSelection.fromPosition(TextPosition(
+                  affinity: TextAffinity.downstream,
+                  offset: '${this.actuator.promoCode}'.length)))),
+        ));
+  }
+
+  /// Promo code apply
+  Widget buildApplyButton() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 44,
+        width: 100,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: AppColor.black, borderRadius: BorderRadius.circular(8)),
+        child: Text(
+          S.of(context).discover_filter_apply,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColor.white, fontSize: 14),
+        ),
+      ),
+      onTap: () {
+        actuator.preparePromoCode();
+      },
+    );
+  }
+
+  /// 优惠码提示消息
+  Widget buildPromoCodeMessage() {
+    return !actuator.isSpecial() && actuator.showPromoMessage()
+        ? Container(
+            height: 40,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 16, right: 16, top: 8),
+            decoration: actuator.orderP.code == 200
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xFFB57A30),
+                          Color(0xFFB57A30),
+                          Color(0xFF973F0E)
+                        ],
+                        begin: FractionalOffset(1, 0),
+                        end: FractionalOffset(0, 1)))
+                : BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColor.colorFF2222),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Offstage(
+                  offstage: actuator.orderP.code == 200,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Image.asset(
+                      "res/icons/ic_err_alert.png",
+                      package: "resources",
+                      width: 18,
+                      height: 18,
+                    ),
+                  ),
+                ),
+                Text(
+                  actuator.orderP.code == 200
+                      ? actuator.orderP.message ?? ""
+                      : "Sorry this code is invalid",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: AppColor.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          )
+        : Container();
   }
 
   /**
@@ -322,24 +448,29 @@ class _OrderPreviewPageState
    */
   Widget buildAddressUserAvatar() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(44),
-      child: FadeInImage.assetNetwork(
-        height: 44,
-        width: 44,
-        fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 100),
-        placeholder: "packages/resources/res/images/def_cover_1_1.png",
-        image: "${actuator.orderP.avatar}",
-        imageErrorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            "res/images/def_cover_1_1.png",
-            package: "resources",
-            height: 44,
-            width: 44,
-          );
-        },
-      ),
-    );
+        borderRadius: BorderRadius.circular(44),
+        child: CachedNetworkImage(
+          fadeInDuration: const Duration(milliseconds: 50),
+          fadeOutDuration: const Duration(milliseconds: 50),
+          imageUrl: "${actuator.orderP.avatar}",
+          placeholder: (context, url) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 44,
+              gaplessPlayback: true,
+              width: 44),
+          errorWidget: (context, url, error) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 44,
+              gaplessPlayback: true,
+              width: 44),
+          height: 44,
+          width: 44,
+          fit: BoxFit.cover,
+        ));
   }
 
   Container buildUserName() {
@@ -448,76 +579,6 @@ class _OrderPreviewPageState
     );
   }
 
-  /// Promo code 输入框
-  Widget buildPromoCodeField(BuildContext context) {
-    return Expanded(
-      child: Container(
-          height: 44,
-          padding: EdgeInsets.only(right: 76),
-          margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-          decoration: BoxDecoration(
-              color: AppColor.color08000,
-              border: Border.all(color: AppColor.color1A000, width: 1),
-              borderRadius: BorderRadius.circular(8)),
-          child: TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide.none),
-                contentPadding:
-                    EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
-                counterText: "",
-                hintText: "Promo code",
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  color: AppColor.hint,
-                )),
-            maxLines: 1,
-            maxLength: 14,
-            keyboardType: TextInputType.phone,
-            cursorColor: AppColor.colorF7551D,
-            cursorWidth: 2,
-            cursorRadius: Radius.circular(2),
-            textAlign: TextAlign.center,
-            style: TextStyle(color: AppColor.black, fontSize: 16),
-            onChanged: (text) {
-              if (!TextHelper.isEqual(actuator.promoCode, text)) {
-                actuator.promoCode = text;
-              }
-            },
-            controller: TextEditingController.fromValue(TextEditingValue(
-                //判断 name 是否为空
-                text:
-                    '${this.actuator.promoCode == null ? "" : this.actuator.promoCode}',
-                // 保持光标在最后
-
-                selection: TextSelection.fromPosition(TextPosition(
-                    affinity: TextAffinity.downstream,
-                    offset: '${this.actuator.promoCode}'.length)))),
-          )),
-    );
-  }
-
-  /// Promo code apply
-  Widget buildApplyButton() {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 44,
-        width: 100,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: AppColor.black, borderRadius: BorderRadius.circular(8)),
-        child: Text(
-          S.of(context).discover_filter_apply,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: AppColor.white, fontSize: 14),
-        ),
-      ),
-      onTap: () {
-        notifyToasty("别点，会崩的");
-      },
-    );
-  }
-
   /**
    * 订单价格列表
    */
@@ -532,7 +593,7 @@ class _OrderPreviewPageState
           var orderItem = actuator.orderItems[index];
           return Container(
             child: ItemOrderPriceWidget(
-              key: Key("${orderItem.shop!.id}-${DateTime.now().microsecond}"),
+              key: Key("${orderItem.shop!.id}"),
               orderNumber: orderNumber,
               orderItem: orderItem,
             ),

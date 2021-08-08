@@ -54,9 +54,9 @@ DeliveryCoast _$DeliveryCoastFromJson(Map<String, dynamic> json) {
     end: json['end'] == null
         ? null
         : Coordinate.fromJson(json['end'] as Map<String, dynamic>),
-    shopId: json['shopId'] as String?,
+    shopId: json['shop_id'] as String?,
     distance: (json['distance'] as num?)?.toDouble(),
-    deliveryCost: (json['deliveryCost'] as num?)?.toDouble(),
+    deliveryCost: (json['delivery_cost'] as num?)?.toDouble(),
     currency: json['currency'] as String?,
   );
 }
@@ -65,9 +65,9 @@ Map<String, dynamic> _$DeliveryCoastToJson(DeliveryCoast instance) =>
     <String, dynamic>{
       'start': instance.start,
       'end': instance.end,
-      'shopId': instance.shopId,
+      'shop_id': instance.shopId,
       'distance': instance.distance,
-      'deliveryCost': instance.deliveryCost,
+      'delivery_cost': instance.deliveryCost,
       'currency': instance.currency,
     };
 

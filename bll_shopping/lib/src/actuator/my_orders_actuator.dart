@@ -1,5 +1,4 @@
 import 'package:common/common.dart';
-import 'package:flutter/material.dart';
 
 import '../../shopping.dart';
 
@@ -14,9 +13,11 @@ class MyOrdersActuator extends RefreshActuator {
   /// 我的订单列表
   List<Order> myOrders = [];
 
+  MyOrdersActuator() {}
+
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
 
     /// 监听订单创建完成的事件，并刷新数据
     appendSubscribe(
@@ -52,7 +53,7 @@ class MyOrdersActuator extends RefreshActuator {
     _loadMyOrders(page, type);
   }
 
-  void _loadMyOrders(int page, PullType type) async {
+  _loadMyOrders(int page, PullType type) async {
     DioClient().get("${ShoppingUrl.myOrders}?page=${page}",
         (response) => MyOrdersBody.fromJson(response.data),
         success: (MyOrdersBody body) {
@@ -63,6 +64,7 @@ class MyOrdersActuator extends RefreshActuator {
         myOrders.addAll(body.data);
       }
     }, complete: () {
+      refreshCompleted(type);
       notifySetState();
     });
   }

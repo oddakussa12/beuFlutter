@@ -405,7 +405,7 @@ class ShoppingCartBarState
               var product = mainShop.goods![index];
               return Container(
                 child: ItemShoppingCartProductWidget(
-                  key: Key("${product.id}-${DateTime.now().microsecond}"),
+                  key: Key("${product.id}-${product.name}"),
                   shop: mainShop,
                   product: product,
                   provider: this,

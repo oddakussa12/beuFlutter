@@ -61,7 +61,7 @@ class CountryCode {
   CountryCode(this.code, this.name, this.areaCode, this.icon);
 
   factory CountryCode.create() {
-    return CountryCode("00", "", "", "");
+    return CountryCode("", "", "00", "");
   }
 
   factory CountryCode.fromJson(Map<String, dynamic> json) =>

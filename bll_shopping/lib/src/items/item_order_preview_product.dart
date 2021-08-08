@@ -68,11 +68,13 @@ class _ItemOrderPreviewProductState
    */
   Widget buildOrderProductImage() {
     return Container(
+      alignment: Alignment.topCenter,
       margin: EdgeInsets.only(left: 8, top: 4),
       child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(product.productImage()),
             placeholder: (context, url) => Image.asset(
               "res/images/def_cover_1_1.png",
@@ -103,7 +105,7 @@ class _ItemOrderPreviewProductState
   Widget buildOrderProductInfo() {
     return Expanded(
         child: Container(
-      height: 60,
+      height: 64,
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,14 +116,14 @@ class _ItemOrderPreviewProductState
               alignment: Alignment.topLeft,
               child: Text(
                 TextHelper.clean(product.name),
-                maxLines: 2,
+                maxLines: product.specPrice != null && product.specPrice! > 0 ? 1 :2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
               )),
 
           /// 原价
           Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 2),
               alignment: Alignment.topLeft,
               child: Text(
                 TextHelper.clean(product.formatPrice),
@@ -131,12 +133,16 @@ class _ItemOrderPreviewProductState
                     color: AppColor.colorBE,
                     fontSize: 16,
                     decorationThickness: 2,
-                    decoration: product.specPrice != null && product.specPrice! > 0 ? TextDecoration.lineThrough : TextDecoration.none,
+                    decoration:
+                        product.specPrice != null && product.specPrice! > 0
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
                     decorationStyle: TextDecorationStyle.solid),
               )),
+
           product.specPrice != null && product.specPrice! > 0
               ? Container(
-                  margin: EdgeInsets.only(left: 10, right: 10),
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 2),
                   alignment: Alignment.topLeft,
                   child: Text(
                     "${ValueFormat.formatDouble(product.specPrice)}${product.currency}",

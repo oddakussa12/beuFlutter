@@ -38,7 +38,7 @@ class FollowShopsActuator extends RefreshActuator {
   /**
    * 加载支持外卖的商铺
    */
-  void loadDiscoveryBusiness(int page, PullType type) async {
+  loadDiscoveryBusiness(int page, PullType type) async {
     if (shops.isEmpty) {
       changeStatusForLoading();
     }
@@ -56,6 +56,7 @@ class FollowShopsActuator extends RefreshActuator {
       }
     }, complete: () {
       emptyStatus = shops.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
+      refreshCompleted(type);
       notifySetState();
     });
   }

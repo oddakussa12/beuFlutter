@@ -22,11 +22,15 @@ abstract class ReactActuator<V extends Viewer> implements Actuator<V>, Viewer {
   List<StreamSubscription> eventSubscriptions = [];
 
   @override
-  void attach(BuildContext context, V view) {
-    LogDog.i(this.runtimeType.toString() + ", attach");
-
-    this.context = context;
+  void attachViewer(V view) {
+    LogDog.i(this.runtimeType.toString() + ", attachViewer");
     this.viewer = view;
+  }
+
+  @override
+  void attachContext(BuildContext context) {
+    LogDog.i(this.runtimeType.toString() + ", attachContext");
+    this.context = context;
   }
 
   void appendSubscribe(StreamSubscription subscription) {
@@ -54,10 +58,10 @@ abstract class ReactActuator<V extends Viewer> implements Actuator<V>, Viewer {
   }
 
   @override
-  void notifyToasty(String content) {
-    LogDog.i(this.runtimeType.toString() + ", notifyToasty: ${content}");
-    if (viewer != null && TextHelper.isNotEmpty(content)) {
-      viewer!.notifyToasty(content);
+  void notifyToasty(String message) {
+    LogDog.i(this.runtimeType.toString() + ", notifyToasty: ${message}");
+    if (viewer != null && TextHelper.isNotEmpty(message)) {
+      viewer!.notifyToasty(message);
     }
   }
 }

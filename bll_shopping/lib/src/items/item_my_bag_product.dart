@@ -24,24 +24,22 @@ class ItemMyBagProductWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ItemMyBagProductState createState() =>
-      _ItemMyBagProductState(shop, product, provider);
+  _ItemMyBagProductState createState() => _ItemMyBagProductState();
 }
 
-class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
-  final Shop shop;
-  final Product product;
-  final ProductOptionProvider provider;
-
-  _ItemMyBagProductState(this.shop, this.product, this.provider);
+class _ItemMyBagProductState extends State<ItemMyBagProductWidget>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    if (product == null) {
+    super.build(context);
+    if (widget.product == null) {
       return Container();
     }
-    if (product.isChecked == null) {
-      product.isChecked = false;
+    if (widget.product.isChecked == null) {
+      widget.product.isChecked = false;
     }
     return Container(
       alignment: Alignment.centerLeft,
@@ -75,15 +73,15 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(left: 10, right: 10),
       child: Checkbox(
-          value: product.isChecked,
+          value: widget.product.isChecked,
           activeColor: AppColor.colorF7551D,
           onChanged: (checked) {
-            product.isChecked = checked;
-            if (checked! && !shop.isChecked!) {
-              shop.isChecked = checked;
+            widget.product.isChecked = checked;
+            if (checked! && !widget.shop.isChecked!) {
+              widget.shop.isChecked = checked;
             }
-            if (provider != null) {
-              provider.checkShopProduct(shop, product);
+            if (widget.provider != null) {
+              widget.provider.checkShopProduct(widget.shop, widget.product);
             }
           }),
     );
@@ -94,22 +92,29 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
    */
   ClipRRect buildCartProductImage() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: FadeInImage.assetNetwork(
-        height: 60,
-        width: 60,
-        fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 100),
-        placeholder: "packages/resources/res/images/def_cover_1_1.png",
-        image: product.productImage(),
-        imageErrorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            "res/images/def_cover_1_1.png",
-            package: 'resources',
-          );
-        },
-      ),
-    );
+        borderRadius: BorderRadius.circular(16),
+        child: CachedNetworkImage(
+          fadeInDuration: const Duration(milliseconds: 50),
+          fadeOutDuration: const Duration(milliseconds: 50),
+          imageUrl: widget.product.productImage(),
+          placeholder: (context, url) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 60,
+              gaplessPlayback: true,
+              width: 60),
+          errorWidget: (context, url, error) => Image.asset(
+              "res/images/def_cover_1_1.png",
+              package: 'resources',
+              fit: BoxFit.cover,
+              height: 60,
+              gaplessPlayback: true,
+              width: 60),
+          height: 60,
+          width: 60,
+          fit: BoxFit.cover,
+        ));
   }
 
   /**
@@ -128,7 +133,7 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
               margin: EdgeInsets.only(left: 10, right: 10),
               alignment: Alignment.topLeft,
               child: Text(
-                TextHelper.clean(product.name),
+                TextHelper.clean(widget.product.name),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
@@ -137,7 +142,7 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
               margin: EdgeInsets.only(left: 10, right: 10),
               alignment: Alignment.topLeft,
               child: Text(
-                TextHelper.clean(product.formatPrice),
+                TextHelper.clean(widget.product.formatPrice),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: AppColor.colorBE, fontSize: 16),
@@ -166,15 +171,15 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
             ),
             child: IconButton(
                 onPressed: () {
-                  if (provider != null) {
-                    provider.minusProduct(product, shop);
+                  if (widget.provider != null) {
+                    widget.provider.minusProduct(widget.product, widget.shop);
                   }
                 },
                 icon: Image.asset(
                   "res/icons/ic_option_minus.png",
                   package: 'resources',
-                  width: 20,
-                  height: 20,
+                  width: 24,
+                  height: 24,
                   fit: BoxFit.cover,
                 )),
           ),
@@ -188,7 +193,7 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
                 color: AppColor.white,
               ),
               child: Text(
-                "${product.goodsNumber}",
+                "${widget.product.goodsNumber}",
                 maxLines: 1,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -209,16 +214,16 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
               ),
               child: IconButton(
                   onPressed: () {
-                    if (provider != null) {
-                      provider.addProduct(product, shop);
+                    if (widget.provider != null) {
+                      widget.provider.addProduct(widget.product, widget.shop);
                     }
                   },
                   icon: Image.asset(
                     "res/icons/ic_option_add.png",
                     package: 'resources',
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.fill,
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.cover,
                   )))
         ],
       ),

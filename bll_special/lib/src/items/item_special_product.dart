@@ -87,7 +87,8 @@ class ItemSpecialProductWidget extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24), topRight: Radius.circular(24)),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(product.image![0].url),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_cover_1_1.png",

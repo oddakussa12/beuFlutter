@@ -179,7 +179,8 @@ class _ProductDetailPageState
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               child: CachedNetworkImage(
-                fadeInDuration: const Duration(milliseconds: 100),
+                fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
                 imageUrl: actuator.product.productImage(),
                 placeholder: (context, url) => Image.asset(
                   "res/images/def_cover_1_1.png",
@@ -270,7 +271,8 @@ class _ProductDetailPageState
           height: MediaQuery.of(context).size.width,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 100),
+          fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
           placeholder: "packages/resources/res/images/def_cover_1_1.png",
           image: actuator.product.productImage(),
           imageErrorBuilder: (context, error, stackTrace) {

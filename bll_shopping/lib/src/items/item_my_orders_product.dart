@@ -72,7 +72,8 @@ class _ItemMyOrdersProductState extends State<ItemMyOrdersProductWidget> {
           height: 64,
           width: 64,
           fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 100),
+          fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
           placeholder: "packages/resources/res/images/def_cover_1_1.png",
           image: product.productImage(),
           imageErrorBuilder: (context, error, stackTrace) {

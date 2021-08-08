@@ -16,7 +16,9 @@ class Actuator<V extends Viewer> {
   /// Context
   late BuildContext context;
 
-  void attach(BuildContext context, V view) {}
+  void attachViewer(V view) {}
+
+  void attachContext(BuildContext context) {}
 
   void dispose() {}
 }
@@ -53,12 +55,12 @@ class Refreshable {
   /**
    * 刷新数据源
    */
-  void onRefreshSource(int page, PullType type) {}
+  onRefreshSource(int page, PullType type) {}
 
   /**
    * 加载数据源
    */
-  void onLoadMoreSource(int page, PullType type) {}
+  onLoadMoreSource(int page, PullType type){}
 }
 
 /**

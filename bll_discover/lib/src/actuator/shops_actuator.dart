@@ -30,20 +30,18 @@ class ShopsActuator extends RefreshActuator {
 
   @override
   void onRefreshSource(int page, PullType type) {
-    LogDog.d("ShopsPresenter-onRefreshSource");
     loadDiscoveryBusiness(page, type);
   }
 
   @override
   void onLoadMoreSource(int page, PullType type) {
-    LogDog.d("ShopsPresenter-onLoadMoreSource");
     loadDiscoveryBusiness(page, type);
   }
 
   /**
    * 加载支持外卖的商铺
    */
-  void loadDiscoveryBusiness(int page, PullType type) async {
+  loadDiscoveryBusiness(int page, PullType type) async {
     if (shops.isEmpty) {
       changeStatusForLoading();
     }
@@ -57,6 +55,7 @@ class ShopsActuator extends RefreshActuator {
         shops.addAll(body.data);
       }
     }, complete: () {
+      refreshCompleted(type);
       emptyStatus = shops.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
       notifySetState();
     });

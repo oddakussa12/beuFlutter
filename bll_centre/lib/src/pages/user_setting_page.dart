@@ -3,7 +3,6 @@ import 'package:centre/src/dialog/update_version_dialog.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
-
 /**
  * UserSettingActuator
  *
@@ -37,8 +36,7 @@ class _UserSettingPageState
 
   void checkAppVersion() {
     actuator.checkAppVersion((info) {
-      UpdateVersionDialog.show(context, info.last, info.upgrade_point,
-          isDismissible: !info.mustUpgrade);
+      UpdateVersionDialog.show(context, info.last, info.upgrade_point);
     });
   }
 
@@ -238,40 +236,40 @@ class _UserSettingPageState
 
   /// 清理缓存
   Widget buildCleanCache() {
-    return Container(
-      height: 60,
-      alignment: Alignment.center,
-      child: Row(
-        children: [
-          Image.asset(
-            "res/icons/ic_setting_clean_cache.webp",
-            package: "resources",
-            height: 34,
-            width: 34,
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 6),
-            child: Text(
-              S.of(context).setting_cleancache,
-              style: TextStyle(color: AppColor.black, fontSize: 16),
-            ),
-          ),
-          Expanded(
-              child: GestureDetector(
-            child: Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.only(right: 5),
-              child: Text(
-                "${actuator.cacheSize}",
-                style: TextStyle(color: AppColor.color37, fontSize: 14),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+          height: 60,
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              Image.asset(
+                "res/icons/ic_setting_clean_cache.webp",
+                package: "resources",
+                height: 34,
+                width: 34,
               ),
-            ),
-            onTap: () {
-              showCleanAlertDialog(context);
-            },
+              Container(
+                margin: EdgeInsets.only(left: 6),
+                child: Text(
+                  S.of(context).setting_cleancache,
+                  style: TextStyle(color: AppColor.black, fontSize: 16),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                margin: EdgeInsets.only(right: 5),
+                child: Text(
+                  "${actuator.cacheSize}",
+                  style: TextStyle(color: AppColor.color37, fontSize: 14),
+                ),
+              )),
+            ],
           )),
-        ],
-      ),
+      onTap: () {
+        showCleanAlertDialog(context);
+      },
     );
   }
 

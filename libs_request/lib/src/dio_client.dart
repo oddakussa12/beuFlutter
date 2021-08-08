@@ -17,7 +17,7 @@ typedef Parser<T> = T Function(Response response);
 class DioClient {
   /// 抓包用的 http 域名
   static final String CAUGHT_TEST_BASE_URL =
-      "https://test.api.helloo.mantouhealth.com";
+      "http://test.api.helloo.mantouhealth.com";
 
   /// 测试 url
   static final String TEST_BASE_URL =
@@ -34,6 +34,8 @@ class DioClient {
   /// Sentry DSN
   static final String SENTRY_DSN =
       "https://f33d4a898e5b47e9a9d0a2414251ee4a@o822294.ingest.sentry.io/5858692";
+
+  static final String ERR_MESSAGE = "The given data was invalid.";
 
   /// Dio 实例
   Dio _dio = new Dio();
@@ -75,7 +77,7 @@ class DioClient {
           if (uri.isScheme("https")) {
             return "DIRECT";
           }
-          return "PROXY 192.168.31.200:8888";
+          return "PROXY 192.168.1.101:8888";
         };
       };
     }
@@ -136,7 +138,7 @@ class DioClient {
       if (response != null) {
         if (response.data is DioError) {
           var error = response.data['code'];
-          String message = parseServiceError(error);
+          String message = await parseServiceError(error);
           if (fail != null) {
             fail.call(message, error);
           }
@@ -148,7 +150,7 @@ class DioClient {
         }
       }
     } on DioError catch (e) {
-      String message = parseServiceError(e);
+      String message = await parseServiceError(e);
       if (fail != null) {
         fail.call(message, e);
       }
@@ -187,7 +189,7 @@ class DioClient {
       if (response != null) {
         if (response.data is DioError) {
           var error = response.data['code'];
-          String message = parseServiceError(error);
+          String message = await parseServiceError(error);
           if (fail != null) {
             fail.call(message, error);
           }
@@ -199,7 +201,7 @@ class DioClient {
         }
       }
     } on DioError catch (e) {
-      String message = parseServiceError(e);
+      String message = await parseServiceError(e);
       if (fail != null) {
         fail.call(message, e);
       }
@@ -237,7 +239,7 @@ class DioClient {
       if (response != null) {
         if (response.data is DioError) {
           var error = response.data['code'];
-          String message = parseServiceError(error);
+          String message = await parseServiceError(error);
           if (fail != null) {
             fail.call(message, error);
           }
@@ -249,7 +251,7 @@ class DioClient {
         }
       }
     } on DioError catch (e) {
-      String message = parseServiceError(e);
+      String message = await parseServiceError(e);
       if (fail != null) {
         fail.call(message, e);
       }
@@ -287,7 +289,7 @@ class DioClient {
       if (response != null) {
         if (response.data is DioError) {
           var error = response.data['code'];
-          String message = parseServiceError(error);
+          String message = await parseServiceError(error);
           if (fail != null) {
             fail.call(message, error);
           }
@@ -299,7 +301,7 @@ class DioClient {
         }
       }
     } on DioError catch (e) {
-      String message = parseServiceError(e);
+      String message = await parseServiceError(e);
       if (fail != null) {
         fail.call(message, e);
       }
@@ -312,8 +314,9 @@ class DioClient {
   /**
    * 收集 Error 信息
    */
-  static String parseServiceError(DioError error) {
+  static Future<String> parseServiceError(DioError error) async {
     if (error != null) {
+      SentryHelper.caught(error, stackTrace: error.stackTrace);
       if (Constants.isDebug) {
         if (error.message != null) {
           LogDog.d("DioError-message: ${error.message}");
@@ -344,7 +347,8 @@ class DioClient {
           }
 
           /// 2. 取 message 中的信息
-          if (!TextHelper.isEmpty(serviceError.message)) {
+          if (!TextHelper.isEmpty(serviceError.message) &&
+              !TextHelper.isEqual(ERR_MESSAGE, serviceError.message)) {
             LogDog.d("DioError-serviceError-message: ${serviceError.message}");
             return serviceError.message!;
           }

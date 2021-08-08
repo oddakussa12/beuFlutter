@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:common/common.dart';
 import 'package:location/location.dart';
@@ -89,17 +88,16 @@ class DeliveryAddressActuator extends RetryActuator {
     if (locAddress == null || shopIds == null || shopIds!.isEmpty) {
       success.call(UserAddress(name: name, phone: phone, address: address));
     } else {
-      calcDeliveryCoast(success);
+      if (start != null) {
+        start.call();
+      }
+      calcDeliveryCoast(success, start: start, end: end);
     }
   }
 
   /// 请求定位后的配送费
   void calcDeliveryCoast(Success<UserAddress> success,
-      {Complete? start, Complete? end}) async {
-    if (start != null) {
-      start.call();
-    }
-
+      {Actioned? start, Actioned? end}) async {
     List<Map<String, dynamic>> shops = [];
     shopIds!.forEach((id) {
       Map<String, Object> args = {};
@@ -136,15 +134,30 @@ class DeliveryAddressActuator extends RetryActuator {
           }
         });
 
-        String secret = UserManager().getToken().split(RegExp("\\."))[0];
-        result.deliveryCost = AESHelper.encrypt(secret, jsonEncode(params));
+        LogDog.d("calcDeliveryCoast, params: ${params}");
 
-        LogDog.w("calcDeliveryCoast, result: ${jsonEncode(result)}");
+        if (params.isNotEmpty) {
+          String content = jsonEncode(params);
+          dynamic secret =
+              JWTHelper.decodeForKey(UserManager().getToken(), "jti");
+
+          String encrypt = AESHelper.encrypt(secret, content);
+          result.deliveryCost = encrypt;
+
+          LogDog.d("calcDeliveryCoast, paramsContent: ${content}");
+          LogDog.d("calcDeliveryCoast, paramsSecret: ${secret}");
+
+          LogDog.d("calcDeliveryCoast, paramsEncrypt: ${encrypt}");
+          LogDog.d(
+              "calcDeliveryCoast, paramsDecrypt: ${AESHelper.decrypt(secret, encrypt)}");
+        }
       }
     }, complete: () {
       if (end != null) {
         end.call();
       }
+
+      notifySetState();
 
       success.call(result);
     });

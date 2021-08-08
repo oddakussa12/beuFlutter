@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -15,22 +16,26 @@ abstract class RefreshableState<A extends RefreshActuator,
   /// 继承 Retry state
   RefreshableState(A actuator) : super(actuator);
 
-  RefreshController refreshController = RefreshController(initialRefresh: false);
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  late RefreshComplete refreshComplete = (state) {
+    LogDog.w(this.runtimeType.toString() + ", RefreshCallback");
+
+    if (refreshController != null) {
+      if (state == PullType.Down) {
+        refreshController.refreshCompleted(resetFooterState: false);
+      } else if (state == PullType.Up) {
+        refreshController.loadComplete();
+      } else {
+        refreshController.twoLevelComplete();
+      }
+    }
+  };
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    actuator.appendRefreshCallback((state) {
-      setState(() {});
-      if (refreshController != null) {
-        if (state == PullType.Down) {
-          refreshController.refreshCompleted(resetFooterState: false);
-        } else if (state == PullType.Up) {
-          refreshController.loadComplete();
-        } else {
-          refreshController.twoLevelComplete();
-        }
-      }
-    });
+    actuator.appendRefreshCallback(refreshComplete);
   }
 }

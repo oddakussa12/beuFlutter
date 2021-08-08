@@ -26,7 +26,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
   @override
   void initState() {
     super.initState();
-    if (Constants.isTesting && Constants.isDevelop) {
+    if (Constants.isTesting) {
       if (TextHelper.isEmpty(actuator.phone)) {
         actuator.phone = "15901230854";
       }

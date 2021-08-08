@@ -82,7 +82,8 @@ class _ItemShoppingCartProductState
         height: 60,
         width: 60,
         fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 100),
+        fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
         placeholder: "packages/resources/res/images/def_cover_1_1.png",
         image: product.productImage(),
         imageErrorBuilder: (context, error, stackTrace) {

@@ -1,4 +1,3 @@
-
 import 'package:centre/src/pages/my_orders_widget.dart';
 import 'package:common/common.dart';
 
@@ -14,6 +13,16 @@ class MyOrderController {
 
   initState(MyOrdersWidgetState state) {
     this._state = state;
+  }
+
+  void appendComplete(RefreshComplete complete){
+    this.refreshComplete = complete;
+  }
+
+  void updateEmptyState(EmptyStatus status) {
+    if (_state != null) {
+      _state.updateEmptyStatus(status);
+    }
   }
 
   void refresh() {

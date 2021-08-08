@@ -21,8 +21,8 @@ class MyBagActuator extends RefreshActuator {
   final ShoppingCart shopCart = ShoppingCart.create();
 
   @override
-  void attach(BuildContext context, Viewer view) {
-    super.attach(context, view);
+  void attachViewer(Viewer view) {
+    super.attachViewer(view);
 
     /// 事件总线监听购物车变化
     appendSubscribe(BusClient().subscribe<ShoppingCartEvent>((event) {
@@ -99,7 +99,7 @@ class MyBagActuator extends RefreshActuator {
   /**
    * 加载我的购物车
    */
-  void loadMyShopCart() async {
+  loadMyShopCart() async {
     DioClient().get(ShoppingUrl.optionCart,
         (response) => ShoppingCart.fromJson(response.data),
         success: (ShoppingCart body) {
@@ -114,6 +114,7 @@ class MyBagActuator extends RefreshActuator {
       } else {
         emptyStatus = EmptyStatus.Normal;
       }
+      refreshCompleted(PullType.Both);
       notifySetState();
     });
   }
@@ -169,8 +170,7 @@ class MyBagActuator extends RefreshActuator {
     LogDog.d("updateShoppingCart-params: ${requestBody}");
 
     DioClient().post(ShoppingUrl.optionCart,
-        (response) => ShoppingCart.fromJson(response.data),
-        body: requestBody,
+        (response) => ShoppingCart.fromJson(response.data), body: requestBody,
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车

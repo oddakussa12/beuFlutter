@@ -96,7 +96,8 @@ class ItemFollowShopWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(shop.bg),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_cover_8_5.png",
@@ -129,7 +130,8 @@ class ItemFollowShopWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: FadeInImage.assetNetwork(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             placeholder: "packages/resources/res/images/def_cover_8_5.png",
             imageErrorBuilder: (context, error, stackTrace) {
               return Image.asset("res/images/def_cover_8_5.png",
@@ -158,12 +160,14 @@ class ItemFollowShopWidget extends StatelessWidget {
         height: 64,
         width: 64,
         decoration: BoxDecoration(
+            color: AppColor.colorEF,
             border: Border.all(color: Colors.white, width: 2),
             borderRadius: BorderRadius.circular(42)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(64),
           child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             imageUrl: TextHelper.clean(shop.avatarLink),
             placeholder: (context, url) => Image.asset(
                 "res/images/def_avatar.png",
@@ -204,7 +208,8 @@ class ItemFollowShopWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(64),
           child: FadeInImage.assetNetwork(
-            fadeInDuration: const Duration(milliseconds: 100),
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
             placeholder: "packages/resources/res/images/def_avatar.png",
             imageErrorBuilder: (context, error, stackTrace) {
               return Image.asset("res/images/def_avatar.png",

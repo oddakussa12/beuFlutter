@@ -197,7 +197,7 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
         itemBuilder: (context, index) {
           var product = order.goods![index];
           return ItemOrderDetailProductWidget(
-            key: Key("${shop.id}-${product.id}-${DateTime.now().microsecond}"),
+            key: Key("${shop.id}-${product.id}"),
             shop: shop,
             product: product,
           );
