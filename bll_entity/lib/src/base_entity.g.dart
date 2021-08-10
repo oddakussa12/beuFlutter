@@ -10,15 +10,27 @@ UserPoint _$UserPointFromJson(Map<String, dynamic> json) {
   return UserPoint(
     (json['point'] as num).toDouble(),
     json['comment'] as int,
-    PercentAge.fromJson(json['percentage']),
+    percentage: json['percentage'] == null
+        ? null
+        : PercentAge.fromJson(json['percentage']),
   );
 }
 
-Map<String, dynamic> _$UserPointToJson(UserPoint instance) => <String, dynamic>{
-      'point': instance.point,
-      'comment': instance.comment,
-      'percentage': instance.percentage,
-    };
+Map<String, dynamic> _$UserPointToJson(UserPoint instance) {
+  final val = <String, dynamic>{
+    'point': instance.point,
+    'comment': instance.comment,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('percentage', instance.percentage);
+  return val;
+}
 
 PercentAge _$PercentAgeFromJson(Map<String, dynamic> json) {
   return PercentAge(

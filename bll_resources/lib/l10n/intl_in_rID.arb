@@ -337,5 +337,12 @@
   "sethelp_nofeedback": "Please give your kind feedback",
   "shopcenter_followed": "Diikuti",
   "shopcenter_uncategorized": "Tidak berkategori",
-  "discover_order_using": "Pesan menggunakan"
+  "discover_order_using": "Pesan menggunakan",
+  "button_apply": "Apply",
+  "alltip_position_noopen": "Please open the location permission to get an order at the correct price for you",
+  "alltip_position_closeopen": "Please open the location permission, let us accurately locate your location, otherwise the price of your order will be higher than the correct price",
+  "alltip_gps_noopen": "Please turn on GPS to get accurate positioning and let us serve you better",
+  "alltip_promonotues": "Invalid Promo Code",
+  "changeproduct_packagefee": "Package fee",
+  "changeproduct_promocode": "Promo Code"
 }

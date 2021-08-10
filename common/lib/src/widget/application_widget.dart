@@ -54,6 +54,7 @@ class AppStatelessWidget extends StatelessWidget {
 
             onGenerateRoute: onGenerateRoute,
             theme: ThemeData(
+              scaffoldBackgroundColor: AppColor.white,
               primaryColor: AppColor.white,
               primarySwatch: Colors.red,
             ),

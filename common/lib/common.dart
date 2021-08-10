@@ -41,6 +41,10 @@ export 'src/dialog/login_dialog.dart';
 export 'src/event/bus_client.dart';
 export 'src/event/bus_event.dart';
 
+/// item
+export 'src/items/item_common_product_bar.dart';
+export 'src/items/item_common_product_block.dart';
+
 /// Manager
 export 'src/manager/user_manager.dart';
 

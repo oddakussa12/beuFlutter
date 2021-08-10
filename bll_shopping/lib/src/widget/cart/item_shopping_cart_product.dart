@@ -1,4 +1,3 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -29,29 +28,18 @@ class ItemShoppingCartProductWidget extends StatefulWidget {
 
   @override
   _ItemShoppingCartProductState createState() =>
-      _ItemShoppingCartProductState(shop, product, provider);
+      _ItemShoppingCartProductState();
 }
 
 class _ItemShoppingCartProductState
     extends State<ItemShoppingCartProductWidget> {
-  /// 商铺信息
-  final Shop shop;
-
-  /// 商品信息
-  final Product product;
-
-  /// 商品操作
-  final ProductOptionProvider provider;
-
-  _ItemShoppingCartProductState(this.shop, this.product, this.provider);
-
   @override
   Widget build(BuildContext context) {
-    if (product == null) {
+    if (widget.product == null) {
       return Container();
     }
-    if (product.isChecked == null) {
-      product.isChecked = false;
+    if (widget.product.isChecked == null) {
+      widget.product.isChecked = false;
     }
     return Container(
       alignment: Alignment.centerLeft,
@@ -63,7 +51,7 @@ class _ItemShoppingCartProductState
           buildCartProductImage(),
 
           /// 购物车商品信息
-          buildCartProductInfo(),
+          buildProductPriceInfo(),
 
           /// 购物车商品加减操作
           buildProductOptions()
@@ -83,11 +71,14 @@ class _ItemShoppingCartProductState
         width: 60,
         fit: BoxFit.cover,
         fadeInDuration: const Duration(milliseconds: 50),
-            fadeOutDuration: const Duration(milliseconds: 50),
+        fadeOutDuration: const Duration(milliseconds: 50),
         placeholder: "packages/resources/res/images/def_cover_1_1.png",
-        image: product.productImage(),
+        image: widget.product.productImage(),
         imageErrorBuilder: (context, error, stackTrace) {
-          return Image.asset("res/images/def_cover_1_1.png", package: 'resources',);
+          return Image.asset(
+            "res/images/def_cover_1_1.png",
+            package: 'resources',
+          );
         },
       ),
     );
@@ -96,33 +87,58 @@ class _ItemShoppingCartProductState
   /**
    * 购物车商品信息
    */
-  Widget buildCartProductInfo() {
+  Widget buildProductPriceInfo() {
     return Expanded(
         child: Container(
-      height: 60,
+      height: 64,
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              margin: EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  top: widget.product.isGFCategory() ? 0 : 10),
               alignment: Alignment.topLeft,
               child: Text(
-                TextHelper.clean(product.name),
-                maxLines: 2,
+                TextHelper.clean(widget.product.name),
+                maxLines: widget.product.isGFCategory() ? 1 : 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
               )),
+
+          /// 商品原价
           Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               alignment: Alignment.topLeft,
               child: Text(
-                TextHelper.clean(product.formatPrice),
-                maxLines: 1,
+                TextHelper.clean(widget.product.formatPrice),
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColor.colorBE, fontSize: 16),
-              ))
+                style: TextStyle(
+                    color: AppColor.colorBE,
+                    fontSize: 16,
+                    decoration: widget.product.isGFCategory()
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                    decorationThickness: 2),
+              )),
+
+          /// 官方分类下的商品展示折扣价
+          Offstage(
+            offstage: !widget.product.isGFCategory(),
+            child: Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  TextHelper.clean(widget.product.formatDisPrice),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: AppColor.colorBE, fontSize: 16),
+                )),
+          ),
         ],
       ),
     ));
@@ -147,8 +163,8 @@ class _ItemShoppingCartProductState
             ),
             child: IconButton(
                 onPressed: () {
-                  if (provider != null) {
-                    provider.minusProduct(product, shop);
+                  if (widget.provider != null) {
+                    widget.provider.minusProduct(widget.product, widget.shop);
                   }
                 },
                 icon: Image.asset(
@@ -169,7 +185,7 @@ class _ItemShoppingCartProductState
                 color: AppColor.colorF8,
               ),
               child: Text(
-                "${product.goodsNumber}",
+                "${widget.product.goodsNumber}",
                 maxLines: 1,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -189,8 +205,8 @@ class _ItemShoppingCartProductState
               ),
               child: IconButton(
                   onPressed: () {
-                    if (provider != null) {
-                      provider.addProduct(product, shop);
+                    if (widget.provider != null) {
+                      widget.provider.addProduct(widget.product, widget.shop);
                     }
                   },
                   icon: Image.asset(

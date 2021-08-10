@@ -1,9 +1,7 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shopping/src/items/item_order_detail_product.dart';
 
 /**
  * ItemOrderDetailWidget
@@ -98,8 +96,11 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
           /// 订单价格【Subtotal】
           buildOrderSubTotalPrice(),
 
+          /// 商品包装费
+          buildOrderPackagingFee(),
+
           /// 订单派送费
-          buildOrderCoast(),
+          buildOrderDeliveryCoast(),
 
           /// 订单总价
           buildOrderTotalPrice()
@@ -189,17 +190,22 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
       shop.isChecked = false;
     }
     return ListView.builder(
-
-        /// 禁用滑动事件
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: order.goods!.isEmpty ? 0 : order.goods!.length,
         itemBuilder: (context, index) {
           var product = order.goods![index];
-          return ItemOrderDetailProductWidget(
-            key: Key("${shop.id}-${product.id}"),
-            shop: shop,
-            product: product,
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: ItemCommonProductBar(
+              key: Key("${shop.id}-${product.id}"),
+              shop: shop,
+              product: product,
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.shopping.ProductDetail,
+                  arguments: product.id);
+            },
           );
         });
   }
@@ -264,7 +270,39 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
           ),
           Expanded(
               child: Text(
-            TextHelper.clean(order.formatPrice),
+            TextHelper.clean(order.formatTotalPrice),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.black,
+              fontSize: 14,
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  /// 商品包装费
+  Widget buildOrderPackagingFee() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: 10, right: 10, top: 12),
+      child: Row(
+        children: [
+          Text(
+            S.of(context).changeproduct_packagefee,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: AppColor.colorBE,
+              fontSize: 14,
+            ),
+          ),
+          Expanded(
+              child: Text(
+            TextHelper.clean(widget.order.formatPackageCoast),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
@@ -281,7 +319,7 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
   /**
    * 订单派送费
    */
-  Container buildOrderCoast() {
+  Container buildOrderDeliveryCoast() {
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(left: 10, right: 10, top: 16),

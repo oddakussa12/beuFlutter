@@ -21,10 +21,7 @@ class ShoppingMyBagPage extends StatefulWidget {
 
 class _ShoppingMyBagState
     extends RefreshableState<ShoppingMyBagActuator, ShoppingMyBagPage>
-    with
-        AutomaticKeepAliveClientMixin,
-        SingleTickerProviderStateMixin,
-        ProductOptionProvider {
+    with AutomaticKeepAliveClientMixin, ProductOptionProvider {
   _ShoppingMyBagState(actuator) : super(actuator);
 
   @override
@@ -62,10 +59,11 @@ class _ShoppingMyBagState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     LogDog.w("ShoppingMyBagPage, build");
 
     return Scaffold(
-      backgroundColor: AppColor.white,
       appBar: ToolbarOnlyTitle(
         title: S.of(context).shopcart_shopping,
       ),
@@ -110,7 +108,9 @@ class _ShoppingMyBagState
    */
   Widget buildCartMeter() {
     if (actuator.isNoneShoppingCart()) {
-      return Container(height: 1,);
+      return Container(
+        height: 1,
+      );
     }
     return Container(
       height: 60,

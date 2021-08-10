@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alltip_failed":
             MessageLookupByLibrary.simpleMessage("Gagal, coba lagi nanti."),
         "alltip_formatOrderPrice": m2,
+        "alltip_gps_noopen": MessageLookupByLibrary.simpleMessage(
+            "Please turn on GPS to get accurate positioning and let us serve you better"),
         "alltip_headpic": MessageLookupByLibrary.simpleMessage(
             "Foto profil tidak boleh kosong"),
         "alltip_idsuccessed": MessageLookupByLibrary.simpleMessage("Tersimpan"),
@@ -102,6 +104,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Oh tidak! File tidak ada"),
         "alltip_nonetwork": MessageLookupByLibrary.simpleMessage(
             "Jaringan tidak tersedia, coba lagi nanti."),
+        "alltip_position_closeopen": MessageLookupByLibrary.simpleMessage(
+            "Please open the location permission, let us accurately locate your location, otherwise the price of your order will be higher than the correct price"),
+        "alltip_position_noopen": MessageLookupByLibrary.simpleMessage(
+            "Please open the location permission to get an order at the correct price for you"),
         "alltip_product_descriptionrule": MessageLookupByLibrary.simpleMessage(
             "Bio bisnis harus terdiri dari 1 sampai 300 karakter"),
         "alltip_product_imagerule": MessageLookupByLibrary.simpleMessage(
@@ -110,6 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Nama produk harus terdiri dari 6 sampai 32 karakter"),
         "alltip_product_pricerule": MessageLookupByLibrary.simpleMessage(
             "Harga produk tidak boleh kosong"),
+        "alltip_promonotues":
+            MessageLookupByLibrary.simpleMessage("Invalid Promo Code"),
         "alltip_replyrule": MessageLookupByLibrary.simpleMessage(
             "Balasan harus terdiri dari 1 sampai 2000 karakter"),
         "alltip_sended": MessageLookupByLibrary.simpleMessage("Kirim"),
@@ -130,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_name": MessageLookupByLibrary.simpleMessage("beU"),
         "button_addfriend":
             MessageLookupByLibrary.simpleMessage("Tambah teman"),
+        "button_apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "button_cancel": MessageLookupByLibrary.simpleMessage("Membatalkan"),
         "button_completed": MessageLookupByLibrary.simpleMessage("Selesai"),
         "button_confirm": MessageLookupByLibrary.simpleMessage("Konfirmasi"),
@@ -197,8 +206,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeproduct_name":
             MessageLookupByLibrary.simpleMessage("Nama produk"),
         "changeproduct_no": MessageLookupByLibrary.simpleMessage("No"),
+        "changeproduct_packagefee":
+            MessageLookupByLibrary.simpleMessage("Package fee"),
         "changeproduct_price":
             MessageLookupByLibrary.simpleMessage("Harga produk"),
+        "changeproduct_promocode":
+            MessageLookupByLibrary.simpleMessage("Promo Code"),
         "changeproduct_update":
             MessageLookupByLibrary.simpleMessage("Perbarui produk"),
         "changeproduct_yes": MessageLookupByLibrary.simpleMessage("Yes"),

@@ -19,7 +19,8 @@ class PhotoSelectDialog extends StatelessWidget {
   const PhotoSelectDialog({Key? key, this.title, this.itemTap})
       : super(key: key);
 
-  static void showDialog(BuildContext context, {String? title, SelectItemTap? itemTap}) {
+  static void showDialog(BuildContext context,
+      {String? title, SelectItemTap? itemTap}) {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -35,8 +36,6 @@ class PhotoSelectDialog extends StatelessWidget {
         });
   }
 
-  void s() {}
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,16 +46,16 @@ class PhotoSelectDialog extends StatelessWidget {
           TextHelper.isEmpty(title)
               ? Container()
               : Container(
-            height: 50,
-            alignment: Alignment.center,
-            child: Text(
-              title!,
-              style: TextStyle(
-                  color: AppColor.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Text(
+                    title!,
+                    style: TextStyle(
+                        color: AppColor.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
 
           /// 选择图片
           GestureDetector(
@@ -65,7 +64,7 @@ class PhotoSelectDialog extends StatelessWidget {
               height: 56,
               alignment: Alignment.center,
               child: Text(
-                "选择图片",
+                S.of(context).imagepicker_photos,
                 style: TextStyle(
                     color: AppColor.black,
                     fontSize: 16,
@@ -92,7 +91,7 @@ class PhotoSelectDialog extends StatelessWidget {
               height: 56,
               alignment: Alignment.center,
               child: Text(
-                "拍摄照片",
+                S.of(context).imagepicker_takephoto,
                 style: TextStyle(
                     color: AppColor.black,
                     fontSize: 16,

@@ -39,6 +39,10 @@ class OrderPreviewActuator extends RetryActuator {
   @override
   void toRetry() {}
 
+  bool isShowPromo() {
+    return !isSpecial() && orderItems.length <= 1;
+  }
+
   /// 判断是否是特价商品
   bool isSpecial() {
     return TextHelper.isEqual("special", type);
@@ -88,7 +92,7 @@ class OrderPreviewActuator extends RetryActuator {
   /// 准备折扣码
   void preparePromoCode() {
     if (TextHelper.isEmpty(promoCode)) {
-      notifyToasty("优惠码不能为空");
+      notifyToasty(S.of(context).alltip_promonotues);
       return;
     }
 
@@ -154,44 +158,29 @@ class OrderPreviewActuator extends RetryActuator {
     bool diffCurrency = false;
 
     double previewTotal = 0.0;
-    double previewPackageTotal = 0.0;
-    double previewDeliveryTotal = 0.0;
-    double previewDiscountTotal = 0.0;
 
     orderItems.forEach((order) {
-      /// 派送费
-      order.deliveryCoast =
-          order.deliveryCoast == null ? 0.0 : order.deliveryCoast;
+      order.currency = TextHelper.clean(order.currency);
 
-      /// 包装费
-      order.packageFee = order.packageFee == null ? 0.0 : order.packageFee;
-
-      /// 折扣
-      order.subDisTotal = order.subDisTotal == null ? 0.0 : order.subDisTotal;
-
-      order.subTotal = order.subTotal == null ? 0.0 : order.subTotal;
-      order.currency = order.currency == null ? "" : order.currency;
-
-      /// 计算所有订单：包装费
-      // previewPackageTotal += order.packageFee!;
-
-      /// 计算所有订单：派送费
-      // previewDeliveryTotal += order.coast!;
-
-      /// 计算所有订单：折扣
-      // previewDiscountTotal += order.subDisTotal!;
+      /// 整理数值，避免出现 null 【派送费，包装费，折扣，小计】
+      order.deliveryCoast = ValueFormat.cleanDouble(order.deliveryCoast);
+      order.packageFee = ValueFormat.cleanDouble(order.packageFee);
+      order.subDisTotal = ValueFormat.cleanDouble(order.subDisTotal);
+      order.subTotal = ValueFormat.cleanDouble(order.subTotal);
 
       /// 计算订单总价【有折扣时按折扣价计算】
       if (order.subDisTotal != 0) {
-        order.total = (order.subDisTotal! + order.deliveryCoast!);
+        order.total =
+            (order.subDisTotal! + order.deliveryCoast! + order.packageFee!);
       } else {
-        order.total = (order.subTotal! + order.deliveryCoast!);
+        order.total =
+            (order.subTotal! + order.deliveryCoast! + order.packageFee!);
       }
 
       /// 计算所有订单：总价
       previewTotal += order.total!;
 
-      /// 格式化
+      /// 格式化价格【派送费，包装费，折扣，小计】
       order.formatSubTotal =
           "${format.format(order.subTotal)} ${order.currency}";
       order.formatDeliveryCoast =
@@ -212,12 +201,6 @@ class OrderPreviewActuator extends RetryActuator {
     orderP.diffCurrency = diffCurrency;
     if (!diffCurrency) {
       orderP.total = previewTotal;
-
-      /// 格式化
-      // orderP.formatPackageTotal = "+${format.format(previewPackageTotal)} ${currency}";
-      // orderP.formatDeliveryTotal = "+${format.format(previewDeliveryTotal)} ${currency}";
-      // orderP.formatDiscountTotal = "-${format.format(previewDiscountTotal)} ${currency}";
-
       orderP.formatTotal = "${format.format(previewTotal)}";
     } else {
       orderP.total = 0.0;
@@ -227,8 +210,13 @@ class OrderPreviewActuator extends RetryActuator {
 
   /**
    * 提交预览的订单
+   * action:
+   * 1: 跳转地址编辑页
+   * 2：加载进度条
+   * 3：订单创建完成
+   * 4: 下单失败
    */
-  void checkoutPreviewOrder(Complete complete) async {
+  void checkoutPreviewOrder(StatusAction action) async {
     /// 检查预览订单信息
     if (orderP == null || orderItems == null || orderItems.isEmpty) {
       toast(message: S.of(context).alltip_loading_error);
@@ -240,8 +228,14 @@ class OrderPreviewActuator extends RetryActuator {
         TextHelper.isEmpty(orderP.phone!) ||
         TextHelper.isEmpty(orderP.address!)) {
       toast(message: S.of(context).confirm_address_no);
+
+      /// 跳转地址编辑页
+      action.call(1);
       return;
     }
+
+    /// 请求开始：加载进度条
+    action.call(2);
 
     /// 商品信息
     Map<String, String> idNumbers = {};
@@ -270,19 +264,29 @@ class OrderPreviewActuator extends RetryActuator {
       requestBody.fields.add(MapEntry("promo_code", promoCode));
     }
 
+    bool orderCreated = false;
     DioClient().post(ShoppingUrl.apiOrder,
         (response) => PreviewOrdersBody.fromJson(response.data),
         body: requestBody, success: (PreviewOrdersBody body) {
       if (body != null && body.data != null) {
         LogDog.d("checkoutPreviewOrder-Response: ${body}");
 
-        /// 订单创建完成
-        complete.call();
+        orderCreated = true;
+        /// 向主页发送订单创建成功的通知
+        BusClient().fire(OrderCreatedEvent());
       } else {
         toast(message: S.of(context).alltip_loading_error);
       }
     }, fail: (message, error) {
       notifyToasty(message);
+    }, complete: () {
+      /// 订单创建完成
+      if (orderCreated) {
+        action.call(3);
+      } else {
+        /// 下单失败
+        action.call(4);
+      }
     });
   }
 }

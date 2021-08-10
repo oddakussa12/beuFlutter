@@ -7,6 +7,12 @@ NumberFormat format = new NumberFormat("0.00");
 /// 全局通用的动作回调函数【可以用于各种无参动作的回调】
 typedef Actioned = void Function();
 
+/// 全局通用状态动作回调函数
+typedef StatusAction = void Function(int status);
+
+/// 等待返回
+typedef WaitingReturn<T> = bool Function();
+
 /// 全局通用的成功回调函数【可以用于各种一参动作的回调】
 typedef Success<T> = void Function(T result);
 

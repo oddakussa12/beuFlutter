@@ -79,6 +79,8 @@ class SpecialDiscoverPageState
   void prepareOpenSpecialProducts() {
     if (actuator.special.count > 0) {
       Navigator.pushNamed(context, Routes.special.SpecialProducts);
+    } else {
+      actuator.checkSpecialState();
     }
   }
 
@@ -87,7 +89,6 @@ class SpecialDiscoverPageState
     super.build(context);
     LogDog.e("SpecialDiscover-build");
     return Scaffold(
-      backgroundColor: AppColor.white,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
@@ -109,31 +110,7 @@ class SpecialDiscoverPageState
             title: Constants.isTesting ? buildSearchBar() : null,
             flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
-                background: GestureDetector(
-                  child: CachedNetworkImage(
-                    alignment: Alignment.topCenter,
-                    fadeInDuration: const Duration(milliseconds: 200),
-                    imageUrl: TextHelper.clean(actuator.special.image),
-                    placeholder: (context, url) => Image.asset(
-                        "res/images/def_cover_1_1.png",
-                        package: 'resources',
-                        fit: BoxFit.fitWidth,
-                        height: MediaQuery.of(context).size.width * 0.827,
-                        gaplessPlayback: true,
-                        width: MediaQuery.of(context).size.width),
-                    errorWidget: (context, url, error) => Image.asset(
-                        "res/images/def_cover_1_1.png",
-                        package: 'resources',
-                        fit: BoxFit.fitWidth,
-                        height: MediaQuery.of(context).size.width * 0.827,
-                        gaplessPlayback: true,
-                        width: MediaQuery.of(context).size.width),
-                    height: MediaQuery.of(context).size.width * 0.827,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  onTap: prepareOpenSpecialProducts,
-                )),
+                background: buildSpecialProductCover(context)),
             bottom: PreferredSize(
               child: Container(
                 color: AppColor.white,
@@ -161,6 +138,36 @@ class SpecialDiscoverPageState
           physics: PageScrollPhysics(),
         ),
       ),
+    );
+  }
+
+  /// 特价商品封面
+  Widget buildSpecialProductCover(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: CachedNetworkImage(
+        alignment: Alignment.topCenter,
+        fadeInDuration: const Duration(milliseconds: 200),
+        imageUrl: TextHelper.clean(actuator.special.image),
+        placeholder: (context, url) => Image.asset(
+            "res/images/def_cover_8_5.png",
+            package: 'resources',
+            fit: BoxFit.fitHeight,
+            height: MediaQuery.of(context).size.width * 0.827,
+            gaplessPlayback: true,
+            width: MediaQuery.of(context).size.width),
+        errorWidget: (context, url, error) => Image.asset(
+            "res/images/def_cover_8_5.png",
+            package: 'resources',
+            fit: BoxFit.fitHeight,
+            height: MediaQuery.of(context).size.width * 0.827,
+            gaplessPlayback: true,
+            width: MediaQuery.of(context).size.width),
+        height: MediaQuery.of(context).size.width * 0.827,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.fitWidth,
+      ),
+      onTap: prepareOpenSpecialProducts,
     );
   }
 

@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 
-import 'item_order_preview_product.dart';
-
 /**
  * ItemOrderPreviewWidget
  * 订单预览列表项
@@ -29,27 +27,16 @@ class ItemOrderPreviewWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ItemOrderPreviewState createState() =>
-      _ItemOrderPreviewState(orderNumber, shop, orderItem, provider);
+  _ItemOrderPreviewState createState() => _ItemOrderPreviewState();
 }
 
 class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
-  final Shop shop;
-
-  /// 订单序号
-  final int orderNumber;
-  final PreOrder orderItem;
-  final ProductOptionProvider provider;
-
-  _ItemOrderPreviewState(
-      this.orderNumber, this.shop, this.orderItem, this.provider);
-
   /**
    * 打开商铺详情
    */
   void clickOpenShopDetail(BuildContext context) {
     Navigator.pushNamed(context, Routes.shopping.ShopDetail,
-        arguments: orderItem.shop);
+        arguments: widget.orderItem.shop);
   }
 
   @override
@@ -74,7 +61,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 6),
       child: Text(
-        "${S.of(context).order_how_many(orderNumber)}",
+        "${S.of(context).order_how_many(widget.orderNumber)}",
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
@@ -143,7 +130,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(shop.name),
+                TextHelper.clean(widget.shop.name),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -155,7 +142,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ],
         ),
         onTap: () {
-          if (shop != null) {
+          if (widget.shop != null) {
             /// 打开商铺详情
             clickOpenShopDetail(context);
           }
@@ -168,22 +155,21 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
    * 购物车中商品列表
    */
   ListView buildShopProducts() {
-    if (shop.isChecked == null) {
-      shop.isChecked = false;
+    if (widget.shop.isChecked == null) {
+      widget.shop.isChecked = false;
     }
     return ListView.builder(
-
-        /// 禁用滑动事件
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: orderItem.goods!.isEmpty ? 0 : orderItem.goods!.length,
+        itemCount: widget.orderItem.goods!.isEmpty
+            ? 0
+            : widget.orderItem.goods!.length,
         itemBuilder: (context, index) {
-          var product = orderItem.goods![index];
-          return ItemOrderPreviewProductWidget(
-            key: Key("${shop.id}-${product.id}"),
-            shop: shop,
+          var product = widget.orderItem.goods![index];
+          return ItemCommonProductBar(
+            key: Key("${widget.shop.id}-${product.id}"),
+            shop: widget.shop,
             product: product,
-            provider: provider,
           );
         });
   }
@@ -225,8 +211,9 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-          orderItem.subDisTotal != 0 ? TextHelper.clean(orderItem.formatSubDisTotal) :
-            TextHelper.clean(orderItem.formatSubTotal),
+            widget.orderItem.subDisTotal != 0
+                ? TextHelper.clean(widget.orderItem.formatSubDisTotal)
+                : TextHelper.clean(widget.orderItem.formatSubTotal),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
@@ -260,7 +247,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-            TextHelper.clean(orderItem.formatDeliveryCoast),
+            TextHelper.clean(widget.orderItem.formatDeliveryCoast),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
@@ -282,7 +269,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
       child: Row(
         children: [
           Text(
-            "Packaging fee",
+            S.of(context).changeproduct_packagefee,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -292,7 +279,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-            TextHelper.clean(orderItem.formatPackageFee),
+            TextHelper.clean(widget.orderItem.formatPackageFee),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
@@ -326,7 +313,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
           ),
           Expanded(
               child: Text(
-            TextHelper.clean(orderItem.formatTotal),
+            TextHelper.clean(widget.orderItem.formatTotal),
             maxLines: 1,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,

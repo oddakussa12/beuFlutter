@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shopping/src/actuator/shop_detail_actuator.dart';
 import 'package:shopping/src/widget/cart/shopping_cart_bar.dart';
 import 'package:shopping/src/controller/shopping_cart_controller.dart';
-import 'package:shopping/src/items/item_shop_product_grid.dart';
 
 /**
  * shop_detail_page.dart
@@ -72,11 +69,17 @@ class _ShopDetailPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
       appBar: Toolbar(
-        title: actuator.shopDetail.name == null
-            ? ""
-            : TextHelper.clean(actuator.shopDetail.name),
+        title: TextHelper.clean(actuator.shopDetail.name),
+        obiter: Offstage(
+          offstage: actuator.shopDetail.level != 1,
+          child: Image.asset(
+            "res/icons/ic_certified_shop.png",
+            width: 18,
+            height: 16,
+            package: "resources",
+          ),
+        ),
       ),
       body: Stack(
         alignment: AlignmentDirectional.bottomCenter,
@@ -100,9 +103,7 @@ class _ShopDetailPageState
               actuator.pullUp();
             },
             child: SingleChildScrollView(
-              child: actuator.isNotNormal()
-                  ? buildEmptyWidget(context)
-                  : buildShopBody(context),
+              child: buildShopBody(context),
             ),
           ),
 
@@ -137,7 +138,7 @@ class _ShopDetailPageState
                   buildShopBackground(context),
 
                   /// 派送图标: shop.delivery
-                  /// buildDeliveryIcon(actuator.shopDetail.delivery),
+                  buildDeliveryIcon(actuator.shopDetail.delivery),
 
                   /// 商铺头像
                   buildShopAvatar()
@@ -145,22 +146,10 @@ class _ShopDetailPageState
               ),
 
               /// 商铺标题
-              Container(
-                margin: EdgeInsets.only(top: 12),
-                child: Text(
-                  actuator.shopDetail.nickName ?? "",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      color: AppColor.h1,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+              buildShopNickName(),
 
               /// 商铺评分
-              buildShopStars(actuator.shopDetail),
+              buildShopStarBar(actuator.shopDetail),
 
               /// 商铺地址
               buildShopAddress(),
@@ -176,11 +165,12 @@ class _ShopDetailPageState
 
               Container(
                 height: 1,
-                margin: EdgeInsets.all(16),
+                margin: EdgeInsets.symmetric(vertical: 16),
                 color: AppColor.color08000,
               ),
 
-              buildProductsTitle(),
+              /// 商品列表标题
+              buildProductsHeadline(),
 
               /// 商铺商品列表
               buildShopProducts(context)
@@ -277,7 +267,7 @@ class _ShopDetailPageState
     if (ableDelivery != null && ableDelivery) {
       return Container(
         alignment: Alignment.topRight,
-        margin: EdgeInsets.only(top: 30, right: 30),
+        margin: EdgeInsets.only(top: 12, right: 26),
         child: Image.asset(
           "res/icons/ic_shop_delivery.png",
           package: 'resources',
@@ -291,47 +281,67 @@ class _ShopDetailPageState
     }
   }
 
+  Widget buildShopNickName() {
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      child: Text(
+        actuator.shopDetail.nickName ?? actuator.shopDetail.name ?? "",
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: AppColor.h1, fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
   /**
-   * 商铺评分
+   * 商铺评分条
    */
-  Widget buildShopStars(Shop shop) {
+  Widget buildShopStarBar(Shop shop) {
+    UserPoint point = shop.getShopPoint();
+
+    /// 当商铺的评分为零时，不显示 star bar
+    if (point.point <= 0) {
+      return Container();
+    }
+
     List<Widget> stars = [];
 
-    /// 评论个数
-    int comment = shop.getShopComment();
-    if (comment > 0) {
+    /// 评论数
+    if (point.comment > 0) {
       stars.add(Container(
-        margin: EdgeInsets.only(left: 5, right: 5),
+        margin: EdgeInsets.only(left: 10, right: 5),
         child: Text(
-          "${comment}",
-          style: TextStyle(color: AppColor.colorBE, fontSize: 12),
+          "(${point.comment})",
+          style: TextStyle(color: AppColor.colorBE, fontSize: 14),
         ),
       ));
     }
 
     /// 星
-    int star = shop.getShopStar();
+    double star = point.point;
     for (int i = 1; i <= 5; i++) {
       stars.add(buildSopStar(star >= i));
     }
 
-    /// 等级
+    /// 评分
     if (star > 0) {
       stars.add(Container(
-        margin: EdgeInsets.only(left: 5, right: 5),
+        margin: EdgeInsets.only(left: 5, right: 10),
         child: Text(
-          "(${star.toDouble()})",
+          "(${ValueFormat.formatDouble(star)})",
           style: TextStyle(color: AppColor.colorF7551D, fontSize: 12),
         ),
       ));
     }
     return IntrinsicWidth(
       child: Container(
+        height: 24,
         alignment: Alignment.center,
-        padding: EdgeInsets.all(8),
         margin: EdgeInsets.only(top: 12),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(24),
             border: Border.all(color: AppColor.colorBE, width: 1)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -369,138 +379,163 @@ class _ShopDetailPageState
 
   /// 商铺地址
   Widget buildShopAddress() {
-    return TextHelper.isNotEmpty(actuator.shopDetail.address)
-        ? Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
-            child: Text(
-              TextHelper.clean(actuator.shopDetail.address),
-              textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColor.colorBE, fontSize: 14),
-            ),
-          )
-        : Container();
+    return Visibility(
+      visible: TextHelper.isNotEmpty(actuator.shopDetail.address),
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top: 12, left: 16, right: 16),
+        child: Text(
+          TextHelper.clean(actuator.shopDetail.address),
+          textAlign: TextAlign.center,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColor.colorBE, fontSize: 14),
+        ),
+      ),
+    );
   }
 
   Widget buildShopContact() {
-    return TextHelper.isNotEmpty(actuator.shopDetail.contact)
-        ? Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              child: Text(
-                TextHelper.clean(actuator.shopDetail.contact),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: AppColor.colorF7551D,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
-              ),
-              onTap: () {
-                if (TextHelper.isNotEmpty(actuator.shopDetail.contact!)) {
-                  launch("tel://${actuator.shopDetail.contact}");
-                }
-              },
-            ),
-          )
-        : Container();
+    return Visibility(
+      visible: TextHelper.isAnyNotEmpty(
+          [actuator.shopDetail.callCenter, actuator.shopDetail.contact]),
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top: 12, left: 16, right: 16),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Text(
+            TextHelper.cleanFirst(
+                [actuator.shopDetail.callCenter, actuator.shopDetail.contact]),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: AppColor.colorF7551D,
+                fontSize: 14,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            launch("tel://${TextHelper.cleanFirst([
+                  actuator.shopDetail.callCenter,
+                  actuator.shopDetail.contact
+                ])}");
+          },
+        ),
+      ),
+    );
   }
 
   /// 商铺详情
   Widget buildShopDesc() {
-    return TextHelper.isNotEmpty(actuator.shopDetail.about)
-        ? Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 12, left: 16, right: 16),
-            child: Text(
-              TextHelper.clean(actuator.shopDetail.about),
-              textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColor.black, fontSize: 14),
-            ),
-          )
-        : Container();
+    return Visibility(
+        visible: TextHelper.isNotEmpty(actuator.shopDetail.about),
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(top: 12, left: 20, right: 20),
+          child: Text(
+            actuator.shopDetail.about ?? "",
+            textAlign: TextAlign.center,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: AppColor.black, fontSize: 14),
+          ),
+        ));
   }
 
   /// Follow 关注
   Widget buildFollowButton() {
-    if (actuator.shopDetail.followState == null) {
-      return Container();
-    }
-    return GestureDetector(
-      child: Container(
-        height: 40,
-        margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-        alignment: Alignment.center,
-        decoration: actuator.shopDetail.followState!
-            ? BoxDecoration(
-                color: AppColor.colorEF,
-                borderRadius: BorderRadius.circular(44))
-            : BoxDecoration(
-                border: Border.all(
-                    color: AppColor.colorBE, width: AppSizes.divider),
-                borderRadius: BorderRadius.circular(44)),
-        child: Text(
-          actuator.shopDetail.followState!
-              ? S.of(context).shopcenter_followed
-              : S.of(context).shopcenter_follow,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: AppColor.black, fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-      ),
-      onTap: () {
-        prepareFollowShop();
-      },
+    return Visibility(
+      visible: actuator.shopDetail.followState != null,
+      child: actuator.shopDetail.followState == null
+          ? Container()
+          : GestureDetector(
+              child: Container(
+                height: 36,
+                margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                alignment: Alignment.center,
+                decoration: actuator.shopDetail.followState ?? false
+                    ? BoxDecoration(
+                        color: AppColor.color1A000,
+                        borderRadius: BorderRadius.circular(36))
+                    : BoxDecoration(
+                        border: Border.all(
+                            color: AppColor.colorBE, width: AppSizes.divider),
+                        borderRadius: BorderRadius.circular(36)),
+                child: Text(
+                  actuator.shopDetail.followState!
+                      ? S.of(context).shopcenter_followed
+                      : S.of(context).shopcenter_follow,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: actuator.shopDetail.followState ?? false
+                          ? AppColor.color81
+                          : AppColor.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              onTap: () {
+                prepareFollowShop();
+              },
+            ),
     );
   }
 
-  Widget buildProductsTitle() {
-    if (actuator.products != null && actuator.products.isNotEmpty) {
-      return Container(
-        margin: EdgeInsets.only(left: 16, right: 16),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          S.of(context).discover_product,
-          textAlign: TextAlign.left,
-          style: TextStyle(
-              color: AppColor.black, fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      );
-    } else {
-      return Container();
-    }
+  Widget buildProductsHeadline() {
+    return Visibility(
+        visible: actuator.products != null && actuator.products.isNotEmpty,
+        child: Container(
+          margin: EdgeInsets.only(left: 16, right: 16),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            S.of(context).discover_product,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
+          ),
+        ));
   }
 
   /**
    * 构建商铺下的商品列表
    */
   Widget buildShopProducts(BuildContext context) {
-    return Container(
-      child: GridView.count(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          crossAxisCount: 2,
-          mainAxisSpacing: 8,
-          physics: new NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          crossAxisSpacing: 8,
-          childAspectRatio: 0.72,
-          children: actuator.products.map((product) {
-            return ItemShopProductGridWidget(
-                key: Key(
-                    "${product.name}-${product.id}-${DateTime.now().microsecond}"),
-                product: product,
-                event: (product) {
-                  appendShopCart(product);
+    return actuator.isNotNormal()
+        ? buildEmptyWidget(context,
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.22))
+        : GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.68,
+            ),
+            itemCount: actuator.products.length,
+            itemBuilder: (BuildContext context, int index) {
+              Product product = actuator.products[index];
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: ItemCommonProductBlock(
+                    key: Key(
+                        "${product.name}-${product.id}-${DateTime.now().microsecond}"),
+                    product: product,
+                    event: (product) {
+                      appendShopCart(product);
+                    },
+                    showOptions: UserManager().delivery(actuator.shopDetail)),
+                onTap: () {
+                  barController.closeShopCart();
+                  Navigator.pushNamed(context, Routes.shopping.ProductDetail,
+                      arguments: product.id);
                 },
-                showOptions: UserManager().delivery(actuator.shopDetail));
-          }).toList()),
-    );
+              );
+            });
   }
 }

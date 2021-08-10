@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 import 'package:shopping/src/actuator/shopping_cart_actuator.dart';
-import 'package:shopping/src/pages/order_preview_page.dart';
 import 'package:shopping/src/widget/cart/item_shopping_cart_product.dart';
 import 'package:shopping/src/controller/shopping_cart_controller.dart';
 import 'package:shopping/src/widget/shake/shake_controller.dart';
@@ -373,7 +372,7 @@ class ShoppingCartBarState
                     bottomRight: Radius.circular(4))),
 
             /// 购物车商品列表
-            child: buildProducts()));
+            child: buildProductList()));
   }
 
   Container buildProductsTitle() {
@@ -390,7 +389,7 @@ class ShoppingCartBarState
     );
   }
 
-  Widget buildProducts() {
+  Widget buildProductList() {
     if (actuator.shopCart.data == null || actuator.shopCart.data.isEmpty) {
       return Container();
     }
@@ -403,13 +402,11 @@ class ShoppingCartBarState
             itemBuilder: (context, index) {
               var mainShop = actuator.shopCart.data[0];
               var product = mainShop.goods![index];
-              return Container(
-                child: ItemShoppingCartProductWidget(
-                  key: Key("${product.id}-${product.name}"),
-                  shop: mainShop,
-                  product: product,
-                  provider: this,
-                ),
+              return ItemShoppingCartProductWidget(
+                key: Key("${product.id}-${product.name}"),
+                shop: mainShop,
+                product: product,
+                provider: this,
               );
             }));
   }

@@ -24,7 +24,7 @@ class LoginDialog extends StatelessWidget {
     return Dialog(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       insetPadding: PlatformSupport.ios()
-          ? EdgeInsets.symmetric(horizontal: 40)
+          ? EdgeInsets.symmetric(horizontal: 60)
           : EdgeInsets.symmetric(horizontal: 20),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

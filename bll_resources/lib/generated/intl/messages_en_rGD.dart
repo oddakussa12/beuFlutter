@@ -84,6 +84,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alltip_failed":
             MessageLookupByLibrary.simpleMessage("Failed, try again later"),
         "alltip_formatOrderPrice": m2,
+        "alltip_gps_noopen": MessageLookupByLibrary.simpleMessage(
+            "Please turn on GPS to get accurate positioning and let us serve you better"),
         "alltip_headpic": MessageLookupByLibrary.simpleMessage(
             "Profile picture cannot be empty"),
         "alltip_idsuccessed": MessageLookupByLibrary.simpleMessage("Saved"),
@@ -101,6 +103,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Oh no! File does not exist"),
         "alltip_nonetwork": MessageLookupByLibrary.simpleMessage(
             "Network error, try again later"),
+        "alltip_position_closeopen": MessageLookupByLibrary.simpleMessage(
+            "Please open the location permission, let us accurately locate your location, otherwise the price of your order will be higher than the correct price"),
+        "alltip_position_noopen": MessageLookupByLibrary.simpleMessage(
+            "Please open the location permission to get an order at the correct price for you"),
         "alltip_product_descriptionrule": MessageLookupByLibrary.simpleMessage(
             "Business bio should be between 1 to 300 characters"),
         "alltip_product_imagerule": MessageLookupByLibrary.simpleMessage(
@@ -109,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Product name should be between 6 to 32 characters"),
         "alltip_product_pricerule": MessageLookupByLibrary.simpleMessage(
             "Product Price cannot be empty"),
+        "alltip_promonotues":
+            MessageLookupByLibrary.simpleMessage("Invalid Promo Code"),
         "alltip_replyrule": MessageLookupByLibrary.simpleMessage(
             "Reply should be within 1 to 2000 characters"),
         "alltip_sended": MessageLookupByLibrary.simpleMessage("Sent"),
@@ -127,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Username should be within 3－24 characters, can only be English or numbers."),
         "app_name": MessageLookupByLibrary.simpleMessage("beU"),
         "button_addfriend": MessageLookupByLibrary.simpleMessage("Add friend"),
+        "button_apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "button_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "button_completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "button_confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -181,7 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "category_in_this":
             MessageLookupByLibrary.simpleMessage("In this category"),
         "category_manage": MessageLookupByLibrary.simpleMessage("Categories"),
-        "category_name": MessageLookupByLibrary.simpleMessage("Add category"),
+        "category_name": MessageLookupByLibrary.simpleMessage("Add Category"),
         "changeproduct_create":
             MessageLookupByLibrary.simpleMessage("Create product"),
         "changeproduct_description":
@@ -195,8 +204,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeproduct_name":
             MessageLookupByLibrary.simpleMessage("Product pame"),
         "changeproduct_no": MessageLookupByLibrary.simpleMessage("no"),
+        "changeproduct_packagefee":
+            MessageLookupByLibrary.simpleMessage("Package fee"),
         "changeproduct_price":
             MessageLookupByLibrary.simpleMessage("Product price"),
+        "changeproduct_promocode":
+            MessageLookupByLibrary.simpleMessage("Promo Code"),
         "changeproduct_update":
             MessageLookupByLibrary.simpleMessage("Update product"),
         "changeproduct_yes": MessageLookupByLibrary.simpleMessage("yes"),
@@ -221,9 +234,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm_address_rule": MessageLookupByLibrary.simpleMessage(
             "Address should be within 10 to 100 characters"),
         "confirm_billing_info":
-            MessageLookupByLibrary.simpleMessage("Billing info"),
+            MessageLookupByLibrary.simpleMessage("Billing Info"),
         "confirm_check_information": MessageLookupByLibrary.simpleMessage(
-            "Check your information before scheduling a delivery"),
+            "Check your information before placing an order"),
         "confirm_fill_your_info":
             MessageLookupByLibrary.simpleMessage("Fill your delivery info"),
         "confirm_information":
@@ -233,7 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Name should be within 2 to 32 characters"),
         "confirm_order": MessageLookupByLibrary.simpleMessage("Confirm order"),
         "confirm_phone_number":
-            MessageLookupByLibrary.simpleMessage("Phone number"),
+            MessageLookupByLibrary.simpleMessage("Phone Number"),
         "confirm_phone_rule": MessageLookupByLibrary.simpleMessage(
             "Phone should be within 7 to 14 characters"),
         "confirm_your_order":
@@ -363,17 +376,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "nologin_title": MessageLookupByLibrary.simpleMessage("Welcome"),
         "offlineshop_call":
             MessageLookupByLibrary.simpleMessage("Message seller"),
-        "order_beneficiary":
-            MessageLookupByLibrary.simpleMessage("Beneficiary"),
-        "order_cash": MessageLookupByLibrary.simpleMessage("Cash on delivery"),
+        "order_beneficiary": MessageLookupByLibrary.simpleMessage("Your Info"),
+        "order_cash": MessageLookupByLibrary.simpleMessage("Cash on Delivery"),
         "order_checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "order_delivery_address":
-            MessageLookupByLibrary.simpleMessage("Delivery address"),
+            MessageLookupByLibrary.simpleMessage("Delivery Address"),
         "order_delivery_coast":
-            MessageLookupByLibrary.simpleMessage("Delivery cost"),
+            MessageLookupByLibrary.simpleMessage("Delivery Cost"),
         "order_delivery_fee":
-            MessageLookupByLibrary.simpleMessage("Delivery fee"),
-        "order_details": MessageLookupByLibrary.simpleMessage("Order details"),
+            MessageLookupByLibrary.simpleMessage("Delivery Fee"),
+        "order_details": MessageLookupByLibrary.simpleMessage("Order Details"),
         "order_how_many": m7,
         "order_info": MessageLookupByLibrary.simpleMessage("Order Info"),
         "order_number": MessageLookupByLibrary.simpleMessage("Order Number"),
@@ -394,7 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderdone_thanks": MessageLookupByLibrary.simpleMessage(
             "Thank you for shopping with us"),
         "orderdone_your_receipt":
-            MessageLookupByLibrary.simpleMessage("Your receipt"),
+            MessageLookupByLibrary.simpleMessage("Your Receipt"),
         "otherprofile_added": MessageLookupByLibrary.simpleMessage("Added"),
         "otherprofile_addfriend": MessageLookupByLibrary.simpleMessage("Add"),
         "otherprofile_contacts":
@@ -537,14 +549,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "shopcart_choose_product":
             MessageLookupByLibrary.simpleMessage("Please select the product"),
         "shopcart_completed": MessageLookupByLibrary.simpleMessage("Completed"),
-        "shopcart_my_bag": MessageLookupByLibrary.simpleMessage("My bag"),
-        "shopcart_my_orders": MessageLookupByLibrary.simpleMessage("My orders"),
+        "shopcart_my_bag": MessageLookupByLibrary.simpleMessage("My Bag"),
+        "shopcart_my_orders": MessageLookupByLibrary.simpleMessage("My Orders"),
         "shopcart_product_rule":
             MessageLookupByLibrary.simpleMessage("Maximum 50"),
         "shopcart_progress":
             MessageLookupByLibrary.simpleMessage("In progress"),
         "shopcart_shopping":
-            MessageLookupByLibrary.simpleMessage("Shopping cart"),
+            MessageLookupByLibrary.simpleMessage("Shopping Cart"),
         "shopcenter_account": MessageLookupByLibrary.simpleMessage("Account"),
         "shopcenter_buy": MessageLookupByLibrary.simpleMessage("Buy now"),
         "shopcenter_contact": MessageLookupByLibrary.simpleMessage("Contact"),

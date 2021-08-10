@@ -26,15 +26,17 @@ class _DeliveryAddressPageState
   @override
   void initState() {
     super.initState();
-
-    actuator.startLocation(fail: (LocationClient client, LFailType type) {
+    actuator.check(fail: (LocationClient client, LFailType type) {
       if (client != null && type != null) {
         if (LFailType.ServiceUnusable == type) {
-          client.openLocationSettings();
+          /// 定位服务未开启
+          showLocationPermissionAlert(S.of(context).alltip_gps_noopen);
         } else if (LFailType.Denied == type) {
-          client.openSettings();
+          /// 定位权限未授予
+          showLocationPermissionAlert(S.of(context).alltip_position_noopen);
         } else if (LFailType.DeniedForever == type) {
-          client.openSettings();
+          /// 定位权限未授予被永久关闭【拒绝授权，且不让提示的那种】
+          showLocationPermissionAlert(S.of(context).alltip_position_closeopen);
         }
       }
     });
@@ -49,10 +51,27 @@ class _DeliveryAddressPageState
     }
   }
 
+  void showLocationPermissionAlert(String message) {
+    MessageDialog.show(context, message, tapRight: () {
+      actuator.startLocation(fail: (LocationClient client, LFailType type) {
+        if (client != null && type != null) {
+          if (LFailType.ServiceUnusable == type) {
+            client.openLocationSettings();
+          } else if (LFailType.Denied == type) {
+            // client.openSettings();
+          } else if (LFailType.DeniedForever == type) {
+            client.openSettings();
+          }
+        }
+      });
+    });
+  }
+
   /**
    * 提交用户信息
    */
   void confirmUserInfo() {
+    FocusScope.of(context).requestFocus(FocusNode());
     actuator.confirmUserInfo((UserAddress result) {
       Navigator.pop(context, result);
     }, start: () {
@@ -66,6 +85,7 @@ class _DeliveryAddressPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Toolbar(
+        backgroundColor: AppColor.white,
         title: S.of(context).confirm_information,
       ),
       body: SingleChildScrollView(

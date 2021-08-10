@@ -30,6 +30,7 @@ class _FollowShopsPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColor.white,
         appBar: Toolbar(
           title: S.of(context).profile_shop,
         ),

@@ -58,8 +58,16 @@ class ShoppingCartActuator extends ReactActuator {
    */
   void processShoppingCart(ShoppingCart cart, {Product? target}) async {
     if (cart == null || cart.data == null || cart.data.isEmpty) {
-      cart = new ShoppingCart([],
-          formatTotal: "", currency: "", number: 0, formatCoast: "");
+      if (cart == null) {
+        cart = new ShoppingCart([],
+            formatTotal: "", currency: "", number: 0, formatCoast: "");
+      } else {
+        cart.number = 0;
+        cart.total = 0.0;
+        cart.coast = 0.0;
+        cart.formatTotal = "";
+        cart.formatCoast = "";
+      }
     } else {
       double total = 0;
       double coast = 0;
@@ -70,7 +78,16 @@ class ShoppingCartActuator extends ReactActuator {
           currency = currency == "" ? shop.currency! : currency;
           shop.goods!.forEach((product) {
             cartProducts[product.id] = product;
-            total += product.price! * product.goodsNumber!;
+            product.disPrice =
+                ValueFormat.cleanDouble(product.disPrice, def: -1);
+
+            /// 折扣计算
+            if (product.disPrice != -1) {
+              total += product.disPrice! * product.goodsNumber!;
+            } else {
+              total += product.price! * product.goodsNumber!;
+            }
+
             productNumber += product.goodsNumber!;
             if (target != null && target.id == product.id) {
               target.goodsNumber = product.goodsNumber;
@@ -95,6 +112,7 @@ class ShoppingCartActuator extends ReactActuator {
       cart.coast = coast;
       cart.formatCoast = "+ ${coast} ${currency}";
     }
+    notifySetState();
   }
 
   /**
@@ -249,6 +267,8 @@ class ShoppingCartActuator extends ReactActuator {
         localP.goodsNumber = localP.goodsNumber! + 1;
       }
     }
+
+    notifySetState();
   }
 
   void previewOrder(OrderPreviewCallback callback) async {

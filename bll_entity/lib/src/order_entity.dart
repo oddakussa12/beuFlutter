@@ -17,7 +17,8 @@ class RespPromoBody {
 
   RespPromoBody({this.data});
 
-  factory RespPromoBody.fromJson(Map<String, dynamic> json) => _$RespPromoBodyFromJson(json);
+  factory RespPromoBody.fromJson(Map<String, dynamic> json) =>
+      _$RespPromoBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$RespPromoBodyToJson(this);
 }
@@ -47,7 +48,6 @@ class RespPromoCode {
 
   double? reduction;
   double? limit;
-
 
   RespPromoCode(
       this.promoCode,
@@ -284,22 +284,30 @@ class Order {
 
   String? currency;
 
-  // @JsonKey(name: "promo_code")
-  // String? promoCode;
+  @JsonKey(name: "promo_code")
+  String? promoCode;
 
-  // @JsonKey(name: "discount_type")
-  // String? discountType;
+  @JsonKey(name: "promo_price")
+  double? promoPrice;
 
-  // double? reduction;
+  @JsonKey(name: "format_promo_price")
+  String? formatPromoPrice;
 
-  // @JsonKey(name: "discount")
-  // double? discount;
+  /// discount
+  @JsonKey(name: "discount_type")
+  String? discountType;
 
-  // @JsonKey(name: "discounted_price")
-  // double? discountedPrice;
+  @JsonKey(name: "discount")
+  double? discount;
 
-  // @JsonKey(name: "free_delivery")
-  // bool? freeDelivery;
+  @JsonKey(name: "discounted_price")
+  double? discountedPrice;
+
+  @JsonKey(name: "format_discounted_price")
+  String? formatDisPrice;
+
+  @JsonKey(name: "free_delivery")
+  bool? freeDelivery;
 
   @JsonKey(name: "created_at")
   String? createdAt;
@@ -307,23 +315,33 @@ class Order {
   @JsonKey(name: "updated_at")
   String? updatedAt;
 
-  @JsonKey(name: "delivery_coast")
-  double? coast;
-
   @JsonKey(name: "detail")
   List<Product>? goods;
 
   @JsonKey(name: "format_price")
   String? formatPrice = "";
 
-  @JsonKey(ignore: true)
+  @JsonKey(name: "total_price")
+  double? totalPrice;
+
+  @JsonKey(name: "format_total_price")
+  String? formatTotalPrice = "";
+
+  @JsonKey(name: "delivery_coast")
+  double? coast;
+
   String? formatCoast = "";
 
-  @JsonKey(ignore: true)
+  /// 本地计算的总价
   double? total;
 
-  @JsonKey(ignore: true)
   String? formatTotal = "";
+
+  @JsonKey(name: "packaging_cost")
+  dynamic packageCoast;
+
+  @JsonKey(name: "format_packaging_cost")
+  String? formatPackageCoast = "";
 
   Order(this.id, this.userId, this.shopId, this.status,
       {this.shop,
@@ -332,12 +350,24 @@ class Order {
       this.address,
       this.price,
       this.currency,
+      this.promoCode,
+      this.promoPrice,
+      this.formatPromoPrice,
+      this.discountType,
+      this.discount,
+      this.discountedPrice,
+      this.formatDisPrice,
+      this.freeDelivery,
       this.createdAt,
       this.updatedAt,
       this.coast,
       this.goods,
-      this.formatCoast,
+      this.totalPrice,
+      this.formatTotalPrice,
       this.formatPrice,
+      this.formatCoast,
+      this.packageCoast,
+      this.formatPackageCoast,
       this.total,
       this.formatTotal});
 

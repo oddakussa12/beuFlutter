@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'item_my_orders_product.dart';
-
 /**
  * ItemOrderPreviewWidget
  * 订单预览列表项
@@ -156,7 +154,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
           var product = order.goods![index];
           return GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: ItemMyOrdersProductWidget(
+              child: ItemCommonProductBar(
                 key: Key(
                     "${shop.id}-${product.id}-${DateTime.now().microsecond}"),
                 shop: shop,
@@ -164,7 +162,8 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
               ),
               onTap: () {
                 /// 打开订单详情
-                Navigator.pushNamed(context, Routes.shopping.OrderDetail, arguments: order.id);
+                Navigator.pushNamed(context, Routes.shopping.OrderDetail,
+                    arguments: order.id);
               });
         });
   }

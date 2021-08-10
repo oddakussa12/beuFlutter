@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:origin/origin.dart';
 
-int MAX_WAIT_TIME = 8 * 1000 * 1000;
+int MAX_WAIT_TIME = 5 * 1000 * 1000;
 
 int lastTime = 0;
 String lastMessage = "";

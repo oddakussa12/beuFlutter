@@ -2710,10 +2710,10 @@ class S {
     );
   }
 
-  /// `Check your information before scheduling a delivery`
+  /// `Check your information before placing an order`
   String get confirm_check_information {
     return Intl.message(
-      'Check your information before scheduling a delivery',
+      'Check your information before placing an order',
       name: 'confirm_check_information',
       desc: '',
       args: [],
@@ -2730,10 +2730,10 @@ class S {
     );
   }
 
-  /// `Phone number`
+  /// `Phone Number`
   String get confirm_phone_number {
     return Intl.message(
-      'Phone number',
+      'Phone Number',
       name: 'confirm_phone_number',
       desc: '',
       args: [],
@@ -2750,10 +2750,10 @@ class S {
     );
   }
 
-  /// `Billing info`
+  /// `Billing Info`
   String get confirm_billing_info {
     return Intl.message(
-      'Billing info',
+      'Billing Info',
       name: 'confirm_billing_info',
       desc: '',
       args: [],
@@ -2860,10 +2860,10 @@ class S {
     );
   }
 
-  /// `Your receipt`
+  /// `Your Receipt`
   String get orderdone_your_receipt {
     return Intl.message(
-      'Your receipt',
+      'Your Receipt',
       name: 'orderdone_your_receipt',
       desc: '',
       args: [],
@@ -2940,30 +2940,30 @@ class S {
     );
   }
 
-  /// `Shopping cart`
+  /// `Shopping Cart`
   String get shopcart_shopping {
     return Intl.message(
-      'Shopping cart',
+      'Shopping Cart',
       name: 'shopcart_shopping',
       desc: '',
       args: [],
     );
   }
 
-  /// `My bag`
+  /// `My Bag`
   String get shopcart_my_bag {
     return Intl.message(
-      'My bag',
+      'My Bag',
       name: 'shopcart_my_bag',
       desc: '',
       args: [],
     );
   }
 
-  /// `My orders`
+  /// `My Orders`
   String get shopcart_my_orders {
     return Intl.message(
-      'My orders',
+      'My Orders',
       name: 'shopcart_my_orders',
       desc: '',
       args: [],
@@ -3060,10 +3060,10 @@ class S {
     );
   }
 
-  /// `Delivery cost`
+  /// `Delivery Cost`
   String get order_delivery_coast {
     return Intl.message(
-      'Delivery cost',
+      'Delivery Cost',
       name: 'order_delivery_coast',
       desc: '',
       args: [],
@@ -3080,10 +3080,10 @@ class S {
     );
   }
 
-  /// `Beneficiary`
+  /// `Your Info`
   String get order_beneficiary {
     return Intl.message(
-      'Beneficiary',
+      'Your Info',
       name: 'order_beneficiary',
       desc: '',
       args: [],
@@ -3110,10 +3110,10 @@ class S {
     );
   }
 
-  /// `Delivery address`
+  /// `Delivery Address`
   String get order_delivery_address {
     return Intl.message(
-      'Delivery address',
+      'Delivery Address',
       name: 'order_delivery_address',
       desc: '',
       args: [],
@@ -3130,10 +3130,10 @@ class S {
     );
   }
 
-  /// `Delivery fee`
+  /// `Delivery Fee`
   String get order_delivery_fee {
     return Intl.message(
-      'Delivery fee',
+      'Delivery Fee',
       name: 'order_delivery_fee',
       desc: '',
       args: [],
@@ -3150,20 +3150,20 @@ class S {
     );
   }
 
-  /// `Order details`
+  /// `Order Details`
   String get order_details {
     return Intl.message(
-      'Order details',
+      'Order Details',
       name: 'order_details',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cash on delivery`
+  /// `Cash on Delivery`
   String get order_cash {
     return Intl.message(
-      'Cash on delivery',
+      'Cash on Delivery',
       name: 'order_cash',
       desc: '',
       args: [],
@@ -3180,10 +3180,10 @@ class S {
     );
   }
 
-  /// `Add category`
+  /// `Add Category`
   String get category_name {
     return Intl.message(
-      'Add category',
+      'Add Category',
       name: 'category_name',
       desc: '',
       args: [],
@@ -3435,6 +3435,76 @@ class S {
     return Intl.message(
       'Order using',
       name: 'discover_order_using',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get button_apply {
+    return Intl.message(
+      'Apply',
+      name: 'button_apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please open the location permission to get an order at the correct price for you`
+  String get alltip_position_noopen {
+    return Intl.message(
+      'Please open the location permission to get an order at the correct price for you',
+      name: 'alltip_position_noopen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please open the location permission, let us accurately locate your location, otherwise the price of your order will be higher than the correct price`
+  String get alltip_position_closeopen {
+    return Intl.message(
+      'Please open the location permission, let us accurately locate your location, otherwise the price of your order will be higher than the correct price',
+      name: 'alltip_position_closeopen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please turn on GPS to get accurate positioning and let us serve you better`
+  String get alltip_gps_noopen {
+    return Intl.message(
+      'Please turn on GPS to get accurate positioning and let us serve you better',
+      name: 'alltip_gps_noopen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Promo Code`
+  String get alltip_promonotues {
+    return Intl.message(
+      'Invalid Promo Code',
+      name: 'alltip_promonotues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package fee`
+  String get changeproduct_packagefee {
+    return Intl.message(
+      'Package fee',
+      name: 'changeproduct_packagefee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Promo Code`
+  String get changeproduct_promocode {
+    return Intl.message(
+      'Promo Code',
+      name: 'changeproduct_promocode',
       desc: '',
       args: [],
     );

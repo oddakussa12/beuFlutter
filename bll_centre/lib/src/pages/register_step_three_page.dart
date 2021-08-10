@@ -80,6 +80,7 @@ class _RegisterStepThreePageState
 
   /// 第三步
   void navigateStepThree(int state) {
+    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.pop(context);
     BusClient().fire(SignUpEvent());
     if (state == 1) {
@@ -97,30 +98,36 @@ class _RegisterStepThreePageState
       body: Column(
         children: [
           SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height - 140,
-              margin: EdgeInsets.only(left: 32, right: 32),
-              child: Column(
-                children: [
-                  /// Logo
-                  Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 40, bottom: 40),
-                    child: Image.asset(
-                      "res/images/ic_launcher.png",
-                      package: 'resources',
-                      width: 60,
-                      height: 60,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                height: MediaQuery.of(context).size.height - 140,
+                margin: EdgeInsets.only(left: 32, right: 32),
+                child: Column(
+                  children: [
+                    /// Logo
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 40, bottom: 40),
+                      child: Image.asset(
+                        "res/images/ic_launcher.png",
+                        package: 'resources',
+                        width: 60,
+                        height: 60,
+                      ),
                     ),
-                  ),
 
-                  /// 用户昵称
-                  buildNickName(context),
+                    /// 用户昵称
+                    buildNickName(context),
 
-                  /// 下一步按钮
-                  buildNextStep(context),
-                ],
+                    /// 下一步按钮
+                    buildNextStep(context),
+                  ],
+                ),
               ),
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
             ),
           ),
           AgreementBarWidget()

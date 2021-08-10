@@ -14,9 +14,9 @@ class UserPoint {
   double point = 0;
   int comment = 0;
 
-  PercentAge percentage;
+  PercentAge? percentage;
 
-  UserPoint(this.point, this.comment, this.percentage);
+  UserPoint(this.point, this.comment, {this.percentage});
 
   factory UserPoint.fromJson(dynamic json) => _$UserPointFromJson(json);
 

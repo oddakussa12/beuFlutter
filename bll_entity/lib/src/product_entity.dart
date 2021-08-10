@@ -110,6 +110,11 @@ class Product {
   /// 1.1.0: 免费配送
   bool? freeDelivery;
 
+  /// 官方分类
+  bool isGFCategory(){
+    return disPrice != null && disPrice != -1.0;
+  }
+
   bool alreadyChecked() {
     return isChecked != null && isChecked!;
   }

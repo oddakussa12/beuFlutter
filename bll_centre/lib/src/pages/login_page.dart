@@ -71,9 +71,13 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
       toast(message: S.of(context).loginerror_password);
       return;
     }
+
+    LoadingDialog.show(context);
     actuator.login(actuator.country.areaCode, actuator.phone, actuator.password,
         (state) {
       BusClient().fire(SignInEvent());
+      Navigator.pop(context);
+    }, complete: () {
       Navigator.pop(context);
     });
   }

@@ -18,16 +18,10 @@ class ItemMyBagShopWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ItemMyBagShopState createState() => _ItemMyBagShopState(shop, provider);
+  _ItemMyBagShopState createState() => _ItemMyBagShopState();
 }
 
-class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
-    with AutomaticKeepAliveClientMixin {
-  final Shop shop;
-  final ProductOptionProvider provider;
-
-  _ItemMyBagShopState(this.shop, this.provider);
-
+class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
   /**
    * 打开商铺详情
    */
@@ -36,12 +30,7 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return Container(
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
       padding: EdgeInsets.only(bottom: 6),
@@ -83,7 +72,7 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(shop.name),
+                TextHelper.clean(widget.shop.name),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -95,9 +84,9 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
           ],
         ),
         onTap: () {
-          if (shop != null) {
+          if (widget.shop != null) {
             /// 打开商铺详情
-            clickOpenShopDetail(context, shop);
+            clickOpenShopDetail(context, widget.shop);
           }
         },
       ),
@@ -108,20 +97,20 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget>
    * 购物车中商品列表
    */
   ListView buildShopProducts() {
-    if (shop.isChecked == null) {
-      shop.isChecked = false;
+    if (widget.shop.isChecked == null) {
+      widget.shop.isChecked = false;
     }
     return ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: shop.goods!.isEmpty ? 0 : shop.goods!.length,
+        itemCount: widget.shop.goods!.isEmpty ? 0 : widget.shop.goods!.length,
         itemBuilder: (context, index) {
-          var product = shop.goods![index];
+          var product = widget.shop.goods![index];
           return ItemMyBagProductWidget(
-            key: Key("${shop.id}-${product.id}"),
-            shop: shop,
+            key: Key("${widget.shop.id}-${product.id}"),
+            shop: widget.shop,
             product: product,
-            provider: provider,
+            provider: widget.provider,
           );
         });
   }

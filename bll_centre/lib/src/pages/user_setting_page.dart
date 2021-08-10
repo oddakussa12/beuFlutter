@@ -292,7 +292,7 @@ class _UserSettingPageState
           color: AppColor.color1A000,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Text("退出登录",
+        child: Text(S.of(context).setting_logout,
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: AppColor.white,

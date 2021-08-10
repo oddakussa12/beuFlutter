@@ -32,11 +32,6 @@ class _OrderPreviewPageState
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (args == null) {
@@ -59,6 +54,7 @@ class _OrderPreviewPageState
    * 打开编辑地址页
    */
   void openDeliveryAddressPage(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
     actuator.prepareDeliveryAddress((result) {
       Navigator.pushNamed(context, Routes.shopping.DeliveryAddress,
               arguments: result)
@@ -108,7 +104,7 @@ class _OrderPreviewPageState
           buildOrderList(),
 
           /// 分割线
-          !actuator.isSpecial()
+          actuator.isShowPromo()
               ? Container(
                   height: 1,
                   width: MediaQuery.of(context).size.width,
@@ -248,21 +244,19 @@ class _OrderPreviewPageState
         itemBuilder: (context, index) {
           var orderNumber = index + 1;
           var orderItem = actuator.orderItems[index];
-          return Container(
-            child: ItemOrderPreviewWidget(
-              key: Key("${orderItem.shop!.id}"),
-              orderNumber: orderNumber,
-              shop: orderItem.shop!,
-              provider: this,
-              orderItem: orderItem,
-            ),
+          return ItemOrderPreviewWidget(
+            key: Key("${orderItem.shop!.id}-${DateTime.now().microsecond}"),
+            orderNumber: orderNumber,
+            shop: orderItem.shop!,
+            provider: this,
+            orderItem: orderItem,
           );
         });
   }
 
   /// 优惠码布局
   Widget buildPromoCodeLayout() {
-    return !actuator.isSpecial()
+    return actuator.isShowPromo()
         ? Stack(
             children: [
               buildPromoCodeField(context),
@@ -290,7 +284,7 @@ class _OrderPreviewPageState
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
               counterText: "",
-              hintText: "Promo code",
+              hintText: S.of(context).changeproduct_promocode,
               hintStyle: TextStyle(
                 fontSize: 14,
                 color: AppColor.hint,
@@ -349,7 +343,7 @@ class _OrderPreviewPageState
 
   /// 优惠码提示消息
   Widget buildPromoCodeMessage() {
-    return !actuator.isSpecial() && actuator.showPromoMessage()
+    return actuator.isShowPromo() && actuator.showPromoMessage()
         ? Container(
             height: 40,
             alignment: Alignment.center,
@@ -386,7 +380,7 @@ class _OrderPreviewPageState
                 Text(
                   actuator.orderP.code == 200
                       ? actuator.orderP.message ?? ""
-                      : "Sorry this code is invalid",
+                      : S.of(context).alltip_promonotues,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -591,12 +585,10 @@ class _OrderPreviewPageState
         itemBuilder: (context, index) {
           var orderNumber = index + 1;
           var orderItem = actuator.orderItems[index];
-          return Container(
-            child: ItemOrderPriceWidget(
-              key: Key("${orderItem.shop!.id}"),
-              orderNumber: orderNumber,
-              orderItem: orderItem,
-            ),
+          return ItemOrderPriceWidget(
+            key: Key("${orderItem.shop!.id}-${DateTime.now().microsecond}"),
+            orderNumber: orderNumber,
+            orderItem: orderItem,
           );
         });
   }
@@ -615,7 +607,7 @@ class _OrderPreviewPageState
       child: Row(
         children: [
           Text(
-            "Packaging Total",
+            S.of(context).changeproduct_packagefee,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -653,6 +645,7 @@ class _OrderPreviewPageState
       child: Row(
         children: [
           Text(
+            /// TODO:
             "Delivery Total",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -689,6 +682,7 @@ class _OrderPreviewPageState
       child: Row(
         children: [
           Text(
+            /// TODO:
             "Discount",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -778,12 +772,35 @@ class _OrderPreviewPageState
                 fontWeight: FontWeight.bold),
           )),
       onTap: () {
-        actuator.checkoutPreviewOrder(() {
-          /// 向主页发送订单创建成功的通知
-          BusClient().fire(OrderCreatedEvent());
-          Navigator.pop(context);
-        });
+        prepareConfirmOrder();
       },
     );
+  }
+
+  /**
+   * 提交预览的订单
+   * action:
+   * 1: 跳转地址编辑页
+   * 2：加载进度条
+   * 3：订单创建完成
+   * 4：下单失败
+   */
+  void prepareConfirmOrder() {
+    actuator.checkoutPreviewOrder((status) {
+      if (status == 1) {
+        openDeliveryAddressPage(context);
+      } else if (status == 2) {
+        LoadingDialog.show(context);
+      } else if (status == 3) {
+        /// 先关闭 Loading
+        Navigator.pop(context);
+
+        /// 在关闭当前页面
+        Navigator.pop(context);
+      } else if (status == 4) {
+        /// 下单失败
+        Navigator.pop(context);
+      }
+    });
   }
 }

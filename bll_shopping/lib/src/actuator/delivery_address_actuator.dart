@@ -53,6 +53,16 @@ class DeliveryAddressActuator extends RetryActuator {
     }
   }
 
+  void check({LocationFailure? fail}) async {
+    client.checkPermission(
+        success: (LocationAddress result) {
+          locAddress = result;
+          address = result.address;
+          notifySetState();
+        },
+        fail: fail);
+  }
+
   void startLocation({LocationFailure? fail}) async {
     client.start(
         success: (LocationAddress result) {

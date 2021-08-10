@@ -44,7 +44,7 @@ class AgreementBarWidget extends StatelessWidget {
       onTap: () {
         /// 打开协议页
         Navigator.pushNamed(context, Routes.common.WebPage,
-            arguments: {"title": "用户协议", "url": Constants.UserAgreement});
+            arguments: {"title": S.of(context).textview_useragree, "url": Constants.UserAgreement});
       },
     );
   }
@@ -62,7 +62,7 @@ class AgreementBarWidget extends StatelessWidget {
           )),
       onTap: () {
         Navigator.pushNamed(context, Routes.common.WebPage,
-            arguments: {"title": "隐私协议", "url": Constants.PrivacyPolicy});
+            arguments: {"title": S.of(context).setting_privacy, "url": Constants.PrivacyPolicy});
       },
     );
   }

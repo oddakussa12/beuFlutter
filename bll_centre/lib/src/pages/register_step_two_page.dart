@@ -74,6 +74,7 @@ class _RegisterStepTwoPageState
 
   /// 第三步
   void navigateStepThree() {
+    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.push(
         context,
         PageTransition(
@@ -95,33 +96,39 @@ class _RegisterStepTwoPageState
         body: Column(
           children: [
             SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 140,
-                margin: EdgeInsets.only(left: 32, right: 32),
-                child: Column(
-                  children: [
-                    /// Logo
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 40, bottom: 40),
-                      child: Image.asset(
-                        "res/images/ic_launcher.png",
-                        package: 'resources',
-                        width: 60,
-                        height: 60,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  height: MediaQuery.of(context).size.height - 140,
+                  margin: EdgeInsets.only(left: 32, right: 32),
+                  child: Column(
+                    children: [
+                      /// Logo
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 40, bottom: 40),
+                        child: Image.asset(
+                          "res/images/ic_launcher.png",
+                          package: 'resources',
+                          width: 60,
+                          height: 60,
+                        ),
                       ),
-                    ),
 
-                    /// 用户名
-                    buildUserName(),
+                      /// 用户名
+                      buildUserName(),
 
-                    /// 密码
-                    buildPassword(context),
+                      /// 密码
+                      buildPassword(context),
 
-                    /// 下一步按钮
-                    buildNextStep(context),
-                  ],
+                      /// 下一步按钮
+                      buildNextStep(context),
+                    ],
+                  ),
                 ),
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
               ),
             ),
             AgreementBarWidget(),

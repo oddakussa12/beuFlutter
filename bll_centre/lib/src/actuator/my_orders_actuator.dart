@@ -62,12 +62,14 @@ class MyOrdersActuator extends RefreshActuator {
         }
         myOrders.addAll(body.data);
       }
+    }, fail: (message, error) {
+      LogDog.w("loadMyOrders, ${message}", error);
     }, complete: () {
       refreshCompleted(type);
       if (hasUpdated || isNotNormal()) {
         emptyStatus = myOrders.isEmpty ? EmptyStatus.Empty : EmptyStatus.Normal;
-        notifySetState(() {});
       }
+      notifySetState(() {});
     });
   }
 }

@@ -64,6 +64,7 @@ class ShopDetailActuator extends RefreshActuator {
     if (args != null) {
       shopDetail = Shop.create(args);
     }
+    isNeedRefreshDetail = true;
     pullDown();
   }
 
@@ -92,9 +93,9 @@ class ShopDetailActuator extends RefreshActuator {
   /**
    * 加载商铺信息
    */
-  loadShopDetail() async {
+  void loadShopDetail() async {
     /// 已经取到正确的商铺信息了，不需要每次刷新
-    if (shopDetail.isNotEmpty() && !isNeedRefreshDetail) {
+    if (!isNeedRefreshDetail) {
       return;
     }
 
@@ -117,6 +118,10 @@ class ShopDetailActuator extends RefreshActuator {
    * 加载商铺下的商品列表
    */
   loadProducts(int page, PullType type) async {
+    if (products.isEmpty) {
+      changeStatusForLoading();
+    }
+
     String url =
         ShoppingUrl.products + "?page=${page}&user_id=${shopDetail.id}";
     DioClient().get(url, (response) => ProductList.fromJson(response.data),
@@ -130,7 +135,7 @@ class ShopDetailActuator extends RefreshActuator {
       }
     }, complete: () {
       emptyStatus =
-          shopDetail.isNotEmpty() ? EmptyStatus.Normal : EmptyStatus.Empty;
+          products.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
       refreshCompleted(type);
       notifySetState();
     });
@@ -142,7 +147,7 @@ class ShopDetailActuator extends RefreshActuator {
       start.call();
     }
 
-    await DioClient().post(ShoppingUrl.followShop, (response) => (response),
+    DioClient().post(ShoppingUrl.followShop, (response) => (response),
         body: {"followed_id": "${shopDetail.id}"}, success: (Response body) {
       if (body != null && body.statusCode! >= 200 && body.statusCode! < 300) {
         toast(message: S.of(context).shopcenter_followed);

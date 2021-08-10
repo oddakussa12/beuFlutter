@@ -78,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alltip_exit": MessageLookupByLibrary.simpleMessage("再按一次退出beU！"),
         "alltip_failed": MessageLookupByLibrary.simpleMessage("发送失败..."),
         "alltip_formatOrderPrice": m2,
+        "alltip_gps_noopen":
+            MessageLookupByLibrary.simpleMessage("请开启GPS以获得准确定位，让我们更好地为您服务"),
         "alltip_headpic": MessageLookupByLibrary.simpleMessage("头像不能为空"),
         "alltip_idsuccessed": MessageLookupByLibrary.simpleMessage("id更新成功"),
         "alltip_loading": MessageLookupByLibrary.simpleMessage("正在加载数据···"),
@@ -91,6 +93,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "alltip_nodata": MessageLookupByLibrary.simpleMessage("没有数据"),
         "alltip_nofile": MessageLookupByLibrary.simpleMessage("不好了！ 文件不存在"),
         "alltip_nonetwork": MessageLookupByLibrary.simpleMessage("网络开小差了"),
+        "alltip_position_closeopen": MessageLookupByLibrary.simpleMessage(
+            "请打开位置权限，让我们准确定位您的位置，否则您的订单价格会高于正确价格"),
+        "alltip_position_noopen":
+            MessageLookupByLibrary.simpleMessage("请打开位置权限，以正确的价格为您获取订单"),
         "alltip_product_descriptionrule":
             MessageLookupByLibrary.simpleMessage("商品描述必须在1~300字符"),
         "alltip_product_imagerule":
@@ -99,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("商品名称长度必须是6-32位"),
         "alltip_product_pricerule":
             MessageLookupByLibrary.simpleMessage("商品价格不能为空"),
+        "alltip_promonotues": MessageLookupByLibrary.simpleMessage("无效的促销码"),
         "alltip_replyrule":
             MessageLookupByLibrary.simpleMessage("回复长度必须是1~2000个字符"),
         "alltip_sended": MessageLookupByLibrary.simpleMessage("已发送"),
@@ -117,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("用户名长度必须是3~24个字符，只能是英文或数字"),
         "app_name": MessageLookupByLibrary.simpleMessage("beU"),
         "button_addfriend": MessageLookupByLibrary.simpleMessage("添加"),
+        "button_apply": MessageLookupByLibrary.simpleMessage("应用"),
         "button_cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "button_completed": MessageLookupByLibrary.simpleMessage("完成"),
         "button_confirm": MessageLookupByLibrary.simpleMessage("确定"),
@@ -166,14 +174,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeproduct_create": MessageLookupByLibrary.simpleMessage("创建商品"),
         "changeproduct_description":
             MessageLookupByLibrary.simpleMessage("商品描述"),
-        "changeproduct_discount":
-            MessageLookupByLibrary.simpleMessage("Discount price"),
+        "changeproduct_discount": MessageLookupByLibrary.simpleMessage("减后价格"),
         "changeproduct_image": MessageLookupByLibrary.simpleMessage("商品图片"),
         "changeproduct_instock":
             MessageLookupByLibrary.simpleMessage("该商品是否可用？"),
         "changeproduct_name": MessageLookupByLibrary.simpleMessage("商品名称"),
         "changeproduct_no": MessageLookupByLibrary.simpleMessage("否"),
+        "changeproduct_packagefee": MessageLookupByLibrary.simpleMessage("包装费"),
         "changeproduct_price": MessageLookupByLibrary.simpleMessage("商品价格"),
+        "changeproduct_promocode": MessageLookupByLibrary.simpleMessage("优惠码"),
         "changeproduct_update": MessageLookupByLibrary.simpleMessage("更新商品"),
         "changeproduct_yes": MessageLookupByLibrary.simpleMessage("是"),
         "chatdetail_holdonsay": MessageLookupByLibrary.simpleMessage("按住说话"),

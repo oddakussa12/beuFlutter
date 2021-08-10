@@ -77,7 +77,7 @@ class DioClient {
           if (uri.isScheme("https")) {
             return "DIRECT";
           }
-          return "PROXY 192.168.1.101:8888";
+          return "PROXY 192.168.31.201:8888";
         };
       };
     }
@@ -154,6 +154,11 @@ class DioClient {
       if (fail != null) {
         fail.call(message, e);
       }
+    } on Error catch (e) {
+      LogDog.w("DioClient, Error: ${e}", e, e.stackTrace);
+      if (fail != null) {
+        fail.call("Unknown error", Exception(e.toString()));
+      }
     }
     if (complete != null) {
       complete.call();
@@ -205,6 +210,11 @@ class DioClient {
       if (fail != null) {
         fail.call(message, e);
       }
+    } on Error catch (e) {
+      LogDog.w("DioClient, Error: ${e}", e, e.stackTrace);
+      if (fail != null) {
+        fail.call("Unknown", Exception(e.toString()));
+      }
     }
     if (complete != null) {
       complete.call();
@@ -255,6 +265,11 @@ class DioClient {
       if (fail != null) {
         fail.call(message, e);
       }
+    } on Error catch (e) {
+      LogDog.w("DioClient, Error: ${e}", e, e.stackTrace);
+      if (fail != null) {
+        fail.call("Unknown", Exception(e.toString()));
+      }
     }
     if (complete != null) {
       complete.call();
@@ -304,6 +319,11 @@ class DioClient {
       String message = await parseServiceError(e);
       if (fail != null) {
         fail.call(message, e);
+      }
+    } on Error catch (e) {
+      LogDog.w("DioClient, Error: ${e}", e, e.stackTrace);
+      if (fail != null) {
+        fail.call("Unknown", Exception(e.toString()));
       }
     }
     if (complete != null) {

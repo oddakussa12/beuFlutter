@@ -13,6 +13,8 @@ class Toolbar extends StatefulWidget implements PreferredSizeWidget {
   /// 标题
   final String? title;
 
+  final Widget? obiter;
+
   final Widget? back;
 
   /// 标题栏背景
@@ -24,6 +26,7 @@ class Toolbar extends StatefulWidget implements PreferredSizeWidget {
   const Toolbar(
       {Key? key,
       this.title = "",
+      this.obiter,
       this.back,
       this.backgroundColor = AppColor.white,
       this.actions})
@@ -56,11 +59,17 @@ class _ToolbarState extends State<Toolbar> {
             ),
             onTap: () => Navigator.pop(context),
           ),
-          title: Text(
-            "${widget.title}",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.black, fontSize: 19),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${widget.title} ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black, fontSize: 19),
+              ),
+              widget.obiter ?? Container()
+            ],
           ),
           actions: widget.actions,
         ),

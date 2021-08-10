@@ -239,6 +239,8 @@ class Shop {
   @JsonKey(name: "user_contact")
   String? contact;
 
+  String? callCenter;
+
   @JsonKey(name: "user_address")
   String? address;
 
@@ -251,6 +253,7 @@ class Shop {
   @JsonKey(name: "user_gender")
   int? gender;
 
+  /// 当时user_shop为1(商店)时，user_level为0表示普通商铺,user_level为1表示认证商铺
   @JsonKey(name: "user_level")
   int? level;
 
@@ -293,8 +296,6 @@ class Shop {
 
   double? score;
 
-  String? callCenter;
-
   @JsonKey(ignore: true)
   int? star = 0;
 
@@ -334,6 +335,7 @@ class Shop {
       this.bg = "",
       this.avatarLink = "",
       this.star = 0,
+      this.callCenter,
       this.isChecked = false});
 
   factory Shop.create(Shop shop) {
@@ -370,6 +372,13 @@ class Shop {
     } else {
       return userPoint!.comment;
     }
+  }
+
+  UserPoint getShopPoint() {
+    if (userPoint == null) {
+      userPoint = UserPoint(0, 0);
+    }
+    return userPoint!;
   }
 
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);

@@ -150,14 +150,14 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
         .toList(),
     bg: json['user_bg'] as String?,
     avatarLink: json['user_avatar_link'] as String?,
+    callCenter: json['callCenter'] as String?,
     isChecked: json['isChecked'] as bool?,
   )
     ..friendCount = json['friendCount'] as int?
     ..likedCount = json['likedCount'] as int?
     ..likeState = json['likeState'] as bool?
     ..rank = (json['rank'] as num?)?.toDouble()
-    ..score = (json['score'] as num?)?.toDouble()
-    ..callCenter = json['callCenter'] as String?;
+    ..score = (json['score'] as num?)?.toDouble();
 }
 
 Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
@@ -173,6 +173,7 @@ Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
       'user_sl': instance.sl,
       'user_grade': instance.grade,
       'user_contact': instance.contact,
+      'callCenter': instance.callCenter,
       'user_address': instance.address,
       'user_enrollment_at': instance.enrollmentAt,
       'user_avatar_link': instance.avatarLink,
@@ -194,6 +195,5 @@ Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
       'followState': instance.followState,
       'rank': instance.rank,
       'score': instance.score,
-      'callCenter': instance.callCenter,
       'isChecked': instance.isChecked,
     };

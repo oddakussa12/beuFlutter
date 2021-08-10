@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'item_my_orders_product.dart';
-
 /**
  * ItemOrderPreviewWidget
  * 订单预览列表项
@@ -146,7 +144,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
           var product = widget.order.goods![index];
           return GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: ItemMyOrdersProductWidget(
+              child: ItemCommonProductBar(
                 key: Key("${widget.shop.id}-${product.id}"),
                 shop: widget.shop,
                 product: product,

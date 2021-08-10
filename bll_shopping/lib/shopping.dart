@@ -11,7 +11,6 @@ export 'src/pages/delivery_address_page.dart';
 
 /// 给 user centre
 export 'src/widget/my_orders_widget.dart';
-export 'src/items/item_shop_product_grid.dart';
 export 'src/widget/cart/shopping_cart_bar.dart';
 export 'src/widget/cart/item_shopping_cart_product.dart';
 

@@ -30,6 +30,8 @@ class ShoppingMyBagActuator extends RefreshActuator {
     /// 监听订单创建完成的事件，并刷新数据
     appendSubscribe(BusClient().subscribe<OrderCreatedEvent>((event) {
       if (event != null) {
+        LogDog.w("ShoppingCart, OrderCreatedEvent");
+
         clearSelected();
         loadMyShopCart();
       }
@@ -91,16 +93,17 @@ class ShoppingMyBagActuator extends RefreshActuator {
   }
 
   //// 退出登录后清理购物车
-  void cleanShoppingCartByLogout() {
+  void cleanShoppingCartByLogout() async {
     selectedShops.clear();
     selectedProducts.clear();
     if (shopCart != null && shopCart.data != null) {
       shopCart.data.clear();
     }
+
     _processShoppingCartInfo();
   }
 
-  void clearSelected() {
+  void clearSelected() async {
     selectedShops.clear();
     selectedProducts.clear();
 
@@ -128,7 +131,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
   /**
    * 加载我的购物车
    */
-  loadMyShopCart() async {
+  void loadMyShopCart() async {
     if (isNoneShoppingCart()) {
       changeStatusForLoading();
     }
@@ -197,14 +200,12 @@ class ShoppingMyBagActuator extends RefreshActuator {
       "type": "update"
     });
 
-    bool needSetState = true;
     DioClient().post(ShoppingUrl.optionCart,
         (response) => ShoppingCart.fromJson(response.data), body: requestBody,
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车
         processCartUpdateSuccessResult(body, shop, product);
-        needSetState = false;
       } else {
         processCartUpdateFailureResult(isAppend, shop, product);
       }
@@ -220,7 +221,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
    * 处理购物车更新成功的结果
    */
   void processCartUpdateSuccessResult(
-      ShoppingCart result, Shop shop, Product product) {
+      ShoppingCart result, Shop shop, Product product) async {
     /// 当前操作的商品的购物车已被清空
     if (result.data == null || result.data.isEmpty) {
       /// 将当前的商品从本地购物车中移除
@@ -279,10 +280,18 @@ class ShoppingMyBagActuator extends RefreshActuator {
         if (shop.goods != null) {
           /// 遍历当前商铺下的商品
           shop.goods!.forEach((product) {
+            product.disPrice =
+                ValueFormat.cleanDouble(product.disPrice, def: -1);
             product.isChecked = isCheckByProductId(product.id);
             if (product.isChecked!) {
               currency = currency == "" ? shop.currency! : currency;
-              total += product.price! * product.goodsNumber!;
+
+              /// 折扣计算
+              if (product.disPrice != -1) {
+                total += product.disPrice! * product.goodsNumber!;
+              } else {
+                total += product.price! * product.goodsNumber!;
+              }
 
               /// 不同的币种【对每个商品都需要检查】
               if (currency != "" &&

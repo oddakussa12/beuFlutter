@@ -27,14 +27,9 @@ class ItemMyBagProductWidget extends StatefulWidget {
   _ItemMyBagProductState createState() => _ItemMyBagProductState();
 }
 
-class _ItemMyBagProductState extends State<ItemMyBagProductWidget>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     if (widget.product == null) {
       return Container();
     }
@@ -54,7 +49,7 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget>
           buildCartProductImage(),
 
           /// 购物车商品信息
-          buildCartProductInfo(),
+          buildProductPriceInfo(),
 
           /// 购物车商品加减操作
           buildProductOptions()
@@ -101,18 +96,18 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget>
               "res/images/def_cover_1_1.png",
               package: 'resources',
               fit: BoxFit.cover,
-              height: 60,
+              height: 64,
               gaplessPlayback: true,
-              width: 60),
+              width: 64),
           errorWidget: (context, url, error) => Image.asset(
               "res/images/def_cover_1_1.png",
               package: 'resources',
               fit: BoxFit.cover,
-              height: 60,
+              height: 64,
               gaplessPlayback: true,
-              width: 60),
-          height: 60,
-          width: 60,
+              width: 64),
+          height: 64,
+          width: 64,
           fit: BoxFit.cover,
         ));
   }
@@ -120,36 +115,58 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget>
   /**
    * 购物车商品信息
    */
-  Widget buildCartProductInfo() {
+  Widget buildProductPriceInfo() {
     return Expanded(
         child: Container(
-      height: 60,
-      alignment: Alignment.centerLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
-              alignment: Alignment.topLeft,
-              child: Text(
-                TextHelper.clean(widget.product.name),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
-              )),
-          Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
-              alignment: Alignment.topLeft,
-              child: Text(
-                TextHelper.clean(widget.product.formatPrice),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColor.colorBE, fontSize: 16),
-              ))
-        ],
-      ),
-    ));
+          height: 64,
+          alignment: Alignment.centerLeft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    TextHelper.clean(widget.product.name),
+                    maxLines: widget.product.isGFCategory() ? 1 : 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),
+                  )),
+
+              /// 商品原价
+              Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    TextHelper.clean(widget.product.formatPrice),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: AppColor.colorBE,
+                        fontSize: 16,
+                        decoration: widget.product.isGFCategory()
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        decorationThickness: 2),
+                  )),
+
+              /// 官方分类下的商品展示折扣价
+              Visibility(
+                visible: widget.product.isGFCategory(),
+                child: Container(
+                    margin: EdgeInsets.only(left: 10, right: 10),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      TextHelper.clean(widget.product.formatDisPrice),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: AppColor.colorBE, fontSize: 16),
+                    )),
+              ),
+            ],
+          ),
+        ));
   }
 
   /**

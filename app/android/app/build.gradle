@@ -1,3 +1,6 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -95,6 +98,23 @@ android {
             // 是否去除无效的资源文件
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+            /*applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+
+                    def buildTypeName = variant.buildType.name
+                    // 时间戳
+                    SimpleDateFormat sdf = DateFormat.getDateInstance()
+                    sdf.applyPattern("yyyyMMdd-HHmmss")
+                    def timeStamp = sdf.format(System.currentTimeMillis())
+                    // def fileName = "${variant.flavorName}/${buildTypeName}/${timeStamp}_${project.ext.projectName}_${variant.flavorName}_${buildTypeName}_V${variant.versionName}.apk"
+                    def fileName = "${variant.flavorName}/${buildTypeName}/${timeStamp}_beUDelivery_${buildTypeName}_V${variant.versionName}.apk"
+
+                    println("OutputFileName: " + fileName);
+
+                    output.outputFileName = fileName
+                }
+            }*/
         }
     }
 }

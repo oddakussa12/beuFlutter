@@ -22,15 +22,16 @@ class _OrderDetailPageState
     extends RetryableState<OrderDetailActuator, OrderDetailPage> {
   _OrderDetailPageState(OrderDetailActuator actuator) : super(actuator);
 
+  var orderId;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var orderId = ModalRoute.of(context)!.settings.arguments;
-    if (orderId != null) {
+    if (orderId == null) {
+      orderId = ModalRoute.of(context)!.settings.arguments;
       actuator.orderId = orderId as String;
+      actuator.loadOrderDetail();
     }
-
-    actuator.toRetry();
   }
 
   @override
@@ -69,6 +70,17 @@ class _OrderDetailPageState
             margin: EdgeInsets.only(left: 16, right: 16, top: 16),
             color: AppColor.color08000,
           ),
+
+          buildPromoCode(),
+
+          TextHelper.isNotEmpty(actuator.order.promoCode)
+              ? Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                  color: AppColor.color08000,
+                )
+              : Container(),
 
           /// 派送用户信息地址
           Container(
@@ -144,6 +156,28 @@ class _OrderDetailPageState
             ),
           );
         });
+  }
+
+  /// 优惠码
+  Widget buildPromoCode() {
+    return TextHelper.isNotEmpty(actuator.order.promoCode)
+        ? Container(
+            height: 40,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: AppColor.colorEF),
+            child: Text(
+              actuator.order.promoCode,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColor.color99,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold),
+            ))
+        : Container();
   }
 
   /**

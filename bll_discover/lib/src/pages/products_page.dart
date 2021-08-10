@@ -1,6 +1,5 @@
 import 'package:common/common.dart';
 import 'package:discover/src/actuator/product_actuator.dart';
-import 'package:discover/src/items/item_product_grid.dart';
 import 'package:discover/src/pages/special_discover_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -74,14 +73,14 @@ class _ProductsPageState
           crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
-          childAspectRatio: 0.73,
+          childAspectRatio: 0.68,
         ),
         itemCount: actuator.products.length,
         itemBuilder: (BuildContext context, int index) {
           Product product = actuator.products[index];
           return GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            child: ItemProductGridWidget(
+            behavior: HitTestBehavior.opaque,
+            child: ItemCommonProductBlock(
                 key: Key("${product.id}-${product.name}"),
                 product: product,
                 showOptions: false),

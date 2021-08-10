@@ -32,6 +32,35 @@ class LocationClient {
 
   LocationClient({this.maxRetryCount = 3});
 
+  void checkPermission(
+      {required Success<LocationAddress> success,
+      LocationFailure? fail}) async {
+    /// 1. 先检测定位服务是否可用
+    bool enabled = await Geolocator.isLocationServiceEnabled();
+    if (!enabled) {
+      LogDog.w("startLocation, locationServices is not enabled");
+
+      if (fail != null) {
+        fail.call(this, LFailType.ServiceUnusable);
+      }
+      return;
+    }
+
+    /// 2. 再检测定位权限
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    /// 未得到授权时，先请求用户授权
+    if (LocationPermission.denied == permission) {
+      if (fail != null) {
+        fail.call(this, LFailType.Denied);
+      }
+
+      return;
+    }
+
+    start(success: success, fail: fail);
+  }
+
   void start(
       {required Success<LocationAddress> success,
       LocationFailure? fail}) async {
@@ -86,15 +115,23 @@ class LocationClient {
 
   void _retryLocation(Success<LocationAddress> success) async {
     if (retryCount < maxRetryCount) {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+      LogDog.w(
+          "_retryLocation, retryCount: ${retryCount}, maxRetryCount: ${maxRetryCount}");
 
-      LogDog.w("startLocation, listen, data: ${jsonEncode(position)}");
-
-      if (position != null &&
-          position.latitude != 0 &&
-          position.longitude != 0) {
-        geocodingPlaces(position.longitude, position.latitude, success);
+      var position;
+      try {
+        position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+            forceAndroidLocationManager: true,
+            timeLimit: Duration(seconds: 15));
+      } on Error catch (e) {
+        LogDog.w("_retryLocation, Error: ${e}");
+      }
+      if (position != null) {
+        LogDog.w("startLocation, listen, data: ${jsonEncode(position)}");
+        if (position.latitude != 0 && position.longitude != 0) {
+          geocodingPlaces(position.longitude, position.latitude, success);
+        }
       }
     } else {
       retryCount++;
@@ -108,7 +145,8 @@ class LocationClient {
     LocationAddress address = LocationAddress(longitude, latitude);
     String url =
         "https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${MAPBOX_TOKEN}";
-    DioClient().get(url, (response) => LocationPlace.fromJson(jsonDecode(response.data)),
+    DioClient().get(
+        url, (response) => LocationPlace.fromJson(jsonDecode(response.data)),
         success: (LocationPlace place) {
       if (place != null &&
           place.features != null &&
@@ -126,7 +164,7 @@ class LocationClient {
     });
   }
 
-  //// 打开定位设置页
+//// 打开定位设置页
   void openLocationSettings() async {
     await Geolocator.openLocationSettings();
   }

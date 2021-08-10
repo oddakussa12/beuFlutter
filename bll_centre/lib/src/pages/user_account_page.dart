@@ -34,7 +34,10 @@ class _UserAccountPageState extends State<UserAccountPage> {
         GestureDetector(
           child: buildUserAccount(context),
           onTap: () {
-            Navigator.push(context, PageTransition(type: TransitionType.rightToLeft, child: UserUpdatePage()));
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: TransitionType.rightToLeft, child: UserUpdatePage()));
           },
         ),
       ],
@@ -48,7 +51,17 @@ class _UserAccountPageState extends State<UserAccountPage> {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
-          color: AppColor.white, borderRadius: BorderRadius.circular(16)),
+          color: AppColor.white,
+          boxShadow: [
+            BoxShadow(
+                color: AppColor.bg,
+                offset: Offset(1.0, 1.0),
+                blurRadius: 2.0,
+                spreadRadius: 0.6),
+            BoxShadow(color: AppColor.bg, offset: Offset(1.0, 1.0)),
+            BoxShadow(color: AppColor.bg)
+          ],
+          borderRadius: BorderRadius.circular(16)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
