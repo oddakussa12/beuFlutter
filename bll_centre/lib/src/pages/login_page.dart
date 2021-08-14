@@ -73,6 +73,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
     }
 
     LoadingDialog.show(context);
+    FocusScope.of(context).requestFocus(FocusNode());
     actuator.login(actuator.country.areaCode, actuator.phone, actuator.password,
         (state) {
       BusClient().fire(SignInEvent());

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:centre/src/centre_config.dart';
@@ -28,15 +29,16 @@ class UserSettingActuator extends ReactActuator {
 
   void checkAppVersion(UpdateVersionCall call) {
     /// 没有更新到最新版
-    if (!version.isNone! && (version.isUpgrade || version.mustUpgrade)) {
+    /*if (!version.isNone! && (version.isUpgrade || version.mustUpgrade)) {
       call.call(version);
       return;
-    }
+    }*/
 
-    String url = CentreUrl.appVersion(Constants.appVersion);
-    DioClient().get(url, (response) => VersionBody.fromJson(response.data),
+    DioClient().get(
+        CentreUrl.appVersion, (response) => VersionBody.fromJson(response.data),
         success: (VersionBody body) {
       if (body != null && body.data != null) {
+        LogDog.w("checkAppVersion: ${jsonEncode(body)}");
         version = body.data;
         version.isNone = false;
       }
@@ -51,9 +53,12 @@ class UserSettingActuator extends ReactActuator {
   }
 
   /// 计算缓存大小
-  Future<Null> loadCacheSize() async {
+  Future<Null> loadCacheSize({bool? cleaned}) async {
     Directory temporaryDir = await getTemporaryDirectory();
-    double value = await calculateTotalSizeOfFiles(temporaryDir);
+    double value = 0;
+    if (cleaned == null || !cleaned) {
+      value = await calculateTotalSizeOfFiles(temporaryDir);
+    }
 
     notifySetState(() {
       cacheSize = formatFileSize(value);
@@ -106,9 +111,16 @@ class UserSettingActuator extends ReactActuator {
    * 清理缓存
    */
   void cleanCache() async {
-    Directory temporaryDir = await getTemporaryDirectory();
-    await deleteDir(temporaryDir);
-    await loadCacheSize();
+    try {
+      Directory temporaryDir = await getTemporaryDirectory();
+      await deleteDir(temporaryDir);
+      await loadCacheSize();
+    } on Error catch (e) {
+      SentryHelper.caught(e);
+      LogDog.w("cleanCache, error: ", e, e.stackTrace);
+    } finally {
+      loadCacheSize(cleaned: true);
+    }
   }
 
   /// 删除目录

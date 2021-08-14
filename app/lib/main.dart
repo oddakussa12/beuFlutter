@@ -12,7 +12,7 @@ Future<void> main() async {
       builder: (BuildContext context) {
         return SplashPage();
       },
-      title: 'beU',
+      title: 'beU Delivery',
       onGenerateRoute: (RouteSettings settings) {
         return AppRoutes.createRoute(settings);
       },

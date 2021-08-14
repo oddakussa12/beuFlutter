@@ -7,7 +7,6 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'login_page.dart';
 
 /**
  * UserCentrePage

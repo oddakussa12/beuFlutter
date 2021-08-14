@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 
 /**
  * platform_support.dart
@@ -38,7 +37,8 @@ class PlatformSupport {
   }
 
   static Future<String> deviceId() async {
-    String? deviceId = await PlatformDeviceId.getDeviceId;
-    return deviceId ?? "";
+    //String? deviceId = await PlatformDeviceId.getDeviceId;
+    //return deviceId ?? "";
+    return "";
   }
 }

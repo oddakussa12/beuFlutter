@@ -122,7 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("店铺用户名长度必须是3~24个字符，只能是英文或数字"),
         "alltip_usernamerule":
             MessageLookupByLibrary.simpleMessage("用户名长度必须是3~24个字符，只能是英文或数字"),
-        "app_name": MessageLookupByLibrary.simpleMessage("beU"),
+        "app_name": MessageLookupByLibrary.simpleMessage("beU Delivery"),
         "button_addfriend": MessageLookupByLibrary.simpleMessage("添加"),
         "button_apply": MessageLookupByLibrary.simpleMessage("应用"),
         "button_cancel": MessageLookupByLibrary.simpleMessage("取消"),

@@ -7,15 +7,14 @@ class Constants {
   static final String PrivacyPolicy = "https://xmt.notion.site/beU-Privacy-Policy-3864d0d1035c483982f5bcbc9052169b";
 
   /// app id
-  // TODO: 2021/8/6 上线前先改 IOS app id
   static final String IOS_APP_ID = "1577071426";
   static final String ANDROID_APP_ID = "com.xmt.beu.applite";
 
   /// DEBUG：按 Build type 确定是否为 Debug
-  static final bool isDebug = true;
+  static final bool isDebug = false;
 
   /// DEV: 开发模式【手动设置】
-  static final bool isDevelop = true;
+  static final bool isDevelop = false;
 
   /// TESTING: 测试模式【手动设置】
   static final bool isTesting = false;

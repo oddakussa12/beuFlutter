@@ -135,7 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Akun bisnis harus terdiri dari 3 - 24 karakter alfabet dan angka."),
         "alltip_usernamerule": MessageLookupByLibrary.simpleMessage(
             "Akun harus terdiri dari 3 sampai 24 karakter alfabet dan angka."),
-        "app_name": MessageLookupByLibrary.simpleMessage("beU"),
+        "app_name": MessageLookupByLibrary.simpleMessage("beU Delivery"),
         "button_addfriend":
             MessageLookupByLibrary.simpleMessage("Tambah teman"),
         "button_apply": MessageLookupByLibrary.simpleMessage("Apply"),

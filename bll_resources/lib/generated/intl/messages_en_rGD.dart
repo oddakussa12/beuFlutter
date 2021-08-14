@@ -133,7 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Business username should be within 3－24 characters, can only be English or numbers."),
         "alltip_usernamerule": MessageLookupByLibrary.simpleMessage(
             "Username should be within 3－24 characters, can only be English or numbers."),
-        "app_name": MessageLookupByLibrary.simpleMessage("beU"),
+        "app_name": MessageLookupByLibrary.simpleMessage("beU Delivery"),
         "button_addfriend": MessageLookupByLibrary.simpleMessage("Add friend"),
         "button_apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "button_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),

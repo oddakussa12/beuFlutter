@@ -68,6 +68,5 @@ class CentreUrl {
   /**
    * 获取版本更新信息
    */
-  static String appVersion(String version) =>
-      "/api/app/home?version=${version}";
+  static final String appVersion = "/api/app/home";
 }

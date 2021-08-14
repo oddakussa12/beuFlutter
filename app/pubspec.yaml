@@ -56,8 +56,6 @@ dependencies:
   centre:
     path: ../bll_centre/
 
-
-
   ### Business 相关的 Module ###
 
   # 项目内 Module 依赖区

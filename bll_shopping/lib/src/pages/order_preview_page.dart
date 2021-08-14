@@ -411,7 +411,7 @@ class _OrderPreviewPageState
               /// 地址用户
               Expanded(
                   child: Container(
-                height: 44,
+                height: 48,
                 alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

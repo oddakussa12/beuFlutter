@@ -39,10 +39,6 @@
 	<string>Whether it is allowed to obtain your location information during use to calculate shipping costs？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>BeU wants to use your photo album, is it allowed?</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
