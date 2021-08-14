@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="10dbeff7-38ef-49c7-8562-cacd3a6fe1af" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/ruoyegz/.android/avd/Pixel_3a_XL_API_28.avd]" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1vfX2Sp101qftewPXcDuAs3ZhwL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/lib/src/pages" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/lib/src/pages" />
+      <recent name="$PROJECT_DIR$/bll_resources/lib/l10n" />
+      <recent name="$PROJECT_DIR$/common/lib/src/items" />
+      <recent name="$PROJECT_DIR$/bll_resources/res/icons" />
+      <recent name="$PROJECT_DIR$/bll_centre/lib/src/actuator" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/lib/src/dialog" />
+      <recent name="$PROJECT_DIR$/bll_centre/lib/src/items" />
+      <recent name="$PROJECT_DIR$/bll_discover/lib/src/items" />
+      <recent name="$PROJECT_DIR$/bll_shopping/lib/src/items" />
+      <recent name="$PROJECT_DIR$/centre/lib/src/pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flutter.app">
+    <configuration name="text_helper.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/origin/lib/src/helper/text_helper.dart" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/origin" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ImagePicker" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/libs_image_picker/example/example.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SpecialProducts" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/bll_special/example/example.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UIPreview" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app_preview/lib/ui_preview.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="centre" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/bll_centre/example/example.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="debugApp" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app/debug/debug.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="discover" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/bll_discover/example/single_main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="libs" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="picker" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/picker/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="share" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/bll_share/example/example.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Counter increments smoke test" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Counter increments smoke test" />
+      <option name="testFile" value="$PROJECT_DIR$/request/test/widget_test.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in aes_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/bll_shopping/test/aes_test.dart" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Dart Command Line App.text_helper.dart" />
+      <item itemvalue="Flutter.picker" />
+      <item itemvalue="Flutter.SpecialProducts" />
+      <item itemvalue="Flutter.UIPreview" />
+      <item itemvalue="Flutter.debugApp" />
+      <item itemvalue="Flutter.ImagePicker" />
+      <item itemvalue="Flutter.share" />
+      <item itemvalue="Flutter.app" />
+      <item itemvalue="Flutter.discover" />
+      <item itemvalue="Flutter.centre" />
+      <item itemvalue="Flutter.libs" />
+      <item itemvalue="Flutter Test.Counter increments smoke test" />
+      <item itemvalue="Flutter Test.tests in aes_test.dart" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Dart Command Line App.text_helper.dart" />
+        <item itemvalue="Flutter Test.tests in aes_test.dart" />
+        <item itemvalue="Flutter Test.Counter increments smoke test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="10dbeff7-38ef-49c7-8562-cacd3a6fe1af" name="Default Changelist" comment="" />
+      <created>1626953910071</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626953910071</updated>
+    </task>
+    <task id="LOCAL-00001" summary="init commit">
+      <created>1627955999350</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1627955999351</updated>
+    </task>
+    <task id="LOCAL-00002" summary="init commit">
+      <created>1628045356900</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1628045356900</updated>
+    </task>
+    <task id="LOCAL-00003" summary="1.1.0 发布前">
+      <created>1628417425330</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1628417425330</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1.1.0 准备发布">
+      <created>1628594454087</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1628594454087</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init commit" />
+    <MESSAGE value="1.1.0 发布前" />
+    <MESSAGE value="1.1.0 准备发布" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.1.0 准备发布" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="165" y="136" key="#PSD" timestamp="1627354922802">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="165" y="136" key="#PSD/0.0.1280.800@0.0.1280.800" timestamp="1627354922802" />
+    <state x="146" y="38" width="1024" height="702" key="#Project_Structure" timestamp="1626954080592">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="146" y="38" width="1024" height="702" key="#Project_Structure/0.0.1280.800@0.0.1280.800" timestamp="1626954080592" />
+    <state x="0" y="0" width="1280" height="800" key="#com.intellij.codeInsight.template.impl.EditVariableDialog" timestamp="1627549120319">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="0" y="0" width="1280" height="800" key="#com.intellij.codeInsight.template.impl.EditVariableDialog/0.0.1280.800@0.0.1280.800" timestamp="1627549120319" />
+    <state x="104" y="0" width="1071" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628410809659">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="104" y="0" width="1071" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800@0.0.1280.800" timestamp="1628410809659" />
+    <state x="240" y="100" width="800" height="600" key="#com.intellij.featureStatistics.actions.ShowFeatureUsageStatisticsDialog" timestamp="1628057888344">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="100" width="800" height="600" key="#com.intellij.featureStatistics.actions.ShowFeatureUsageStatisticsDialog/0.0.1280.800@0.0.1280.800" timestamp="1628057888344" />
+    <state x="353" y="206" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1628603119895">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="353" y="206" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1628603119895" />
+    <state x="453" y="120" key="#com.intellij.ide.util.MemberChooser" timestamp="1628507313771">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="453" y="120" key="#com.intellij.ide.util.MemberChooser/0.0.1280.800@0.0.1280.800" timestamp="1628507313771" />
+    <state x="0" y="0" width="1280" height="800" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1628410803638">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="0" y="0" width="1280" height="800" key="#com.intellij.ide.util.TreeFileChooserDialog/0.0.1280.800@0.0.1280.800" timestamp="1628410803638" />
+    <state x="378" y="151" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1628736169209">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="378" y="151" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1628736169209" />
+    <state x="100" y="110" width="1080" height="661" key="AVDManager" timestamp="1628316984399">
+      <screen x="0" y="0" width="1280" height="727" />
+    </state>
+    <state x="100" y="110" width="1080" height="661" key="AVDManager/0.0.1280.727@0.0.1280.727" timestamp="1628316984399" />
+    <state x="228" y="159" key="AndroidCreateResourceDirectoryDialog" timestamp="1627874328644">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="228" y="159" key="AndroidCreateResourceDirectoryDialog/0.0.1280.800@0.0.1280.800" timestamp="1627874328644" />
+    <state x="435" y="150" key="AndroidProcessChooserDialog" timestamp="1627697216167">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="435" y="150" key="AndroidProcessChooserDialog/0.0.1280.800@0.0.1280.800" timestamp="1627697216167" />
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2" timestamp="1628594453783">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1628594453783" />
+    <state x="0" y="0" key="FileDocumentManager.FileCacheConflict" timestamp="1627989513678">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="0" y="0" key="FileDocumentManager.FileCacheConflict/0.0.1280.800@0.0.1280.800" timestamp="1627989513678" />
+    <state width="1238" height="261" key="GridCell.Tab.0.bottom" timestamp="1628747976181">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="261" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1628747976181" />
+    <state width="1238" height="261" key="GridCell.Tab.0.center" timestamp="1628747976181">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="261" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1628747976181" />
+    <state width="1238" height="261" key="GridCell.Tab.0.left" timestamp="1628747976179">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="261" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1628747976179" />
+    <state width="1238" height="261" key="GridCell.Tab.0.right" timestamp="1628747976181">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="261" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1628747976181" />
+    <state x="28" y="0" width="1223" height="728" key="SettingsEditor" timestamp="1628918521967">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="28" y="0" width="1223" height="728" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1628918521967" />
+    <state width="543" height="596" key="SwitcherDM" timestamp="1628583089323">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="543" height="596" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1628583089323" />
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2" timestamp="1628907664982">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1628907664982" />
+    <state width="640" height="400" key="XDebugger.FullValuePopup" timestamp="1628316904237">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="640" height="400" key="XDebugger.FullValuePopup/0.0.1280.800@0.0.1280.800" timestamp="1628316904237" />
+    <state x="99" y="100" width="1080" height="600" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1628561300997">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="99" y="100" width="1080" height="600" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1280.800@0.0.1280.800" timestamp="1628561300997" />
+    <state x="201" y="133" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1628577589562">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="201" y="133" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.800@0.0.1280.800" timestamp="1628577589562" />
+    <state x="75" y="17" width="1169" height="783" key="find.popup" timestamp="1628652318349">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="75" y="17" width="1169" height="783" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1628652318349" />
+    <state x="0" y="0" width="1280" height="727" key="new project wizard" timestamp="1628410484598">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="0" y="0" width="1280" height="727" key="new project wizard/0.0.1280.800@0.0.1280.800" timestamp="1628410484598" />
+    <state width="927" height="761" key="new project wizard/0.25.1280.702@0.25.1280.702" timestamp="1626953975497" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1628652304021">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1628652304021" />
+    <state x="370" y="241" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1628737832679">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="370" y="241" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1280.800@0.0.1280.800" timestamp="1628737832679" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/bll_shopping/lib/src/actuator/shopping_my_bag_actuator.dart</url>
+          <line>32</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/bll_shopping/lib/src/actuator/shopping_my_bag_actuator.dart</url>
+          <line>106</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/bll_shopping/lib/src/actuator/shopping_my_bag_actuator.dart</url>
+          <line>116</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/bll_shopping/lib/src/actuator/shopping_cart_actuator.dart</url>
+          <line>186</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/bll_shopping/lib/src/actuator/shopping_cart_actuator.dart</url>
+          <line>194</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint suspend="THREAD" type="dart-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
