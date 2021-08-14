@@ -13,11 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10dbeff7-38ef-49c7-8562-cacd3a6fe1af" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,14 +192,22 @@
       <option name="project" value="LOCAL" />
       <updated>1628594454087</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="增加 .idea 项目配置">
+      <created>1628918593268</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1628918593268</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init commit" />
     <MESSAGE value="1.1.0 发布前" />
     <MESSAGE value="1.1.0 准备发布" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.1.0 准备发布" />
+    <MESSAGE value="增加 .idea 项目配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加 .idea 项目配置" />
   </component>
   <component name="WindowStateProjectService">
     <state x="165" y="136" key="#PSD" timestamp="1627354922802">
@@ -252,10 +258,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="435" y="150" key="AndroidProcessChooserDialog/0.0.1280.800@0.0.1280.800" timestamp="1627697216167" />
-    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2" timestamp="1628594453783">
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2" timestamp="1628918593140">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1628594453783" />
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1628918593140" />
     <state x="0" y="0" key="FileDocumentManager.FileCacheConflict" timestamp="1627989513678">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -284,10 +290,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="543" height="596" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1628583089323" />
-    <state x="240" y="137" key="Vcs.Push.Dialog.v2" timestamp="1628907664982">
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2" timestamp="1628918597974">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="240" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1628907664982" />
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1628918597974" />
     <state width="640" height="400" key="XDebugger.FullValuePopup" timestamp="1628316904237">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
