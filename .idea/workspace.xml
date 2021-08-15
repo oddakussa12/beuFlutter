@@ -13,9 +13,124 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10dbeff7-38ef-49c7-8562-cacd3a6fe1af" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_centre/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_centre/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_centre/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_centre/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_centre/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_discover/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_discover/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_discover/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_entity/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_orders/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_resources/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_share/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_shopping/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bll_special/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_image_picker/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_location/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_request/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs_transition/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/origin/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.dart_tool/package_config_subset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.dart_tool/version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.idea/runConfigurations/main_dart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picker/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +166,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -199,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628918593268</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="增加 .idea 项目配置">
+      <created>1628919030612</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628919030612</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -258,10 +380,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="435" y="150" key="AndroidProcessChooserDialog/0.0.1280.800@0.0.1280.800" timestamp="1627697216167" />
-    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2" timestamp="1628918593140">
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2" timestamp="1628919030528">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1628918593140" />
+    <state x="216" y="0" width="1064" height="727" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1628919030528" />
     <state x="0" y="0" key="FileDocumentManager.FileCacheConflict" timestamp="1627989513678">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -282,18 +404,18 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1238" height="261" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1628747976181" />
-    <state x="28" y="0" width="1223" height="728" key="SettingsEditor" timestamp="1628918521967">
+    <state x="28" y="0" width="1223" height="728" key="SettingsEditor" timestamp="1629032054849">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="28" y="0" width="1223" height="728" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1628918521967" />
+    <state x="28" y="0" width="1223" height="728" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1629032054849" />
     <state width="543" height="596" key="SwitcherDM" timestamp="1628583089323">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="543" height="596" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1628583089323" />
-    <state x="240" y="137" key="Vcs.Push.Dialog.v2" timestamp="1628918597974">
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2" timestamp="1628919183711">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="240" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1628918597974" />
+    <state x="240" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1628919183711" />
     <state width="640" height="400" key="XDebugger.FullValuePopup" timestamp="1628316904237">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
