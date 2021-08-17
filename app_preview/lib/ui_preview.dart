@@ -9,10 +9,12 @@ void main() {
       builder: (BuildContext context) {
         return SplashPage();
       },
+
       title: 'beU Delivery',
       onGenerateRoute: (RouteSettings settings) {
         return AppRoutes.createRoute(settings);
       },
+
       locale: DevicePreview.locale(context),
       transitionBuilder: DevicePreview.appBuilder,
     ), // Wrap your app

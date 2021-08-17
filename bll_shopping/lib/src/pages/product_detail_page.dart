@@ -67,6 +67,7 @@ class _ProductDetailPageState
     ]));
   }
 
+  /// 购物车
   Widget buildShoppingCartBar() {
     if (actuator.product == null || actuator.product.shop == null) {
       return Container();
@@ -80,6 +81,7 @@ class _ProductDetailPageState
         shopId: "${actuator.product.shop!.id}");
   }
 
+  /// 商品信息
   Widget buildProductInfo() {
     if (actuator.product == null) {
       return SliverPadding(padding: EdgeInsets.all(0));
@@ -146,6 +148,7 @@ class _ProductDetailPageState
     );
   }
 
+  /// 标题
   SliverAppBar buildSliverAppBar(BuildContext context) {
     double expandedHeight = MediaQuery.of(context).size.width * 6 / 7;
     return SliverAppBar(

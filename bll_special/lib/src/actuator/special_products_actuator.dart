@@ -4,7 +4,7 @@ import '../special_config.dart';
 
 /**
  * SpecialProductsActuator
- *
+ * 特价商品
  * @author: Ruoyegz
  * @date: 2021/8/4
  */
@@ -36,7 +36,7 @@ class SpecialProductsActuator extends RefreshActuator {
     loadSpecialProducts(page, type);
   }
 
-  loadSpecialProducts(int page, PullType type) async {
+  void loadSpecialProducts(int page, PullType type) async {
     if (products.isEmpty) {
       changeStatusForLoading();
     }

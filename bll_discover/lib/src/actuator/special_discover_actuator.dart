@@ -8,8 +8,11 @@ import 'package:discover/src/discover_config.dart';
  * @date: 2021/8/5
  */
 class SpecialDiscoverActuator extends ReactActuator {
-  // static final int MAX_RETRY_TIME = 60 * 60 * 1000;
-  static final int MAX_RETRY_TIME = 60 * 1000;
+  /// 缓存特价商品的封面
+  static final String KEY_CACHE_SPECIAL_COVER = "specialCover";
+
+  /// 最大的重试时间【1小时】
+  static final int MAX_RETRY_TIME = 60 * 60 * 1000;
 
   /// 特价商品
   SpecialProduct special = SpecialProduct(0, "");
@@ -21,10 +24,26 @@ class SpecialDiscoverActuator extends ReactActuator {
   bool isRequesting = false;
 
   @override
-  void dispose() {
-    super.dispose();
+  void attachViewer(Viewer view) async {
+    super.attachViewer(view);
+    _initSpecialCover();
   }
 
+  void _initSpecialCover() async {
+    String? cover = await Storage.getString(KEY_CACHE_SPECIAL_COVER);
+    if (TextHelper.isNotEmpty(cover) && TextHelper.isEmpty(special.image)) {
+      notifySetState(() {
+        special.count = 0;
+        special.image = cover!;
+      });
+    }
+
+    loadSpecialGoods();
+  }
+
+  /**
+   * 加载特价商品
+   */
   void loadSpecialGoods() async {
     if (special.count <= 0) {
       isRequesting = true;
@@ -33,6 +52,13 @@ class SpecialDiscoverActuator extends ReactActuator {
           success: (SpecialProductBody product) {
         if (product != null && product.data != null) {
           special = product.data;
+
+          /// 缓存封面
+          if (TextHelper.isNotEmpty(special.image)) {
+            Storage.putString(KEY_CACHE_SPECIAL_COVER, special.image);
+          }
+
+          /// 没有特价商品时记录请求时间，为重试准备
           if (special.count <= 0) {
             lastRequestTime = DateTime.now().millisecondsSinceEpoch;
           }

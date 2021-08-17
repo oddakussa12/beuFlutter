@@ -34,12 +34,6 @@ class SpecialDiscoverPageState
   SpecialDiscoverPageState(SpecialDiscoverActuator actuator) : super(actuator);
 
   @override
-  void initState() {
-    super.initState();
-    actuator.loadSpecialGoods();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (tabNames.isEmpty) {
