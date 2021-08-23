@@ -22,6 +22,9 @@ typedef NextStepCallback = void Function();
  * @date:
  */
 class RegisterStepOneActuator extends ReactActuator {
+  /// 请求标识
+  bool isRequesting = false;
+
   @override
   void attachViewer(Viewer view) {
     super.attachViewer(view);
@@ -36,19 +39,31 @@ class RegisterStepOneActuator extends ReactActuator {
 
   /// 注册前检查手机号
   void checkPhone(String code, String phone, NextStepCallback callback) async {
+    if (isRequesting) {
+      return;
+    }
+
+    showLoading();
+    isRequesting = true;
+    bool successful = false;
     String url = "/api/user/+${code}${phone}/type/phone";
     DioClient().get(url, (response) => CheckPhoneBody.fromJson(response.data),
         success: (CheckPhoneBody body) {
       /// 1. 已注册，0. 未注册
       if (body != null && body.state == 0) {
-        if (callback != null) {
-          callback.call();
-        }
+        successful = true;
       } else {
         toast(message: S.of(context).loginerror_phonerepeat);
       }
     }, fail: (message, error) {
       notifyToasty(message);
+    }, complete: () {
+      isRequesting = false;
+      dismissLoading();
+
+      if (successful != null && callback != null) {
+        callback.call();
+      }
     });
   }
 }
@@ -60,6 +75,9 @@ class RegisterStepOneActuator extends ReactActuator {
  * @date:
  */
 class RegisterStepTwoActuator extends ReactActuator {
+  /// 请求标识
+  bool isRequesting = false;
+
   @override
   void attachViewer(Viewer view) {
     super.attachViewer(view);
@@ -72,26 +90,32 @@ class RegisterStepTwoActuator extends ReactActuator {
     }));
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   /// 注册前检查用户名
   void checkUserName(String name, NextStepCallback callback) async {
+    if (isRequesting) {
+      return;
+    }
+
+    showLoading();
+    isRequesting = true;
+    bool successful = false;
     String url = CentreUrl.checkUserName + "?user_name=${name}";
     DioClient().get(url, (response) => response, success: (Response response) {
       if (response != null &&
           response.statusCode! > 200 &&
           response.statusCode! < 300) {
-        if (callback != null) {
-          callback.call();
-        }
+        successful = true;
       } else {
         toast(message: S.of(context).alltip_usernamerule);
       }
     }, fail: (message, error) {
       notifyToasty(message);
+    }, complete: () {
+      isRequesting = false;
+      dismissLoading();
+      if (successful != null && callback != null) {
+        callback.call();
+      }
     });
   }
 }
@@ -103,10 +127,8 @@ class RegisterStepTwoActuator extends ReactActuator {
  * @date: 2021/7/26
  */
 class RegisterStepThreeActuator extends ReactActuator {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  /// 请求标识
+  bool isRequesting = false;
 
   /// 开始注册
   void startRegister(
@@ -116,6 +138,13 @@ class RegisterStepThreeActuator extends ReactActuator {
       required String password,
       required String nickName,
       required UserInfoStateCallback callback}) async {
+    if (isRequesting) {
+      return;
+    }
+
+    showLoading();
+    isRequesting = true;
+
     FormData requestBody = FormData.fromMap({
       "user_phone": phone,
       "user_phone_country": areaCode,
@@ -137,6 +166,9 @@ class RegisterStepThreeActuator extends ReactActuator {
       }
     }, fail: (message, error) {
       notifyToasty(message);
-    }, complete: () {});
+    }, complete: () {
+      isRequesting = false;
+      dismissLoading();
+    });
   }
 }

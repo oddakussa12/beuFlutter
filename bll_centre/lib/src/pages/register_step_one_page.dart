@@ -72,13 +72,14 @@ class _RegisterStepOnePageState
       return;
     }
 
+    FocusScope.of(context).requestFocus(FocusNode());
+
     /// 检查手机的合法性
     actuator.checkPhone(country.areaCode, phone, navigateStepTwo);
   }
 
   /// 第二步
   void navigateStepTwo() {
-    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.push(
         context,
         PageTransition(

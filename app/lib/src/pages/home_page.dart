@@ -28,16 +28,13 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   int pageIndex = 0;
 
+  /// 版本检查
+  AppVersionScope versionScope = AppVersionScope();
+
   PageController _pageController = PageController(keepPage: true);
 
   /// tabs 对应的页面列表
-  List<Widget> pageWidgets = [
-    /*SpecialDiscoverPage(key: PageStorageKey<String>("DiscoverPage")),
-    ShoppingMyBagPage(
-      key: PageStorageKey<String>("ShoppingMyBagPage"),
-    ),
-    UserCentrePage(key: PageStorageKey<String>("UserCentrePage"))*/
-  ];
+  List<Widget> pageWidgets = [];
 
   @override
   void initState() {
@@ -70,6 +67,11 @@ class _HomePageState extends State<HomePage>
         _pageController.jumpToPage(0);
       }
     });
+
+    /// 延时检查 app 版本信息
+    versionScope.delayCheckVersion(context, (info) {
+      UpdateVersionDialog.show(context, info.last, info.upgrade_point);
+    });
   }
 
   @override
@@ -87,6 +89,12 @@ class _HomePageState extends State<HomePage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    super.dispose();
+    versionScope.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

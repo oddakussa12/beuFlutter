@@ -68,13 +68,14 @@ class _RegisterStepTwoPageState
       return;
     }
 
+    FocusScope.of(context).requestFocus(FocusNode());
+
     /// 检查手机的合法性
     actuator.checkUserName(name, navigateStepThree);
   }
 
   /// 第三步
   void navigateStepThree() {
-    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.push(
         context,
         PageTransition(

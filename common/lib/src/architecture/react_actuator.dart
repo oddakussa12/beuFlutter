@@ -11,7 +11,6 @@ import 'architecture.dart';
  * @date: 2021/7/22
  */
 abstract class ReactActuator<V extends Viewer> implements Actuator<V>, Viewer {
-
   /// 视图
   V? viewer;
 
@@ -62,6 +61,20 @@ abstract class ReactActuator<V extends Viewer> implements Actuator<V>, Viewer {
     LogDog.i(this.runtimeType.toString() + ", notifyToasty: ${message}");
     if (viewer != null && TextHelper.isNotEmpty(message)) {
       viewer!.notifyToasty(message);
+    }
+  }
+
+  @override
+  void showLoading() {
+    if (viewer != null) {
+      viewer!.showLoading();
+    }
+  }
+
+  @override
+  void dismissLoading() {
+    if (viewer != null) {
+      viewer!.dismissLoading();
     }
   }
 }

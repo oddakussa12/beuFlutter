@@ -181,35 +181,56 @@ class _ProductDetailPageState
                 topRight: Radius.circular(0)),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: CachedNetworkImage(
-                fadeInDuration: const Duration(milliseconds: 50),
-            fadeOutDuration: const Duration(milliseconds: 50),
-                imageUrl: actuator.product.productImage(),
-                placeholder: (context, url) => Image.asset(
-                  "res/images/def_cover_1_1.png",
-                  package: 'resources',
-                  height: expandedHeight,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
-                ),
-                errorWidget: (context, url, error) => Image.asset(
-                  "res/images/def_cover_1_1.png",
-                  package: 'resources',
-                  height: expandedHeight,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
-                ),
-                height: 150,
-                width: MediaQuery.of(context).size.width / 2,
-                fit: BoxFit.cover,
+              child: BannerSwiper(
+                length: actuator.product.image != null
+                    ? actuator.product.image!.length
+                    : 0,
+                height: expandedHeight.toDouble(),
+                width: MediaQuery.of(context).size.width,
+                autoLoop: true,
+                builder: (index) {
+                  String url = index < actuator.product.image!.length
+                      ? actuator.product.image![index].url
+                      : "";
+                  LogDog.d("ProductDetailPage, index: ${index}, image: ${url}");
+
+                  return buildBackgroundWidget(
+                      context, index, expandedHeight, url);
+                },
               ),
               onTap: () {
                 barController.closeShopCart();
               },
             )),
       ),
+    );
+  }
+
+  Widget buildBackgroundWidget(
+      BuildContext context, int index, double expandedHeight, String imageUrl) {
+    return CachedNetworkImage(
+      fadeInDuration: const Duration(milliseconds: 50),
+      fadeOutDuration: const Duration(milliseconds: 50),
+      imageUrl: imageUrl,
+      placeholder: (context, url) => Image.asset(
+        "res/images/def_cover_1_1.png",
+        package: 'resources',
+        height: expandedHeight,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+        gaplessPlayback: true,
+      ),
+      errorWidget: (context, url, error) => Image.asset(
+        "res/images/def_cover_1_1.png",
+        package: 'resources',
+        height: expandedHeight,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+        gaplessPlayback: true,
+      ),
+      height: 150,
+      width: MediaQuery.of(context).size.width / 2,
+      fit: BoxFit.cover,
     );
   }
 
@@ -275,7 +296,7 @@ class _ProductDetailPageState
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
           fadeInDuration: const Duration(milliseconds: 50),
-            fadeOutDuration: const Duration(milliseconds: 50),
+          fadeOutDuration: const Duration(milliseconds: 50),
           placeholder: "packages/resources/res/images/def_cover_1_1.png",
           image: actuator.product.productImage(),
           imageErrorBuilder: (context, error, stackTrace) {

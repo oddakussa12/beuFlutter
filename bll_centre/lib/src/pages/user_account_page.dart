@@ -31,8 +31,10 @@ class _UserAccountPageState extends State<UserAccountPage> {
   Widget buildPageBody(BuildContext context) {
     return Column(
       children: [
+        /// 用户信息
         GestureDetector(
-          child: buildUserAccount(context),
+          child: _buildCommonItem(context, "res/icons/ic_account_profile.png",
+              S.of(context).confirm_information),
           onTap: () {
             Navigator.push(
                 context,
@@ -40,11 +42,20 @@ class _UserAccountPageState extends State<UserAccountPage> {
                     type: TransitionType.rightToLeft, child: UserUpdatePage()));
           },
         ),
+
+        /// 地址薄
+        GestureDetector(
+          child: _buildCommonItem(
+              context, "res/icons/ic_address_book.png", "Address book"),
+          onTap: () {
+            Navigator.pushNamed(context, Routes.address.AddressBook);
+          },
+        ),
       ],
     );
   }
 
-  Widget buildUserAccount(BuildContext context) {
+  Widget _buildCommonItem(BuildContext context, String imagePath, String text) {
     return Container(
       height: MediaQuery.of(context).size.width * 0.42,
       alignment: Alignment.center,
@@ -66,7 +77,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            "res/icons/ic_account_profile.png",
+            imagePath,
             package: "resources",
             width: 64,
             height: 64,
@@ -75,7 +86,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
           Container(
             margin: EdgeInsets.only(top: 10),
             child: Text(
-              S.of(context).confirm_information,
+              text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

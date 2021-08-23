@@ -11,10 +11,10 @@ class Constants {
   static final String ANDROID_APP_ID = "com.xmt.beu.applite";
 
   /// DEBUG：按 Build type 确定是否为 Debug
-  static final bool isDebug = false;
+  static final bool isDebug = true;
 
   /// DEV: 开发模式【手动设置】
-  static final bool isDevelop = false;
+  static final bool isDevelop = true;
 
   /// TESTING: 测试模式【手动设置】
   static final bool isTesting = false;

@@ -51,6 +51,7 @@ class CountryCodeActuator extends RetryActuator {
       }
     }
 
+    showLoading();
     DioClient().get(CentreUrl.countryCode,
         (response) => CountryCodeBody.fromJson(response.data),
         options: Options(
@@ -67,6 +68,7 @@ class CountryCodeActuator extends RetryActuator {
         Storage.putString(CentreKey.COUNTRY_CODE, json.encode(body));
       }
     }, complete: () {
+      dismissLoading();
       notifySetState();
     });
   }

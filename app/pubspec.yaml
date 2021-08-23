@@ -56,6 +56,10 @@ dependencies:
   centre:
     path: ../bll_centre/
 
+  # 地址薄
+  address:
+    path: ../bll_address/
+
   ### Business 相关的 Module ###
 
   # 项目内 Module 依赖区

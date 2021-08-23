@@ -1,3 +1,4 @@
+import 'package:address/address.dart';
 import 'package:centre/centre.dart';
 import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,6 +72,12 @@ class AppRoutes {
         type: TransitionType.rightToLeft,
         settings: settings,
       );
-    } else {}
+    } else if (Routes.address.AddressBook == settings.name) {
+      return PageTransition(
+        child: AddressBookPage(),
+        type: TransitionType.rightToLeft,
+        settings: settings,
+      );
+    }else {}
   }
 }

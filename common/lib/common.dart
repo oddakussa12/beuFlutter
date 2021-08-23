@@ -74,6 +74,9 @@ export 'src/widget/empty/empty_widget.dart';
 export 'src/widget/progress_bar_button.dart';
 export 'src/widget/progress_bar_icon.dart';
 
+export 'src/widget/swiper/banner_indicator.dart';
+export 'src/widget/swiper/banner_swiper.dart';
+
 /// toolbar
 export 'src/widget/appbar/app_bar.dart';
 export 'src/widget/appbar/app_bar_only_title.dart';

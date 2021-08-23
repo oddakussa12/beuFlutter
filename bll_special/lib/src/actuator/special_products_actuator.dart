@@ -40,6 +40,7 @@ class SpecialProductsActuator extends RefreshActuator {
     if (products.isEmpty) {
       changeStatusForLoading();
     }
+
     String url = SpecialUrl.specialProducts + "?page=${page}";
     //String url = SpecialUrl.discoveryShops + "?page=${page}&type=product&order=rated";
     DioClient().get(url, (response) => SpecProductList.fromJson(response.data),

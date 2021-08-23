@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:centre/src/centre_config.dart';
+import 'package:centre/src/model/app_version_scope.dart';
 import 'package:common/common.dart';
-
-/// 版本更新回调
-typedef UpdateVersionCall = void Function(VersionInfo info);
 
 /**
  * UserSettingActuator
@@ -20,36 +18,10 @@ class UserSettingActuator extends ReactActuator {
   String cacheSize = NONE_CACHE;
 
   /// 默认版本信息
-  VersionInfo version = VersionInfo.none();
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void checkAppVersion(UpdateVersionCall call) {
-    /// 没有更新到最新版
-    /*if (!version.isNone! && (version.isUpgrade || version.mustUpgrade)) {
-      call.call(version);
-      return;
-    }*/
-
-    DioClient().get(
-        CentreUrl.appVersion, (response) => VersionBody.fromJson(response.data),
-        success: (VersionBody body) {
-      if (body != null && body.data != null) {
-        LogDog.w("checkAppVersion: ${jsonEncode(body)}");
-        version = body.data;
-        version.isNone = false;
-      }
-    }, complete: () {
-      /// 需要更新版本
-      if (version.isUpgrade || version.mustUpgrade) {
-        call.call(version);
-      } else {
-        notifyToasty(S.of(context).setupdata_mostnew);
-      }
-    });
+  void checkAppVersion(UpdateCallback call) {
+    AppVersionScope scope = AppVersionScope();
+    scope.checkVersion(context, call, showToast: true);
   }
 
   /// 计算缓存大小

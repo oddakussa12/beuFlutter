@@ -16,9 +16,9 @@ class LoadingDialog extends StatelessWidget {
   const LoadingDialog({Key? key, this.message, this.autoDismiss = true})
       : super(key: key);
 
-  static void show(BuildContext context,
+  static Future show(BuildContext context,
       {bool? autoDismiss = true, bool? barrierDismiss = false}) {
-    showDialog(
+    return showDialog(
         context: context,
         barrierDismissible: barrierDismiss!,
         builder: (context) {

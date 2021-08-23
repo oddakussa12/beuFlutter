@@ -29,7 +29,7 @@ class Actuator<V extends Viewer> {
  * @author: Ruoyegz
  * @date: 2021/7/22
  */
-class Viewer {
+class Viewer extends Loadable{
   void notifySetState([VoidCallback? callback]) {}
 
   void notifyToasty(String content) {}
@@ -60,7 +60,16 @@ class Refreshable {
   /**
    * 加载数据源
    */
-  onLoadMoreSource(int page, PullType type){}
+  onLoadMoreSource(int page, PullType type) {}
+}
+
+/**
+ * loading
+ */
+class Loadable {
+  void showLoading() {}
+
+  void dismissLoading() {}
 }
 
 /**

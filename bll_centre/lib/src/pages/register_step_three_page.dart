@@ -65,6 +65,7 @@ class _RegisterStepThreePageState
       toast(message: S.of(context).alltip_nikenamerule);
       return;
     }
+    FocusScope.of(context).requestFocus(FocusNode());
 
     /// 检查手机的合法性
     actuator.startRegister(
@@ -80,12 +81,10 @@ class _RegisterStepThreePageState
 
   /// 第三步
   void navigateStepThree(int state) {
-    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.pop(context);
     BusClient().fire(SignUpEvent());
     if (state == 1) {
-      Navigator.push(context,
-          PageTransition(type: TransitionType.rightToLeft, child: LoginPage()));
+      Navigator.pushNamed(context, Routes.centre.Login);
     }
   }
 

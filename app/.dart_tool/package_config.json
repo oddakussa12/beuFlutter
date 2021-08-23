@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "address",
+      "rootUri": "../../bll_address",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///Library/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.1.2",
       "packageUri": "lib/",
@@ -740,7 +746,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-08-15T15:50:59.338277Z",
+  "generated": "2021-08-23T03:30:23.442285Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }

@@ -10,6 +10,7 @@ class Routes {
   static final shopping = _Shopping();
   static final special = _Special();
   static final centre = _Centre();
+  static final address = _Address();
 }
 
 /**
@@ -74,7 +75,6 @@ class _Special {
 
   /// 订单详情
   final String SpecialProducts = _Module + "SpecialProducts";
-
 }
 
 /**
@@ -97,4 +97,17 @@ class _Centre {
 
   /// 关注的商铺
   final String FollowShops = _Module + "FollowShops";
+}
+
+class _Address {
+  static final String _Module = "Address/";
+
+  /// 地址薄
+  final String AddressBook = _Module + "AddressBook";
+
+  /// 地址编辑器
+  final String AddressEditor = _Module + "AddressEditor";
+
+  /// 地址定位
+  final String AddressLocation = _Module + "AddressLocation";
 }

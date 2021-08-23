@@ -50,4 +50,14 @@ abstract class ReactableState<A extends ReactActuator, T extends StatefulWidget>
   void notifyToasty(String content) {
     toast(message: content);
   }
+
+  @override
+  void showLoading() {
+    LoadingDialog.show(context);
+  }
+
+  @override
+  void dismissLoading() {
+    Navigator.pop(context);
+  }
 }
