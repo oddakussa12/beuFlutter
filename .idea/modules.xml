@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app_preview/app_preview.iml" filepath="$PROJECT_DIR$/app_preview/app_preview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_centre/bll_centre.iml" filepath="$PROJECT_DIR$/bll_centre/bll_centre.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_discover/bll_discover.iml" filepath="$PROJECT_DIR$/bll_discover/bll_discover.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_entity/bll_entity.iml" filepath="$PROJECT_DIR$/bll_entity/bll_entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_orders/bll_orders.iml" filepath="$PROJECT_DIR$/bll_orders/bll_orders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_resources/bll_resources.iml" filepath="$PROJECT_DIR$/bll_resources/bll_resources.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_share/bll_share.iml" filepath="$PROJECT_DIR$/bll_share/bll_share.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_shopping/bll_shopping.iml" filepath="$PROJECT_DIR$/bll_shopping/bll_shopping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bll_special/bll_special.iml" filepath="$PROJECT_DIR$/bll_special/bll_special.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs_image_picker/libs_image_picker.iml" filepath="$PROJECT_DIR$/libs_image_picker/libs_image_picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs_location/libs_location.iml" filepath="$PROJECT_DIR$/libs_location/libs_location.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs_request/libs_request.iml" filepath="$PROJECT_DIR$/libs_request/libs_request.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs_transition/libs_transition.iml" filepath="$PROJECT_DIR$/libs_transition/libs_transition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/origin/origin.iml" filepath="$PROJECT_DIR$/origin/origin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/picker/picker.iml" filepath="$PROJECT_DIR$/picker/picker.iml" />
+    </modules>
+  </component>
+</project>
