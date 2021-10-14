@@ -29,6 +29,7 @@ class OrderPreviewActuator extends RetryActuator {
 
   /// 当前预览订单
   final PreviewOrdersBody orderP = PreviewOrdersBody([]);
+  // todo: set here data from UserManager
 
   @override
   void dispose() {
@@ -85,6 +86,12 @@ class OrderPreviewActuator extends RetryActuator {
     if (idNumbers != null &&
         idNumbers.isNotEmpty &&
         TextHelper.isNotEmpty(deliveryCoastParam)) {
+      // if the information is relevant we can update User cash in local storage
+      // todo: update that on backend side and for future request
+      var user = UserManager().getUser();
+      user.phone = orderP.phone;
+      UserManager().saveUser(user); // todo: review by Flutter developer
+
       loadPreviewOrder();
     }
   }
@@ -272,6 +279,7 @@ class OrderPreviewActuator extends RetryActuator {
         LogDog.d("checkoutPreviewOrder-Response: ${body}");
 
         orderCreated = true;
+
         /// 向主页发送订单创建成功的通知
         BusClient().fire(OrderCreatedEvent());
       } else {

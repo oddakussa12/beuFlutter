@@ -35,6 +35,9 @@ class CountryCodeActuator extends RetryActuator {
    * 加载国家区号
    */
   void loadCountryCode() async {
+    if (Constants.isDevelop) {
+      await Storage.clear(); // invalidate previously hashed values
+    }
     String? cache = await Storage.getString(CentreKey.COUNTRY_CODE);
     LogDog.d("loadCountryCode-cache: ${cache}");
 

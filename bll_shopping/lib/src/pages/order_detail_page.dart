@@ -245,7 +245,7 @@ class _OrderDetailPageState
         margin: EdgeInsets.only(left: 16, right: 16, top: 2),
         alignment: Alignment.topLeft,
         child: Text(
-          TextHelper.clean(actuator.order.user),
+          "build user name", //TextHelper.clean(actuator.order.user),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: AppColor.color0F0F17, fontSize: 14),

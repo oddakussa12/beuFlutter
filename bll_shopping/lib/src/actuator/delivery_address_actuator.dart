@@ -44,6 +44,11 @@ class DeliveryAddressActuator extends RetryActuator {
         phone = params.phone;
         address = params.address;
         shopIds = params.shopIds;
+        if (name == "" || phone == "") {
+          var user = UserManager().getUser();
+          if (name == "") name = user.nickName;
+          if (phone == "") phone = user.phone;
+        }
       }
       if (Constants.isTesting) {
         name = "XMT-beU";

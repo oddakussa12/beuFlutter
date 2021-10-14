@@ -473,7 +473,9 @@ class _OrderPreviewPageState
         alignment: Alignment.topLeft,
         child: Text(
           actuator.orderP.name == ""
-              ? S.of(context).login_username
+              //? S.of(context).login_username // todo: ask explain Flutter developer
+              ? (UserManager().getUser().name?.toString() ??
+                  S.of(context).login_username)
               : TextHelper.clean(actuator.orderP.name),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -487,7 +489,9 @@ class _OrderPreviewPageState
         alignment: Alignment.topLeft,
         child: Text(
           actuator.orderP.phone == ""
-              ? S.of(context).confirm_phone_number
+              // ? S.of(context).confirm_phone_number // todo: same as buildUserName
+              ? (UserManager().getUser().phone?.toString() ??
+                  S.of(context).confirm_phone_number)
               : TextHelper.clean(actuator.orderP.phone),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

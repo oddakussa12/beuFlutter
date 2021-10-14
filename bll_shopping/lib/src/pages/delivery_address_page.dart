@@ -26,6 +26,7 @@ class _DeliveryAddressPageState
   @override
   void initState() {
     super.initState();
+    // actuator.init(UserAddress(name: "a", phone: "123"));
     actuator.check(fail: (LocationClient client, LFailType type) {
       if (client != null && type != null) {
         if (LFailType.ServiceUnusable == type) {

@@ -1,0 +1,242 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "app",
+            "cwd": "app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "app (profile mode)",
+            "cwd": "app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "app_preview",
+            "cwd": "app_preview",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "app_preview (profile mode)",
+            "cwd": "app_preview",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_address",
+            "cwd": "bll_address",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_address (profile mode)",
+            "cwd": "bll_address",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_centre",
+            "cwd": "bll_centre",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_centre (profile mode)",
+            "cwd": "bll_centre",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_discover",
+            "cwd": "bll_discover",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_discover (profile mode)",
+            "cwd": "bll_discover",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_entity",
+            "cwd": "bll_entity",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_entity (profile mode)",
+            "cwd": "bll_entity",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_orders",
+            "cwd": "bll_orders",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_orders (profile mode)",
+            "cwd": "bll_orders",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_resources",
+            "cwd": "bll_resources",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_resources (profile mode)",
+            "cwd": "bll_resources",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_share",
+            "cwd": "bll_share",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_share (profile mode)",
+            "cwd": "bll_share",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_shopping",
+            "cwd": "bll_shopping",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_shopping (profile mode)",
+            "cwd": "bll_shopping",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bll_special",
+            "cwd": "bll_special",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bll_special (profile mode)",
+            "cwd": "bll_special",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "common",
+            "cwd": "common",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "common (profile mode)",
+            "cwd": "common",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "libs_image_picker",
+            "cwd": "libs_image_picker",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "libs_image_picker (profile mode)",
+            "cwd": "libs_image_picker",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "libs_location",
+            "cwd": "libs_location",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "libs_location (profile mode)",
+            "cwd": "libs_location",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "libs_request",
+            "cwd": "libs_request",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "libs_request (profile mode)",
+            "cwd": "libs_request",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "libs_transition",
+            "cwd": "libs_transition",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "libs_transition (profile mode)",
+            "cwd": "libs_transition",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "origin",
+            "cwd": "origin",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "origin (profile mode)",
+            "cwd": "origin",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "picker",
+            "cwd": "picker",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "picker (profile mode)",
+            "cwd": "picker",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}

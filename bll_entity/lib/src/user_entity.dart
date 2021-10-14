@@ -174,6 +174,9 @@ class User {
   @JsonKey(name: "user_address")
   String? address;
 
+  @JsonKey(name: "user_phone")
+  String? phone;
+
   @JsonKey(name: "user_enrollment_at")
   String? enrollmentAt;
 
