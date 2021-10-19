@@ -441,12 +441,14 @@ class _OrderPreviewPageState
    * 地址头像
    */
   Widget buildAddressUserAvatar() {
+    var avatarUri =
+        actuator.orderP.avatar ?? UserManager().getUser().avatarLink ?? "";
     return ClipRRect(
         borderRadius: BorderRadius.circular(44),
         child: CachedNetworkImage(
           fadeInDuration: const Duration(milliseconds: 50),
           fadeOutDuration: const Duration(milliseconds: 50),
-          imageUrl: "${actuator.orderP.avatar}",
+          imageUrl: avatarUri,
           placeholder: (context, url) => Image.asset(
               "res/images/def_cover_1_1.png",
               package: 'resources',
@@ -474,7 +476,7 @@ class _OrderPreviewPageState
         child: Text(
           actuator.orderP.name == ""
               //? S.of(context).login_username // todo: ask explain Flutter developer
-              ? (UserManager().getUser().name?.toString() ??
+              ? (UserManager().getUser().nickName?.toString() ??
                   S.of(context).login_username)
               : TextHelper.clean(actuator.orderP.name),
           maxLines: 2,

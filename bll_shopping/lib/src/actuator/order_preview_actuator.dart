@@ -29,7 +29,6 @@ class OrderPreviewActuator extends RetryActuator {
 
   /// 当前预览订单
   final PreviewOrdersBody orderP = PreviewOrdersBody([]);
-  // todo: set here data from UserManager
 
   @override
   void dispose() {

@@ -2,6 +2,7 @@ import 'package:app/src/app_routes.dart';
 import 'package:app/src/pages/splash_page.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 Future<void> main() async {
   await SentryFlutter.init(
@@ -18,4 +19,6 @@ Future<void> main() async {
       },
     )),
   );
+
+  // Logger(printer: SimplePrinter(colors: true)).v('boom');
 }

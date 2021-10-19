@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:discover/src/discover_config.dart';
 import 'package:discover/src/pages/special_discover_page.dart';
+import 'package:location/location.dart';
 
 /**
  * shops_actuator.dart
@@ -13,6 +14,30 @@ class ShopsActuator extends RefreshActuator {
   List<Shop> shops = [];
   late RetrySpecialCallback? callback;
 
+  LocationAddress? locAddress;
+
+  LocationClient client = LocationClient();
+
+  void checkLocation({LocationFailure? fail}) async {
+    client.checkPermission(
+        success: (LocationAddress result) {
+          locAddress = result;
+          onRefreshSource(0, PullType.Down);
+          // notifySetState();
+        },
+        fail: fail);
+  }
+
+  void updateLocation({LocationFailure? fail}) async {
+    client.start(
+        success: (LocationAddress result) {
+          locAddress = result;
+          onRefreshSource(0, PullType.Down);
+          // notifySetState();
+        },
+        fail: fail);
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -22,7 +47,7 @@ class ShopsActuator extends RefreshActuator {
   @override
   void toRetry() {
     super.toRetry();
-    if(callback != null){
+    if (callback != null) {
       callback!.call();
     }
     pullDown();
@@ -30,12 +55,12 @@ class ShopsActuator extends RefreshActuator {
 
   @override
   void onRefreshSource(int page, PullType type) {
-    loadDiscoveryBusiness(page, type);
+    loadDiscoveryBusinessNear(page, type);
   }
 
   @override
   void onLoadMoreSource(int page, PullType type) {
-    loadDiscoveryBusiness(page, type);
+    loadDiscoveryBusinessNear(page, type);
   }
 
   /**
@@ -46,8 +71,10 @@ class ShopsActuator extends RefreshActuator {
       changeStatusForLoading();
     }
 
-    String url = DiscoverUrl.discoveryIndex + "?page=${page}&type=shop&order=popular";
-    DioClient().get(url, (response) => ShopList.fromJson(response.data), success: (ShopList body) {
+    String url =
+        DiscoverUrl.discoveryIndex + "?page=${page}&type=shop&order=popular";
+    DioClient().get(url, (response) => ShopList.fromJson(response.data),
+        success: (ShopList body) {
       if (body != null && body.data != null) {
         if (page <= 1) {
           shops.clear();
@@ -58,6 +85,35 @@ class ShopsActuator extends RefreshActuator {
       refreshCompleted(type);
       emptyStatus = shops.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
       notifySetState();
+    });
+  }
+
+  /** 
+  * Load nearest
+  */
+  loadDiscoveryBusinessNear(int page, PullType type) async {
+    if (shops.isEmpty) {
+      changeStatusForLoading();
+    }
+
+    String url = DiscoverUrl.discoveryIndex +
+        "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
+        "&latitude=${locAddress?.latitude ?? '0'}";
+    DioClient().get(url, (response) => ShopList.fromJson(response.data),
+        success: (ShopList body) {
+      if (body != null && body.data != null) {
+        if (page <= 1) {
+          shops.clear();
+        }
+        shops.addAll(body.data);
+      }
+    }, complete: () {
+      refreshCompleted(type);
+      emptyStatus = shops.isNotEmpty ? EmptyStatus.Normal : EmptyStatus.Empty;
+      notifySetState();
+    }, fail: (arg, e) {
+      LogDog.d(e);
+      shops.clear();
     });
   }
 
