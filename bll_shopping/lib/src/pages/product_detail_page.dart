@@ -281,7 +281,11 @@ class _ProductDetailPageState
         margin: EdgeInsets.only(right: 16, top: 14),
       ),
       onTap: () {
-        appendShopCart();
+        if (UserManager().isLogin()) {
+          appendShopCart();
+        } else {
+          LoginDialog.show(context);
+        }
       },
     );
   }

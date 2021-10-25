@@ -527,7 +527,11 @@ class _ShopDetailPageState
                         "${product.name}-${product.id}-${DateTime.now().microsecond}"),
                     product: product,
                     event: (product) {
-                      appendShopCart(product);
+                      if (UserManager().isLogin()) {
+                        appendShopCart(product);
+                      } else {
+                        LoginDialog.show(context);
+                      }
                     },
                     showOptions: UserManager().delivery(actuator.shopDetail)),
                 onTap: () {
