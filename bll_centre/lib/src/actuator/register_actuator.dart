@@ -61,7 +61,7 @@ class RegisterStepOneActuator extends ReactActuator {
       isRequesting = false;
       dismissLoading();
 
-      if (successful != null && callback != null) {
+      if (successful != null && successful && callback != null) {
         callback.call();
       }
     });
@@ -113,7 +113,7 @@ class RegisterStepTwoActuator extends ReactActuator {
     }, complete: () {
       isRequesting = false;
       dismissLoading();
-      if (successful != null && callback != null) {
+      if (successful != null && successful && callback != null) {
         callback.call();
       }
     });
