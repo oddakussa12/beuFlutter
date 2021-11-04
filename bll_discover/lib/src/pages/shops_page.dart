@@ -4,6 +4,7 @@ import 'package:discover/src/items/item_shop_grid_stateless.dart';
 import 'package:discover/src/pages/special_discover_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:location/location.dart';
 
 /**
  * shops_page.dart
@@ -31,6 +32,21 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
   void initState() {
     super.initState();
     actuator.callback = widget.callback;
+    // actuator.init(UserAddress(name: "a", phone: "123"));
+    actuator.checkLocation(fail: (LocationClient client, LFailType type) {
+      if (client != null && type != null) {
+        if (LFailType.ServiceUnusable == type) {
+          /// 定位服务未开启
+          showLocationPermissionAlert(S.of(context).alltip_gps_noopen);
+        } else if (LFailType.Denied == type) {
+          /// 定位权限未授予
+          showLocationPermissionAlert(S.of(context).alltip_position_noopen);
+        } else if (LFailType.DeniedForever == type) {
+          /// 定位权限未授予被永久关闭【拒绝授权，且不让提示的那种】
+          showLocationPermissionAlert(S.of(context).alltip_position_closeopen);
+        }
+      }
+    });
   }
 
   @override
@@ -89,5 +105,21 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
    */
   void clickShop(BuildContext context, Shop shop) {
     Navigator.pushNamed(context, Routes.shopping.ShopDetail, arguments: shop);
+  }
+
+  void showLocationPermissionAlert(String message) {
+    MessageDialog.show(context, message, tapRight: () {
+      actuator.updateLocation(fail: (LocationClient client, LFailType type) {
+        if (client != null && type != null) {
+          if (LFailType.ServiceUnusable == type) {
+            client.openLocationSettings();
+          } else if (LFailType.Denied == type) {
+            // client.openSettings();
+          } else if (LFailType.DeniedForever == type) {
+            client.openSettings();
+          }
+        }
+      });
+    });
   }
 }

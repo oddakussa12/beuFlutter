@@ -181,7 +181,9 @@ class _ProductDetailPageState
                 topRight: Radius.circular(0)),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: BannerSwiper(
+              child: buildBackgroundWidget(
+                  context, 0, expandedHeight, actuator.product.image![0].url),
+              /*BannerSwiper(
                 length: actuator.product.image != null
                     ? actuator.product.image!.length
                     : 0,
@@ -193,11 +195,11 @@ class _ProductDetailPageState
                       ? actuator.product.image![index].url
                       : "";
                   LogDog.d("ProductDetailPage, index: ${index}, image: ${url}");
-
                   return buildBackgroundWidget(
                       context, index, expandedHeight, url);
                 },
               ),
+              ),*/
               onTap: () {
                 barController.closeShopCart();
               },
@@ -279,7 +281,11 @@ class _ProductDetailPageState
         margin: EdgeInsets.only(right: 16, top: 14),
       ),
       onTap: () {
-        appendShopCart();
+        if (UserManager().isLogin()) {
+          appendShopCart();
+        } else {
+          LoginDialog.show(context);
+        }
       },
     );
   }

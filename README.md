@@ -71,3 +71,5 @@
 
 ```
 
+For install on IOS and fix crash on relaunch issue: 
+    flutter run --release 

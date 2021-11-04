@@ -162,6 +162,6 @@ class UserManager {
    * 对当前用户来说，商品是否可以外卖
    */
   bool delivery(Shop? shop) {
-    return isLogin() && shop != null && shop.mayDelivery();
+    return /*isLogin() &&*/ shop != null && shop.mayDelivery();
   }
 }

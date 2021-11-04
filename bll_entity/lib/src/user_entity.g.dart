@@ -102,6 +102,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     avatarLink: json['user_avatar_link'] as String?,
     isChecked: json['isChecked'] as bool?,
   )
+    ..phone = json['user_phone'] as String?
     ..friendCount = json['friendCount'] as int?
     ..likedCount = json['likedCount'] as int?
     ..isFriend = json['isFriend'] as bool?
@@ -125,6 +126,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'user_grade': instance.grade,
       'user_contact': instance.contact,
       'user_address': instance.address,
+      'user_phone': instance.phone,
       'user_enrollment_at': instance.enrollmentAt,
       'user_avatar_link': instance.avatarLink,
       'user_gender': instance.gender,

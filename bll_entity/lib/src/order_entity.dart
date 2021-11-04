@@ -130,7 +130,7 @@ class PreviewOrdersBody {
 
   PreviewOrdersBody(this.data,
       {this.name = "",
-      this.avatar = "",
+      this.avatar = null,
       this.phone = "",
       this.address = "",
       this.total = 0.0,
