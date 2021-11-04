@@ -232,7 +232,8 @@ class ItemSpecialProductWidget extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 8, bottom: 2),
             child: Text(
-              TextHelper.clean(product.shop != null ? product.shop!.name : ""),
+              TextHelper.clean(
+                  product.shop != null ? product.shop!.nickName : ""),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
