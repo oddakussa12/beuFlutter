@@ -13,7 +13,8 @@ buildscript {
     }
 
     ext {
-        ndkVersion = "24.0.7856742"
+         ndkVersion = "23.1.7779620"
+       // ndkVersion = "24.0.7856742"
     }
 }
 
