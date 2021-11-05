@@ -31,9 +31,7 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
   @override
   void initState() {
     super.initState();
-
     actuator.callback = widget.callback;
-
     // actuator.init(UserAddress(name: "a", phone: "123"));
     actuator.checkLocation(fail: (LocationClient client, LFailType type) {
       if (client != null && type != null) {
@@ -77,17 +75,7 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
         child: actuator.isNotNormal()
             ? buildEmptyWidget(context,
                 message: S.of(context).allpage_shopnofind)
-            :
-            //  Scaffold(
-            //     // floatingActionButton: FloatingActionButton(
-            //     //   // isExtended: true,
-            //     //   child: Icon(Icons.add),
-            //     //   backgroundColor: Theme.of(context).primaryColor,
-            //     //   onPressed: () {},
-            //     // ),
-            //     body: buildShops(),
-            //   ));
-            buildShops());
+            : buildShops());
   }
 
   GridView buildShops() {

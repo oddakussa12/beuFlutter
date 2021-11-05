@@ -117,7 +117,7 @@ Map<String, dynamic> _$DiscoveryShopsToJson(DiscoveryShops instance) =>
     };
 
 Shop _$ShopFromJson(Map<String, dynamic> json) {
-  print(json);
+ 
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
