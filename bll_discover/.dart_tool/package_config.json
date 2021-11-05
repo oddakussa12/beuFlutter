@@ -644,7 +644,11 @@
       "languageVersion": "2.12"
     }
   ],
+<<<<<<< HEAD
   "generated": "2021-11-04T10:53:28.975661Z",
+=======
+  "generated": "2021-11-05T11:36:43.377763Z",
+>>>>>>> master
   "generator": "pub",
   "generatorVersion": "2.15.0-178.1.beta"
 }
