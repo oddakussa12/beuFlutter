@@ -16,6 +16,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
+     
     return Container(
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
@@ -65,6 +66,17 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               maxLines: PlatformSupport.ios() ? 2 : 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: AppColor.color80000, fontSize: 12),
+            ),
+          ),
+           Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(  horizontal: 5),
+            child: Text(
+              TextHelper.clean("2 mins"),
+              textAlign: TextAlign.center,
+              maxLines: PlatformSupport.ios() ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
             ),
           )
         ],

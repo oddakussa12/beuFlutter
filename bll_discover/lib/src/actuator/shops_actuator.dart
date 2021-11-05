@@ -105,6 +105,7 @@ class ShopsActuator extends RefreshActuator {
         if (page <= 1) {
           shops.clear();
         }
+
         shops.addAll(body.data);
       }
     }, complete: () {
