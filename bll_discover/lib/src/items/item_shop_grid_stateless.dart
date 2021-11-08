@@ -68,7 +68,11 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               style: TextStyle(color: AppColor.color80000, fontSize: 12),
             ),
           ),
-           Container(
+ 
+  Row(
+       mainAxisAlignment: MainAxisAlignment.center,
+       
+       children: [        Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(  horizontal: 5),
             child: Text(
@@ -78,7 +82,29 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
             ),
+          ),
+           Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(  horizontal: 5),
+            child: Text(
+              TextHelper.clean("293 orders"),
+              textAlign: TextAlign.center,
+              maxLines: PlatformSupport.ios() ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
+            ),
+          )],),Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(  horizontal: 5),
+            child: Text(
+              TextHelper.clean("Average price 68 ETB"),
+              textAlign: TextAlign.center,
+              maxLines: PlatformSupport.ios() ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+            ),
           )
+ 
         ],
       ),
     );
