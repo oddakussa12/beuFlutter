@@ -61,6 +61,7 @@ Map<String, dynamic> _$ShopDetailToJson(ShopDetail instance) =>
     };
 
 ShopList _$ShopListFromJson(Map<String, dynamic> json) {
+  // print(json['data'][0]);
   return ShopList(
     json['links'] == null
         ? null
@@ -117,7 +118,6 @@ Map<String, dynamic> _$DiscoveryShopsToJson(DiscoveryShops instance) =>
     };
 
 Shop _$ShopFromJson(Map<String, dynamic> json) {
- 
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
@@ -162,7 +162,6 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
-  
       'user_id': instance.id,
       'user_uuid': instance.uuid,
       'user_name': instance.name,

@@ -22,6 +22,7 @@ class ShopsActuator extends RefreshActuator {
     client.checkPermission(
         success: (LocationAddress result) {
           locAddress = result;
+
           onRefreshSource(0, PullType.Down);
           // notifySetState();
         },
@@ -79,6 +80,7 @@ class ShopsActuator extends RefreshActuator {
         if (page <= 1) {
           shops.clear();
         }
+
         shops.addAll(body.data);
       }
     }, complete: () {
@@ -87,6 +89,8 @@ class ShopsActuator extends RefreshActuator {
       notifySetState();
     });
   }
+
+  loadAvarageprice(int id) {}
 
   /** 
   * Load nearest

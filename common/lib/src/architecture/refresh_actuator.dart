@@ -29,7 +29,7 @@ abstract class RefreshActuator<V extends Viewer> extends RetryActuator<V>
 
   /// 下拉调用
   void pullDown() {
-    LogDog.i(this.runtimeType.toString() + ", pullDown");
+   LogDog.i(this.runtimeType.toString() + ", pullDown");
     if (refreshProvider != null) {
       refreshProvider.refreshSource();
     }

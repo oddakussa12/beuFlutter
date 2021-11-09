@@ -72,7 +72,14 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   Row(
        mainAxisAlignment: MainAxisAlignment.center,
        
-       children: [        Container(
+       children: [     
+         
+         Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(  horizontal: 1),
+            child: Icon(Icons.delivery_dining_outlined),
+          ),
+            Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(  horizontal: 5),
             child: Text(
@@ -86,14 +93,18 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
            Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(  horizontal: 5),
-            child: Text(
+            child:  
+                Text(
               TextHelper.clean("293 orders"),
               textAlign: TextAlign.center,
               maxLines: PlatformSupport.ios() ? 2 : 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
-            ),
-          )],),Container(
+            )
+           
+          )],)
+          
+          ,Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(  horizontal: 5),
             child: Text(

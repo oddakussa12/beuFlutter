@@ -2,6 +2,7 @@
 class DiscoverUrl {
 
   /// 获取推荐商铺 | 商品
+    static final String productDetail = "/api/goods/";
   static final String discoveryShops = "/api/business/discovery/home";
 
   /// 商铺发现接口

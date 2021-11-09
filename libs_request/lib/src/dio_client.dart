@@ -127,6 +127,7 @@ class DioClient {
             TextHelper.isNotEmpty(baseUrl)) {
           this._dio.options.baseUrl = baseUrl;
         }
+        print(baseUrl);
       }
 
       Response response = await _dio.get(url,

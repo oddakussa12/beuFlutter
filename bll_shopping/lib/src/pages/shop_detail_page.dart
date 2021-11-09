@@ -29,11 +29,12 @@ class _ShopDetailPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    
 
     /// 外部传入的商铺参数
 
-    var args = ModalRoute.of(context)!.settings.arguments;
-    actuator.initShopDetail(args as Shop, barController);
+   var args = ModalRoute.of(context)!.settings.arguments;
+   actuator.initShopDetail(args as Shop, barController);
   }
 
   @override
@@ -522,6 +523,7 @@ class _ShopDetailPageState
             itemCount: actuator.products.length,
             itemBuilder: (BuildContext context, int index) {
               Product product = actuator.products[index];
+            
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 child: ItemCommonProductBlock(

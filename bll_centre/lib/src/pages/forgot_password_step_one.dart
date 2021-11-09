@@ -13,20 +13,21 @@ import 'country_code_page.dart';
  * @author: Ruoyegz
  * @date: 2021/7/7
  */
-class RegisterStepOnePage extends StatefulWidget {
-  const RegisterStepOnePage({Key? key}) : super(key: key);
+class ForgotPasswordOnePage extends StatefulWidget {
+  const ForgotPasswordOnePage({Key? key}) : super(key: key);
 
   @override
-  _RegisterStepOnePageState createState() =>
-      _RegisterStepOnePageState(RegisterStepOneActuator());
+  _ForgotPasswordOnePageState createState() =>
+      _ForgotPasswordOnePageState(RegisterStepOneActuator());
 }
 
-class _RegisterStepOnePageState
-    extends ReactableState<RegisterStepOneActuator, RegisterStepOnePage> {
+class _ForgotPasswordOnePageState
+    extends ReactableState<RegisterStepOneActuator, ForgotPasswordOnePage> {
   String phone = "";
   CountryCode country = CountryCode.create();
 
-  _RegisterStepOnePageState(RegisterStepOneActuator actuator) : super(actuator);
+  _ForgotPasswordOnePageState(RegisterStepOneActuator actuator)
+      : super(actuator);
 
   /// 注册按钮的交互状态
   bool mutualStatus = false;
@@ -80,22 +81,22 @@ class _RegisterStepOnePageState
 
   /// 第二步
   void navigateStepTwo() {
-    Navigator.push(
-        context,
-        PageTransition(
-            type: TransitionType.rightToLeft,
-            child: RegisterStepTwoPage(
-              phone: phone,
-              country: country,
-            )));
+    // Navigator.push(
+    //     context,
+    //     PageTransition(
+    //         type: TransitionType.rightToLeft,
+    //         child: RegisterStepTwoPage(
+    //           phone: phone,
+    //           country: country,
+    //         )));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Toolbar(
-          title: S.of(context).login_signup,
-        ),
+        appBar: Toolbar(title: "Forgot password"
+            //S.of(context).login_signup,
+            ),
         body: Column(
           children: [
             SingleChildScrollView(
@@ -126,7 +127,6 @@ class _RegisterStepOnePageState
 
                       /// 登录按钮
                       buildNextStep(context),
-                   
                     ],
                   ),
                 ),
