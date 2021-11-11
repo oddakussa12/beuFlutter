@@ -32,7 +32,6 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
   void initState() {
     super.initState();
     actuator.callback = widget.callback;
-    
 
     // actuator.init(UserAddress(name: "a", phone: "123"));
     actuator.checkLocation(fail: (LocationClient client, LFailType type) {
@@ -49,7 +48,6 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
         }
       }
     });
-    
   }
 
   @override
@@ -57,7 +55,6 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
     super.didChangeDependencies();
 
     actuator.pullDown();
-     
   }
 
   @override
@@ -96,6 +93,7 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
         itemCount: actuator.shops.length,
         itemBuilder: (BuildContext context, int index) {
           Shop shop = actuator.shops[index];
+          
 
           return GestureDetector(
             behavior: HitTestBehavior.deferToChild,

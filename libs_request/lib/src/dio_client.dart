@@ -55,7 +55,9 @@ class DioClient {
   factory DioClient() => _instance;
 
   DioClient._internal() {
+     
     baseUrl = defBaseUrl();
+
     headerInterceptor = HttpHeaderInterceptor();
     _dio
       ..options = new BaseOptions(
@@ -93,6 +95,7 @@ class DioClient {
       if (Constants.isCaught) {
         return CAUGHT_TEST_BASE_URL;
       }
+
       return TEST_BASE_URL;
     } else {
       return PRO_BASE_URL;
@@ -127,7 +130,7 @@ class DioClient {
             TextHelper.isNotEmpty(baseUrl)) {
           this._dio.options.baseUrl = baseUrl;
         }
-        print(baseUrl);
+        print(baseUrl + url+" yes");
       }
 
       Response response = await _dio.get(url,
@@ -137,6 +140,8 @@ class DioClient {
             "DioClient-get: ${url}, count: ${count} : ${total} : ${count / total * 100}%");
       });
       if (response != null) {
+        
+
         if (response.data is DioError) {
           var error = response.data['code'];
           String message = await parseServiceError(error);
@@ -145,6 +150,7 @@ class DioClient {
           }
         } else {
           T result = parser.call(response);
+
           if (success != null) {
             success.call(result);
           }

@@ -10,6 +10,7 @@ UserPoint _$UserPointFromJson(Map<String, dynamic> json) {
   return UserPoint(
     (json['point'] as num).toDouble(),
     json['comment'] as int,
+    
     percentage: json['percentage'] == null
         ? null
         : PercentAge.fromJson(json['percentage']),

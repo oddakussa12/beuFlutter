@@ -20,7 +20,7 @@ class Constants {
   static final bool isTesting = true;
 
   /// 抓包专用开关【只在测试 | 开发环境有用】
-  static final bool isCaught = true;
+  static final bool isCaught = false;
 
   static String languageCode = "en";
 

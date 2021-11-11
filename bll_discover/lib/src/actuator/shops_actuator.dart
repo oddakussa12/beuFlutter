@@ -99,10 +99,17 @@ class ShopsActuator extends RefreshActuator {
     if (shops.isEmpty) {
       changeStatusForLoading();
     }
+    String url;
+    if (Constants.isTesting) {
+      url = DiscoverUrl.discoveryIndex +
+          "?longtitude=${locAddress?.longitude ?? '0'}" +
+          "&latitude=${locAddress?.latitude ?? '0'}";
+    } else {
+      url = DiscoverUrl.discoveryIndex +
+          "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
+          "&latitude=${locAddress?.latitude ?? '0'}";
+    }
 
-    String url = DiscoverUrl.discoveryIndex +
-        "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
-        "&latitude=${locAddress?.latitude ?? '0'}";
     DioClient().get(url, (response) => ShopList.fromJson(response.data),
         success: (ShopList body) {
       if (body != null && body.data != null) {
