@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:entity/src/base_entity.dart';
 import 'package:entity/src/product_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -256,6 +259,8 @@ class Shop {
   /// 当时user_shop为1(商店)时，user_level为0表示普通商铺,user_level为1表示认证商铺
   @JsonKey(name: "user_level")
   int? level;
+  @JsonKey(name: "deliveryTime")
+  double? deliveryTime;
 
   @JsonKey(name: "user_shop")
   int? shop;
@@ -336,9 +341,11 @@ class Shop {
       this.avatarLink = "",
       this.star = 0,
       this.callCenter,
-      this.isChecked = false});
+      this.isChecked = false,
+      this.deliveryTime});
 
   factory Shop.create(Shop shop) {
+    
     return Shop(shop.id,
         uuid: shop.uuid,
         name: shop.name,
@@ -351,7 +358,8 @@ class Shop {
         about: shop.about,
         contact: shop.contact,
         address: shop.address,
-        userPoint: shop.userPoint);
+        userPoint: shop.userPoint,
+        deliveryTime: shop.deliveryTime);
   }
 
   bool isNotEmpty() {
@@ -376,7 +384,10 @@ class Shop {
 
   UserPoint getShopPoint() {
     if (userPoint == null) {
-      userPoint = UserPoint(0, 0);
+      userPoint = UserPoint(
+        0,
+        0,
+      );
     }
     return userPoint!;
   }

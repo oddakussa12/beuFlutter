@@ -170,6 +170,30 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "firebase_analytics",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-5.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "firebase_analytics_platform_interface",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics_platform_interface-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.2+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -512,6 +536,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "quiver",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "request",
       "rootUri": "../../libs_request",
       "packageUri": "lib/",
@@ -746,7 +776,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-11-05T09:34:02.368918Z",
+  "generated": "2021-11-11T10:11:00.280602Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }

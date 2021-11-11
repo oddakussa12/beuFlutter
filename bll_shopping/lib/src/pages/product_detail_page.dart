@@ -58,7 +58,8 @@ class _ProductDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return  
+    Material(
         child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],
@@ -70,6 +71,7 @@ class _ProductDetailPageState
   /// 购物车
   Widget buildShoppingCartBar() {
     if (actuator.product == null || actuator.product.shop == null) {
+      
       return Container();
     }
 
@@ -83,6 +85,7 @@ class _ProductDetailPageState
 
   /// 商品信息
   Widget buildProductInfo() {
+    print(actuator.product);
     if (actuator.product == null) {
       return SliverPadding(padding: EdgeInsets.all(0));
     }

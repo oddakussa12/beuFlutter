@@ -61,6 +61,8 @@ Map<String, dynamic> _$ShopDetailToJson(ShopDetail instance) =>
     };
 
 ShopList _$ShopListFromJson(Map<String, dynamic> json) {
+  print(json['data'][0]);
+  print("object");
   return ShopList(
     json['links'] == null
         ? null
@@ -117,6 +119,12 @@ Map<String, dynamic> _$DiscoveryShopsToJson(DiscoveryShops instance) =>
     };
 
 Shop _$ShopFromJson(Map<String, dynamic> json) {
+  double? sec = (json['deliveryTime'] as num?)!.toDouble();
+  // double? days = (sec) / (24 * 3600);
+  double? hours = ((sec) % (24 * 3600)) / 3600;
+  // double? minutes = ((sec) % (24 * 3600 * 3600)) / 60;
+  // double? seconds = ((sec) % (24 * 3600 * 3600 * 60)) / 60;
+
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
@@ -142,6 +150,7 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     userPoint: json['userPoint'] == null
         ? null
         : UserPoint.fromJson(json['userPoint']),
+    deliveryTime: (json['deliveryTime'] as num?)!.toDouble(),
     currency: json['user_currency'] as String?,
     coast: (json['deliveryCoast'] as num?)?.toDouble(),
     subTotal: (json['subTotal'] as num?)?.toDouble(),

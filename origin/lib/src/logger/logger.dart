@@ -1,4 +1,3 @@
-
 import 'package:logger/logger.dart';
 
 import '../constants.dart';
@@ -34,6 +33,7 @@ class LogDog {
 
   static void i(dynamic message, [dynamic error, StackTrace? stackTrace]) {
     if (Constants.isDebug) {
+     
       _logger.i(message, error, stackTrace);
     }
   }
@@ -42,6 +42,7 @@ class LogDog {
     if (Constants.isDebug) {
       _logger.w(message, error, stackTrace);
     }
+     
   }
 
   static void e(dynamic message, [dynamic error, StackTrace? stackTrace]) {

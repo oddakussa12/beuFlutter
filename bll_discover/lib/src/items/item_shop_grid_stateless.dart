@@ -16,6 +16,15 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
+    double? min, sec, hours;
+
+    // double? sec = (json['deliveryTime'] as num?)?.toDouble();
+    sec = (shop.deliveryTime)! / (24 * 3600);
+
+    min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
+    hours = (shop.deliveryTime)! % (24 * 3600) / 3600;
+    // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
+    print("${sec} sec ${min} min ${hours} hours ");
     return Container(
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
@@ -66,10 +75,68 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: AppColor.color80000, fontSize: 12),
             ),
-          )
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 1),
+                child: Icon(Icons.delivery_dining_outlined),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  TextHelper.clean(shop.deliveryTime! > 0
+                      ? (double.parse(
+                                  ((shop.deliveryTime!)).toStringAsFixed(2)))
+                              .toString() +
+                          " Hours"
+                      : double.parse(((shop.deliveryTime!)).toStringAsFixed(2))
+                              .toString() +
+                          " mins"),
+                  textAlign: TextAlign.center,
+                  maxLines: PlatformSupport.ios() ? 2 : 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
+                ),
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: Text(
+                    TextHelper.clean("293 orders"),
+                    textAlign: TextAlign.center,
+                    maxLines: PlatformSupport.ios() ? 2 : 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
+                  ))
+            ],
+          ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   margin: EdgeInsets.symmetric(  horizontal: 5),
+          //   child: Text(
+          //     TextHelper.clean("Average price 68 ETB"),
+          //     textAlign: TextAlign.center,
+          //     maxLines: PlatformSupport.ios() ? 2 : 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+          //   ),
+          // )
         ],
       ),
     );
+  }
+
+  String timeFormat(double? num) {
+    String hours, min;
+    double? temp = num, r;
+    for (int i = 0; i < 2; i++) {}
+    double.parse(((shop.deliveryTime!)).toStringAsFixed(2));
+    return " ";
   }
 
   Container buildDeliveryIcon(bool ableDelivery) {

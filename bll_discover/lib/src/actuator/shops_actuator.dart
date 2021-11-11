@@ -22,6 +22,7 @@ class ShopsActuator extends RefreshActuator {
     client.checkPermission(
         success: (LocationAddress result) {
           locAddress = result;
+
           onRefreshSource(0, PullType.Down);
           // notifySetState();
         },
@@ -79,6 +80,7 @@ class ShopsActuator extends RefreshActuator {
         if (page <= 1) {
           shops.clear();
         }
+
         shops.addAll(body.data);
       }
     }, complete: () {
@@ -88,6 +90,8 @@ class ShopsActuator extends RefreshActuator {
     });
   }
 
+  loadAvarageprice(int id) {}
+
   /** 
   * Load nearest
   */
@@ -95,16 +99,24 @@ class ShopsActuator extends RefreshActuator {
     if (shops.isEmpty) {
       changeStatusForLoading();
     }
+    String url;
+    if (Constants.isTesting) {
+      url = DiscoverUrl.discoveryIndex +
+          "?longtitude=${locAddress?.longitude ?? '0'}" +
+          "&latitude=${locAddress?.latitude ?? '0'}";
+    } else {
+      url = DiscoverUrl.discoveryIndex +
+          "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
+          "&latitude=${locAddress?.latitude ?? '0'}";
+    }
 
-    String url = DiscoverUrl.discoveryIndex +
-        "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
-        "&latitude=${locAddress?.latitude ?? '0'}";
     DioClient().get(url, (response) => ShopList.fromJson(response.data),
         success: (ShopList body) {
       if (body != null && body.data != null) {
         if (page <= 1) {
           shops.clear();
         }
+
         shops.addAll(body.data);
       }
     }, complete: () {

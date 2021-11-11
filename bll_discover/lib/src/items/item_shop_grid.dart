@@ -70,6 +70,7 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
 
           /// 商铺评分
           buildShopStars(widget.shop),
+           
 
           /// 商铺地址
           Container(
@@ -83,6 +84,7 @@ class _ItemShopGridWidgetState extends State<ItemShopGridWidget>
               style: TextStyle(color: AppColor.color80000, fontSize: 12),
             ),
           )
+          
         ],
       ),
     );
