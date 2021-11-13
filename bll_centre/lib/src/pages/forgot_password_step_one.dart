@@ -1,4 +1,5 @@
 import 'package:centre/src/actuator/register_actuator.dart';
+import 'package:centre/src/pages/forgot_password_step_two.dart';
 import 'package:centre/src/pages/register_step_two_page.dart';
 import 'package:centre/src/widget/agreement_bar_widget.dart';
 import 'package:common/common.dart';
@@ -81,14 +82,10 @@ class _ForgotPasswordOnePageState
 
   /// 第二步
   void navigateStepTwo() {
-    // Navigator.push(
-    //     context,
-    //     PageTransition(
-    //         type: TransitionType.rightToLeft,
-    //         child: RegisterStepTwoPage(
-    //           phone: phone,
-    //           country: country,
-    //         )));
+    Navigator.push(
+        context,
+        PageTransition(
+            type: TransitionType.rightToLeft, child: ForgotPasswordPageTwo()));
   }
 
   @override
@@ -97,7 +94,7 @@ class _ForgotPasswordOnePageState
         appBar: Toolbar(title: "Forgot password"
             //S.of(context).login_signup,
             ),
-        body: Column(
+        body: ListView(
           children: [
             SingleChildScrollView(
               child: GestureDetector(

@@ -345,7 +345,6 @@ class Shop {
       this.deliveryTime});
 
   factory Shop.create(Shop shop) {
-    
     return Shop(shop.id,
         uuid: shop.uuid,
         name: shop.name,

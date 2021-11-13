@@ -47,11 +47,14 @@ class SpecialDiscoverActuator extends ReactActuator {
   void loadSpecialGoods() async {
     if (special.count <= 0) {
       isRequesting = true;
+      print(DiscoverUrl.specialGoods);
+      print("object");
       DioClient().get(DiscoverUrl.specialGoods,
           (response) => SpecialProductBody.fromJson(response.data),
           success: (SpecialProductBody product) {
         if (product != null && product.data != null) {
           special = product.data;
+          print(product.data.toJson());
 
           /// 缓存封面
           if (TextHelper.isNotEmpty(special.image)) {

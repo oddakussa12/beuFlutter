@@ -37,7 +37,7 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter 
 
   # Json 自动化
   json_serializable: ^4.1.3

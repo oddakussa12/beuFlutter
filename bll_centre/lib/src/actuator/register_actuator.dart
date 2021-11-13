@@ -30,6 +30,7 @@ class RegisterStepOneActuator extends ReactActuator {
     super.attachViewer(view);
 
     /// 注册成功事件【关闭页面】
+    
     appendSubscribe(BusClient().subscribe<SignUpEvent>((event) {
       if (event != null) {
         Navigator.pop(context);
@@ -59,7 +60,7 @@ class RegisterStepOneActuator extends ReactActuator {
       notifyToasty(message);
     }, complete: () {
       isRequesting = false;
-      dismissLoading();
+     dismissLoading();
 
       if (successful != null && successful && callback != null) {
         callback.call();

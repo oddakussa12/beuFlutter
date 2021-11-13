@@ -19,12 +19,13 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     double? min, sec, hours;
 
     // double? sec = (json['deliveryTime'] as num?)?.toDouble();
-    sec = (shop.deliveryTime)! / (24 * 3600);
+    // sec = (shop.deliveryTime)! / (24 * 3600);
 
-    min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    hours = (shop.deliveryTime)! % (24 * 3600) / 3600;
+    // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
+    hours = (shop.deliveryTime)! / 3600;
+    if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
-    print("${sec} sec ${min} min ${hours} hours ");
+    // print("${sec} sec ${min} min ${hours} hours ");
     return Container(
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
@@ -62,19 +63,42 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           ),
 
           /// 商铺评分
-          buildShopStars(shop),
+          //  buildShopStars(shop),
 
           /// 商铺地址
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-            child: Text(
-              TextHelper.clean(shop.address),
-              textAlign: TextAlign.center,
-              maxLines: PlatformSupport.ios() ? 2 : 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColor.color80000, fontSize: 12),
-            ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+          //   child: Text(
+          //     TextHelper.clean(shop.address),
+          //     textAlign: TextAlign.center,
+          //     maxLines: PlatformSupport.ios() ? 2 : 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(color: AppColor.color80000, fontSize: 12),
+          //   ),
+          // ),
+
+          Row(
+            children: [
+              Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.fireplace_sharp,
+                    color: Colors.yellow[900],
+                  )),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  TextHelper.clean("486 በወር ትዕዛዞች"),
+                  textAlign: TextAlign.center,
+                  maxLines: PlatformSupport.ios() ? 2 : 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
+              ),
+            ],
           ),
 
           Row(
@@ -83,26 +107,12 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Icon(Icons.delivery_dining_outlined),
-              ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  TextHelper.clean(shop.deliveryTime! > 0
-                      ? (double.parse(
-                                  ((shop.deliveryTime!)).toStringAsFixed(2)))
-                              .toString() +
-                          " Hours"
-                      : double.parse(((shop.deliveryTime!)).toStringAsFixed(2))
-                              .toString() +
-                          " mins"),
-                  textAlign: TextAlign.center,
-                  maxLines: PlatformSupport.ios() ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
+                child: Icon(
+                  Icons.delivery_dining_outlined,
+                  color: Colors.yellow[900],
                 ),
               ),
+          
               Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 5),
@@ -111,33 +121,36 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
-                  ))
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                  )),
+                      Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  TextHelper.clean(double.parse((hours).toStringAsFixed(2)) < 0
+                      ? double.parse((hours).toStringAsFixed(2)).toString() +
+                          " Hours"
+                      : double.parse((hours).toStringAsFixed(2)).toString() +
+                          " Mins"),
+                  textAlign: TextAlign.center,
+                  maxLines: PlatformSupport.ios() ? 2 : 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
+              ),
             ],
           ),
-          // Container(
-          //   alignment: Alignment.center,
-          //   margin: EdgeInsets.symmetric(  horizontal: 5),
-          //   child: Text(
-          //     TextHelper.clean("Average price 68 ETB"),
-          //     textAlign: TextAlign.center,
-          //     maxLines: PlatformSupport.ios() ? 2 : 1,
-          //     overflow: TextOverflow.ellipsis,
-          //     style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-          //   ),
-          // )
         ],
       ),
     );
   }
 
-  String timeFormat(double? num) {
-    String hours, min;
-    double? temp = num, r;
-    for (int i = 0; i < 2; i++) {}
-    double.parse(((shop.deliveryTime!)).toStringAsFixed(2));
-    return " ";
-  }
+  // String timeFormat(double? num) {
+
+  // for (int i = 0; i < 2; i++) {}
+  // double.parse(((shop.time!)).toStringAsFixed(2));
+  // return " ";
+  // }
 
   Container buildDeliveryIcon(bool ableDelivery) {
     if (ableDelivery) {
