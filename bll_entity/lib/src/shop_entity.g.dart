@@ -121,7 +121,7 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
   // double? hours = (( (json['deliveryTime'] as num?)?.toDouble())! % (24 * 3600)) / 3600;
   // double? minutes = ((sec) % (24 * 3600 * 3600)) / 60;
   // double? seconds = ((sec) % (24 * 3600 * 3600 * 60)) / 60;
-  print(json['deliveryTime']);
+  
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
@@ -148,6 +148,7 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
         ? null
         : UserPoint.fromJson(json['userPoint']),
     deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
+    distance:(json['distance'] as num?)?.toDouble(),
     currency: json['user_currency'] as String?,
     coast: (json['deliveryCoast'] as num?)?.toDouble(),
     subTotal: (json['subTotal'] as num?)?.toDouble(),

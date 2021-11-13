@@ -262,6 +262,8 @@ class Shop {
   @JsonKey(name: "deliveryTime")
   double? deliveryTime;
 
+  @JsonKey(name: "distance")
+  double? distance;
   @JsonKey(name: "user_shop")
   int? shop;
 
@@ -342,7 +344,8 @@ class Shop {
       this.star = 0,
       this.callCenter,
       this.isChecked = false,
-      this.deliveryTime});
+      this.deliveryTime,
+      this.distance});
 
   factory Shop.create(Shop shop) {
     return Shop(shop.id,
@@ -358,7 +361,8 @@ class Shop {
         contact: shop.contact,
         address: shop.address,
         userPoint: shop.userPoint,
-        deliveryTime: shop.deliveryTime);
+        deliveryTime: shop.deliveryTime,
+        distance: shop.distance);
   }
 
   bool isNotEmpty() {

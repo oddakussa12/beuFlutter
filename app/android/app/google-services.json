@@ -1,62 +1,33 @@
 {
   "project_info": {
-    "project_number": "73907736185",
-    "project_id": "beu-bc00a",
-    "storage_bucket": "beu-bc00a.appspot.com"
+    "project_number": "114023596879",
+    "project_id": "beudelveryflutter",
+    "storage_bucket": "beudelveryflutter.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:73907736185:android:6adc7bd3844c9833a94ea8",
-        "android_client_info": {
-          "package_name": "com.xmt.beu.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "73907736185-bfg29ulqchmv8gjagbp989nanslp5fts.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBqbzqGpX8yiUsD2fvU5FHFmWIkHPfqFus"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "73907736185-bfg29ulqchmv8gjagbp989nanslp5fts.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:73907736185:android:054192022a41c977a94ea8",
+        "mobilesdk_app_id": "1:114023596879:android:3340d3b10c821ee6423b3a",
         "android_client_info": {
           "package_name": "com.xmt.beu.applite"
         }
       },
       "oauth_client": [
         {
-          "client_id": "73907736185-bfg29ulqchmv8gjagbp989nanslp5fts.apps.googleusercontent.com",
+          "client_id": "114023596879-bptvar3ciaep779bgrv6pvi00r71kj93.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqbzqGpX8yiUsD2fvU5FHFmWIkHPfqFus"
+          "current_key": "AIzaSyAgY-BtbcUbCHwr5GILPaiD9WqPhWl1_rE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "73907736185-bfg29ulqchmv8gjagbp989nanslp5fts.apps.googleusercontent.com",
+              "client_id": "114023596879-bptvar3ciaep779bgrv6pvi00r71kj93.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

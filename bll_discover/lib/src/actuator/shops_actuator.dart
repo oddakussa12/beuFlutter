@@ -101,13 +101,14 @@ class ShopsActuator extends RefreshActuator {
     }
     String url;
 
-    // url = DiscoverUrl.discoveryIndex +
-    //     "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
-    //     "&latitude=${locAddress?.latitude ?? '0'}";
     url = DiscoverUrl.discoveryIndex +
-        "?page=${page}&type=shop&longtitude=38.79421&latitude=8.99090";
-
-    print("${locAddress?.latitude} ${locAddress?.longitude}");
+        "?page=${page}&type=shop&longtitude=${locAddress?.longitude ?? '0'}" +
+        "&latitude=${locAddress?.latitude ?? '0'}";
+    // url = DiscoverUrl.discoveryIndex +
+    //     "?page=${page}&type=shop&longtitude=38.79421&latitude=8.99090";
+   
+    
+    print("${locAddress?.latitude} ${locAddress?.longitude}  what");
 
     DioClient().get(url, (response) => ShopList.fromJson(response.data),
         success: (ShopList body) {

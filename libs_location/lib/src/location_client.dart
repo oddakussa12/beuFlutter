@@ -127,8 +127,10 @@ class LocationClient {
       } on Error catch (e) {
         LogDog.w("_retryLocation, Error: ${e}");
       }
+      
       if (position != null) {
         LogDog.w("startLocation, listen, data: ${jsonEncode(position)}");
+
         if (position.latitude != 0 && position.longitude != 0) {
           geocodingPlaces(position.longitude, position.latitude, success);
         }

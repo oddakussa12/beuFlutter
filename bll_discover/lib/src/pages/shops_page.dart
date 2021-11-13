@@ -86,14 +86,13 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 28,
           childAspectRatio: 0.76,
         ),
         itemCount: actuator.shops.length,
         itemBuilder: (BuildContext context, int index) {
           Shop shop = actuator.shops[index];
-          
 
           return GestureDetector(
             behavior: HitTestBehavior.deferToChild,
