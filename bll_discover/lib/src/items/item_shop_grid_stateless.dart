@@ -23,6 +23,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
     // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
     hours = (shop.deliveryTime ?? 0) / 3600;
+    if (shop.deliveryTime != null) hours = (shop.deliveryTime ?? 0) / 3600;
+
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
     // print("${sec} sec ${min} min ${hours} hours ");
@@ -101,57 +103,63 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               ),
             ],
           ),
-           Container(
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Icon(
+                    Icons.delivery_dining_outlined,
+                    color: Colors.yellow[900],
+                  ),
+                ),
+                Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
-                    TextHelper.clean(shop.distance.toString()),
+                    TextHelper.clean(double.parse((hours).toStringAsFixed(2)) <
+                            0
+                        ? double.parse((hours).toStringAsFixed(1)).toString() +
+                            " hours"
+                        : double.parse((hours).toStringAsFixed(1)).toString() +
+                            " min"),
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-                  )),
-
-          Row(
-           // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Container(
-              //   alignment: Alignment.center,
-              // //  margin: EdgeInsets.symmetric(horizontal: 1),
-              //   child: Icon(
-              //     Icons.delivery_dining_outlined,
-              //     color: Colors.yellow[900],
-              //   ),
-              // ),
-             
-              // Container(
-              //   alignment: Alignment.center,
-              //   margin: EdgeInsets.symmetric(horizontal: 2),
-              //   child: Text(
-              //     TextHelper.clean(double.parse((hours).toStringAsFixed(2)) < 0
-              //         ? double.parse((hours).toStringAsFixed(1)).toString() +
-              //             " hours"
-              //         : double.parse((hours).toStringAsFixed(1)).toString() +
-              //             " min"),
-              //     textAlign: TextAlign.center,
-              //     maxLines: PlatformSupport.ios() ? 2 : 1,
-              //     overflow: TextOverflow.ellipsis,
-              //     style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-              //   ),
-              // ),
-            ],
+                  ),
+                ),
+                Text("    |   "),
+                Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    child: Text(
+                      TextHelper.clean(((shop.distance ?? 0) / 1000)
+                              .toStringAsFixed(2)) +
+                          " Km",
+                      textAlign: TextAlign.center,
+                      maxLines: PlatformSupport.ios() ? 2 : 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                    )),
+              ],
+            ),
           ),
-          // Container(
-          //   alignment: Alignment.center,
-          //   margin: EdgeInsets.symmetric(horizontal: 5),
-          //   child: Text(
-          //     TextHelper.clean("75 ብር አማካይ ዋጋ"),
-          //     textAlign: TextAlign.center,
-          //     maxLines: PlatformSupport.ios() ? 2 : 1,
-          //     overflow: TextOverflow.ellipsis,
-          //     style: TextStyle(color: Colors.black54, fontSize: 12),
-          //   ),
-          // ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              //   margin: EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                TextHelper.clean("75 ብር አማካይ ዋጋ"),
+                textAlign: TextAlign.center,
+                maxLines: PlatformSupport.ios() ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black54, fontSize: 12),
+              ),
+            ),
+          )
         ],
       ),
     );

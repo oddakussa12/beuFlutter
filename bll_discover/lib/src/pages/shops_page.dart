@@ -35,6 +35,7 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
 
     // actuator.init(UserAddress(name: "a", phone: "123"));
     actuator.checkLocation(fail: (LocationClient client, LFailType type) {
+      
       if (client != null && type != null) {
         if (LFailType.ServiceUnusable == type) {
           /// 定位服务未开启
