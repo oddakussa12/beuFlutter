@@ -22,8 +22,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     // sec = (shop.deliveryTime)! / (24 * 3600);
 
     // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    hours = (shop.deliveryTime ?? 0) / 3600;
-    if (shop.deliveryTime != null) hours = (shop.deliveryTime ?? 0) / 3600;
+    hours = ((shop.deliveryTime ?? 0) / 60);
 
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
@@ -84,12 +83,15 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: Icon(
-                    Icons.fireplace_sharp,
-                    color: Colors.yellow[900],
-                  )),
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 1),
+                child: Image.asset(
+                  "res/icons/flame_icon.png",
+                  package: "resources",
+                  width: 15,
+                  height: 15,
+                ),
+              ),
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 5),
@@ -98,7 +100,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: PlatformSupport.ios() ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
               ),
             ],
@@ -110,9 +112,11 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 1),
-                  child: Icon(
-                    Icons.delivery_dining_outlined,
-                    color: Colors.yellow[900],
+                  child: Image.asset(
+                    "res/icons/ic_shop_delivery.png",
+                    package: "resources",
+                    width: 15,
+                    height: 15,
                   ),
                 ),
                 Container(
@@ -128,10 +132,13 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                   ),
                 ),
-                Text("    |   "),
+                Text(
+                  " | ",
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
                 Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
@@ -142,13 +149,14 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                     )),
               ],
             ),
           ),
           Expanded(
             child: Container(
+              // padding: EdgeInsets.only(top: 15),
               alignment: Alignment.center,
               //   margin: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
@@ -156,7 +164,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: PlatformSupport.ios() ? 2 : 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black54, fontSize: 12),
+                style: TextStyle(color: Colors.black54, fontSize: 15),
               ),
             ),
           )

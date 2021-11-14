@@ -160,7 +160,8 @@ class _HomePageState extends State<HomePage>
             ),
             label: "",
             tooltip: ""),
-        BottomNavigationBarItem(
+       
+        BottomNavigationBarItem( 
             icon: Image.asset(
               "res/icons/ic_nav_profile.png",
               package: "resources",
