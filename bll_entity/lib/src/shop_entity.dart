@@ -264,6 +264,15 @@ class Shop {
 
   @JsonKey(name: "distance")
   double? distance;
+
+  
+  @JsonKey(name: "averagePrice")
+  double? averagePrice;
+
+
+ @JsonKey(name: "orderCount")
+  int? orderCount;
+
   @JsonKey(name: "user_shop")
   int? shop;
 
@@ -345,7 +354,9 @@ class Shop {
       this.callCenter,
       this.isChecked = false,
       this.deliveryTime,
-      this.distance});
+      this.distance,
+      this.orderCount,
+      this.averagePrice});
 
   factory Shop.create(Shop shop) {
     return Shop(shop.id,
@@ -362,7 +373,9 @@ class Shop {
         address: shop.address,
         userPoint: shop.userPoint,
         deliveryTime: shop.deliveryTime,
-        distance: shop.distance);
+        distance: shop.distance,
+        orderCount:shop.orderCount,
+        averagePrice: shop.averagePrice);
   }
 
   bool isNotEmpty() {
