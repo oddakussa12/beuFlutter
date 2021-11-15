@@ -96,7 +96,7 @@ class _RegisterStepOnePageState
         appBar: Toolbar(
           title: S.of(context).login_signup,
         ),
-        body: Column(
+        body: ListView(
           children: [
             SingleChildScrollView(
               child: GestureDetector(

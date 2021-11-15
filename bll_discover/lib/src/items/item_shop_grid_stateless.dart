@@ -96,7 +96,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
-                  TextHelper.clean("${shop.orderCount ?? 0}  በወር  ትዕዛዞች"),
+                  TextHelper.clean("${(shop.orderCount ?? 0)==0? "-":shop.orderCount ?? 0 }  በወር  ትዕዛዞች"),
                   textAlign: TextAlign.center,
                   maxLines: PlatformSupport.ios() ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
