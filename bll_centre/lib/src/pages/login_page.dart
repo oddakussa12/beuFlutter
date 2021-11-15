@@ -129,7 +129,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
 
                       /// 登录按钮
                       buildLoginIn(context),
-                      buildForgotPassword(context),
+                         buildForgotPassword(context),
 
                       /// 注册分割线
                       Container(
@@ -326,7 +326,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
                 fontWeight: FontWeight.bold)),
       ),
       onTap: () {
-              Navigator.push(
+        Navigator.push(
             context,
             PageTransition(
                 type: TransitionType.rightToLeft,
