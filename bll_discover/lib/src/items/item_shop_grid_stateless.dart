@@ -86,7 +86,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
                 child: Image.asset(
-                  "res/icons/flame_icon.png",
+                  "res/icons/ic_flame_icon.png",
                   package: "resources",
                   width: 15,
                   height: 15,
