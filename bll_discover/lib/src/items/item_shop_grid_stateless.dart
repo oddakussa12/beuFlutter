@@ -19,12 +19,14 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     double? min, sec, hours;
 
     // double? sec = (json['deliveryTime'] as num?)?.toDouble();
-    sec = (shop.deliveryTime)! / (24 * 3600);
+    // sec = (shop.deliveryTime)! / (24 * 3600);
 
-    min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    hours = (shop.deliveryTime)! % (24 * 3600) / 3600;
+    // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
+    hours = ((shop.deliveryTime ?? 0) / 60);
+
+    // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
-    print("${sec} sec ${min} min ${hours} hours ");
+    // print("${sec} sec ${min} min ${hours} hours ");
     return Container(
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
@@ -62,20 +64,20 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           ),
 
           /// 商铺评分
-          buildShopStars(shop),
+          //  buildShopStars(shop),
 
           /// 商铺地址
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-            child: Text(
-              TextHelper.clean(shop.address),
-              textAlign: TextAlign.center,
-              maxLines: PlatformSupport.ios() ? 2 : 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColor.color80000, fontSize: 12),
-            ),
-          ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+          //   child: Text(
+          //     TextHelper.clean(shop.address),
+          //     textAlign: TextAlign.center,
+          //     maxLines: PlatformSupport.ios() ? 2 : 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(color: AppColor.color80000, fontSize: 12),
+          //   ),
+          // ),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -83,61 +85,100 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Icon(Icons.delivery_dining_outlined),
+                child: Image.asset(
+                  "res/icons/flame_icon.png",
+                  package: "resources",
+                  width: 15,
+                  height: 15,
+                ),
               ),
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
-                  TextHelper.clean(shop.deliveryTime! > 0
-                      ? (double.parse(
-                                  ((shop.deliveryTime!)).toStringAsFixed(2)))
-                              .toString() +
-                          " Hours"
-                      : double.parse(((shop.deliveryTime!)).toStringAsFixed(2))
-                              .toString() +
-                          " mins"),
+                  TextHelper.clean("486  በወር  ትዕዛዞች"),
                   textAlign: TextAlign.center,
                   maxLines: PlatformSupport.ios() ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
               ),
-              Container(
+            ],
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Image.asset(
+                    "res/icons/ic_shop_delivery.png",
+                    package: "resources",
+                    width: 15,
+                    height: 15,
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
-                    TextHelper.clean("293 orders"),
+                    TextHelper.clean(double.parse((hours).toStringAsFixed(2)) <
+                            0
+                        ? double.parse((hours).toStringAsFixed(1)).toString() +
+                            " hours"
+                        : double.parse((hours).toStringAsFixed(1)).toString() +
+                            " min"),
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: AppColor.colorFF34, fontSize: 12),
-                  ))
-            ],
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                  ),
+                ),
+                Text(
+                  " | ",
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
+                Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    child: Text(
+                      TextHelper.clean(((shop.distance ?? 0) / 1000)
+                              .toStringAsFixed(2)) +
+                          " Km",
+                      textAlign: TextAlign.center,
+                      maxLines: PlatformSupport.ios() ? 2 : 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                    )),
+              ],
+            ),
           ),
-          // Container(
-          //   alignment: Alignment.center,
-          //   margin: EdgeInsets.symmetric(  horizontal: 5),
-          //   child: Text(
-          //     TextHelper.clean("Average price 68 ETB"),
-          //     textAlign: TextAlign.center,
-          //     maxLines: PlatformSupport.ios() ? 2 : 1,
-          //     overflow: TextOverflow.ellipsis,
-          //     style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-          //   ),
-          // )
+          Expanded(
+            child: Container(
+              // padding: EdgeInsets.only(top: 15),
+              alignment: Alignment.center,
+              //   margin: EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                TextHelper.clean("75 ብር አማካይ ዋጋ"),
+                textAlign: TextAlign.center,
+                maxLines: PlatformSupport.ios() ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black54, fontSize: 15),
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 
-  String timeFormat(double? num) {
-    String hours, min;
-    double? temp = num, r;
-    for (int i = 0; i < 2; i++) {}
-    double.parse(((shop.deliveryTime!)).toStringAsFixed(2));
-    return " ";
-  }
+  // String timeFormat(double? num) {
+
+  // for (int i = 0; i < 2; i++) {}
+  // double.parse(((shop.time!)).toStringAsFixed(2));
+  // return " ";
+  // }
 
   Container buildDeliveryIcon(bool ableDelivery) {
     if (ableDelivery) {

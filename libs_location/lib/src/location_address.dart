@@ -5,6 +5,7 @@
  * @date: 2021/8/3
  */
 class LocationAddress {
+  
   double longitude;
   double latitude;
 

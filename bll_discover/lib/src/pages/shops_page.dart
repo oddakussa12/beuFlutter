@@ -35,6 +35,7 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
 
     // actuator.init(UserAddress(name: "a", phone: "123"));
     actuator.checkLocation(fail: (LocationClient client, LFailType type) {
+      
       if (client != null && type != null) {
         if (LFailType.ServiceUnusable == type) {
           /// 定位服务未开启
@@ -86,14 +87,13 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 28,
           childAspectRatio: 0.76,
         ),
         itemCount: actuator.shops.length,
         itemBuilder: (BuildContext context, int index) {
           Shop shop = actuator.shops[index];
-          
 
           return GestureDetector(
             behavior: HitTestBehavior.deferToChild,

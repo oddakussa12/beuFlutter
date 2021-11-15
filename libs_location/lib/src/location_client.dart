@@ -36,7 +36,9 @@ class LocationClient {
       {required Success<LocationAddress> success,
       LocationFailure? fail}) async {
     /// 1. 先检测定位服务是否可用
+
     bool enabled = await Geolocator.isLocationServiceEnabled();
+
     if (!enabled) {
       LogDog.w("startLocation, locationServices is not enabled");
 
@@ -119,21 +121,26 @@ class LocationClient {
           "_retryLocation, retryCount: ${retryCount}, maxRetryCount: ${maxRetryCount}");
 
       var position;
+
       try {
         position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            forceAndroidLocationManager: true,
-            timeLimit: Duration(seconds: 15));
+          desiredAccuracy: LocationAccuracy.high,
+          // forceAndroidLocationManager: true,
+          timeLimit: Duration(seconds: 30)
+        );
       } on Error catch (e) {
         LogDog.w("_retryLocation, Error: ${e}");
       }
+
       if (position != null) {
         LogDog.w("startLocation, listen, data: ${jsonEncode(position)}");
+
         if (position.latitude != 0 && position.longitude != 0) {
           geocodingPlaces(position.longitude, position.latitude, success);
         }
       }
     } else {
+      print("yesss");
       retryCount++;
       _retryLocation(success);
     }
