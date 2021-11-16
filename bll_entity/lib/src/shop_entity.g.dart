@@ -121,7 +121,8 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
   // double? hours = (( (json['deliveryTime'] as num?)?.toDouble())! % (24 * 3600)) / 3600;
   // double? minutes = ((sec) % (24 * 3600 * 3600)) / 60;
   // double? seconds = ((sec) % (24 * 3600 * 3600 * 60)) / 60;
-  
+  // double average_perice = double.parse((json['avg_check'][0]['avg_check'] ?? 0)) ;
+  // print(average_perice);
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
@@ -148,9 +149,10 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
         ? null
         : UserPoint.fromJson(json['userPoint']),
     deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
-    distance:(json['distance'] as num?)?.toDouble(),
-    orderCount:486 as int? ,
-    averagePrice:(75 as num?)?.toDouble() ,
+    distance: (json['distance'] as num?)?.toDouble(),
+    orderCount: (json['orders_count'] as int?),
+    // averagePrice: json['avg_check'][0]['avg_check']  as String,
+    averagePrice: "467",
     // orderCount:(json['orderCount'] as int?) ,
     // averagePrice:(json['averagePrice'] as num?)?.toDouble(),
     currency: json['user_currency'] as String?,

@@ -133,7 +133,7 @@ class S {
   /// `Not shop found`
   String get allpage_shopnofind {
     return Intl.message(
-      'Not shop found',
+      'Check your internet access',
       name: 'allpage_shopnofind',
       desc: '',
       args: [],
@@ -143,7 +143,7 @@ class S {
   /// `Not products found`
   String get allpage_productnofind {
     return Intl.message(
-      'Not products found',
+      'Check your internet access',
       name: 'allpage_productnofind',
       desc: '',
       args: [],

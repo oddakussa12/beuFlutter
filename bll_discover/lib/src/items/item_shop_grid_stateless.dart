@@ -79,32 +79,35 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_flame_icon.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  TextHelper.clean("${shop.orderCount ?? 0}  በወር  ትዕዛዞች"),
-                  textAlign: TextAlign.center,
-                  maxLines: PlatformSupport.ios() ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                ),
-              ),
-            ],
-          ),
+       Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: 1),
+                      child: Image.asset(
+                        "res/icons/ic_flame_icon.png",
+                        package: "resources",
+                        width: 15,
+                        height: 15,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        TextHelper.clean(
+                            "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0}  በወር  ትዕዛዞች"),
+                        textAlign: TextAlign.center,
+                        maxLines: PlatformSupport.ios() ? 2 : 1,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(color: Colors.yellow[900], fontSize: 15),
+                      ),
+                    ),
+                  ],
+                )
+              ,
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

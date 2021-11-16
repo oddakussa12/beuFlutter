@@ -44,13 +44,13 @@ class _UserAccountPageState extends State<UserAccountPage> {
         ),
 
         /// 地址薄
-        GestureDetector(
-          child: _buildCommonItem(
-              context, "res/icons/ic_address_book.png", "Address book"),
-          onTap: () {
-            Navigator.pushNamed(context, Routes.address.AddressBook);
-          },
-        ),
+        // GestureDetector(
+        //   child: _buildCommonItem(
+        //       context, "res/icons/ic_address_book.png", "Address book"),
+        //   onTap: () {
+        //     Navigator.pushNamed(context, Routes.address.AddressBook);
+        //   },
+        // ),
       ],
     );
   }

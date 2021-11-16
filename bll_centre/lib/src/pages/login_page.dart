@@ -91,7 +91,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
         appBar: Toolbar(
           title: S.of(context).login_log_in,
         ),
-        body: Column(
+        body: ListView(
           children: [
             SingleChildScrollView(
               child: GestureDetector(
@@ -129,7 +129,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
 
                       /// 登录按钮
                       buildLoginIn(context),
-                         buildForgotPassword(context),
+                      //  buildForgotPassword(context),
 
                       /// 注册分割线
                       Container(

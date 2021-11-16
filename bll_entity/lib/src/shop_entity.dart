@@ -267,7 +267,7 @@ class Shop {
 
   
   @JsonKey(name: "averagePrice")
-  double? averagePrice;
+  String ? averagePrice;
 
 
  @JsonKey(name: "orderCount")
