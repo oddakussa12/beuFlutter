@@ -168,7 +168,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               alignment: Alignment.center,
               //   margin: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
-                TextHelper.clean("${shop.averagePrice ?? 0} ብር አማካይ ዋጋ"),
+                TextHelper.clean("${shop.averagePrice ?? 0}  "+ S.of(context).number_of_orders_in_amharic),
                 textAlign: TextAlign.center,
                 maxLines: PlatformSupport.ios() ? 2 : 1,
                 overflow: TextOverflow.ellipsis,
