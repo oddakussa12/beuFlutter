@@ -41,7 +41,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               buildShopBackgroundByCache(shop, context),
 
               /// 派送图标
-              buildDeliveryIcon(shop.mayDelivery()),
+              //buildDeliveryIcon(shop.mayDelivery()),
 
               /// 商铺头像
               buildShopAvatarByCache(shop)
@@ -166,6 +166,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               // padding: EdgeInsets.only(top: 15),
               alignment: Alignment.center,
               //   margin: EdgeInsets.symmetric(horizontal: 5),
+
               child: Text(
                 TextHelper.clean(
                     "${((shop.averagePrice ?? []).length) == 0 ? "-" : (shop.averagePrice ?? [])[0]['avg_check']}  " +
