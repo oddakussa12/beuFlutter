@@ -231,23 +231,23 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              // padding: EdgeInsets.only(top: 15),
-              alignment: Alignment.center,
-              //   margin: EdgeInsets.symmetric(horizontal: 5),
+          // Expanded(
+          //   child: Container(
+          //     // padding: EdgeInsets.only(top: 15),
+          //     alignment: Alignment.center,
+          //     //   margin: EdgeInsets.symmetric(horizontal: 5),
 
-              child: Text(
-                TextHelper.clean(
-                    "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
-                        S.of(context).average_price_in_amharic),
-                textAlign: TextAlign.center,
-                maxLines: PlatformSupport.ios() ? 2 : 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black54, fontSize: 15),
-              ),
-            ),
-          )
+          //     child: Text(
+          //       TextHelper.clean(
+          //           "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
+          //               S.of(context).average_price_in_amharic),
+          //       textAlign: TextAlign.center,
+          //       maxLines: PlatformSupport.ios() ? 2 : 1,
+          //       overflow: TextOverflow.ellipsis,
+          //       style: TextStyle(color: Colors.black54, fontSize: 15),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
