@@ -79,8 +79,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          UserManager().isLogin()
-              ? Row(
+       Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -108,7 +107,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     ),
                   ],
                 )
-              : Container(),
+              ,
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
