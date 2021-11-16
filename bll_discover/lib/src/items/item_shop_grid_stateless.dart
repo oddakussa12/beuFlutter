@@ -79,7 +79,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          Row(
+         UserManager().isLogin()?  Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -92,7 +92,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   height: 15,
                 ),
               ),
-              Container(
+             Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
@@ -102,9 +102,9 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
-              ),
+              ) ,
             ],
-          ),
+          ):Container(),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
