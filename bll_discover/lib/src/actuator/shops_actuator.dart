@@ -19,7 +19,6 @@ class ShopsActuator extends RefreshActuator {
   LocationClient client = LocationClient();
 
   void checkLocation({LocationFailure? fail}) async {
-     
     client.checkPermission(
         success: (LocationAddress result) {
           locAddress = result;
@@ -91,8 +90,6 @@ class ShopsActuator extends RefreshActuator {
     });
   }
 
-  loadAvarageprice(int id) {}
-
   /** 
   * Load nearest
   */
@@ -108,7 +105,7 @@ class ShopsActuator extends RefreshActuator {
     // url = DiscoverUrl.discoveryIndex +
     //     "?page=${page}&type=shop&longtitude=38.79421&latitude=8.99090";
 
-   // print("${locAddress?.latitude} ${locAddress?.longitude}  what");
+    // print("${locAddress?.latitude} ${locAddress?.longitude}  what");
 
     DioClient().get(url, (response) => ShopList.fromJson(response.data),
         success: (ShopList body) {

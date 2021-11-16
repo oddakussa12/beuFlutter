@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /**
  * item_shop_grid.dart
@@ -27,25 +28,6 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
     // print("${sec} sec ${min} min ${hours} hours ");
-
-    String iconResource = "res/icons/ic_flame_icon.png";
-    switch (shop.orderCount) {
-      case Constants.unpopularRestaurant:
-        iconResource = "res/icons/ic_flame_icon.png";
-        break;
-      case Constants.popularRestaurant:
-        iconResource = "res/icons/ic_flame_icon.png";
-        break;
-      case Constants.popularPlusRestaurant:
-        iconResource = "res/icons/ic_flame_icon.png";
-        break;
-      case Constants.superPopularRestaurant:
-        iconResource = "res/icons/ic_flame_icon.png";
-        break;
-      case Constants.blackHouseRestaurant:
-        iconResource = "res/icons/ic_flame_icon.png";
-        break;
-    }
 
     return Container(
       alignment: Alignment.topCenter,
@@ -105,11 +87,85 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_flame_icon.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
+                child: Consumer<SettingsModel>(
+                  builder: (context, settings, child) {
+                    Row iconResource = Row(children: [
+                      Image.asset("res/icons/ic_flame_icon.png",
+                          package: "resources",
+                          width: 15,
+                          height: 15,
+                          color: Colors.transparent)
+                    ]);
+                    if (shop.orderCount != null) {
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().unpopularRestaurant) {
+                        iconResource = Row(children: [
+                          Image.asset(
+                            "res/icons/ic_flame_icon.png",
+                            package: "resources",
+                            width: 15,
+                            height: 15,
+                          )
+                        ]);
+                      }
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().popularRestaurant) {
+                        iconResource = Row(
+                          children: [
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          ],
+                        );
+                      }
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().superPopularRestaurant) {
+                        iconResource = Row(
+                          children: [
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          ],
+                        );
+                      }
+                      if (shop.orderCount! >
+                          settings.getViewSettings().blackHouseRestaurant) {
+                        iconResource = Row(children: [
+                          Image.asset("res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                              color: Colors.black)
+                        ]);
+                      }
+                    }
+
+                    return iconResource;
+                  },
                 ),
               ),
               Container(

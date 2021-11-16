@@ -374,6 +374,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "octo_image",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/octo_image-1.0.0+1",
       "packageUri": "lib/",
@@ -526,6 +532,12 @@
     {
       "name": "process",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -776,7 +788,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-11-15T12:10:52.869667Z",
+  "generated": "2021-11-16T14:46:17.403687Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }

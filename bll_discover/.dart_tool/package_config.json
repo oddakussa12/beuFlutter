@@ -2,6 +2,18 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "address",
+      "rootUri": "../../bll_address",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "app",
+      "rootUri": "../../app",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.2.0",
       "packageUri": "lib/",
@@ -50,6 +62,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "centre",
+      "rootUri": "../../bll_centre",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.1.0",
       "packageUri": "lib/",
@@ -82,6 +100,12 @@
     {
       "name": "convert",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cross_file",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -140,6 +164,30 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "firebase_analytics",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-5.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "firebase_analytics_platform_interface",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics_platform_interface-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.2+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -160,6 +208,12 @@
     {
       "name": "flutter_localizations",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -224,6 +278,30 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "image_cropper",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/image_cropper-1.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "image_picker",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "image_picker_for_web",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "image_picker_platform_interface",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
       "packageUri": "lib/",
@@ -278,6 +356,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "octo_image",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/octo_image-1.0.0+1",
       "packageUri": "lib/",
@@ -286,6 +370,12 @@
     {
       "name": "oktoast",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/oktoast-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "orders",
+      "rootUri": "../../bll_orders",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -398,6 +488,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "picker",
+      "rootUri": "../../picker",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.0.0",
       "packageUri": "lib/",
@@ -422,10 +518,22 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "provider",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "pull_to_refresh",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/pull_to_refresh-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "quiver",
+      "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "request",
@@ -494,6 +602,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "shopping",
+      "rootUri": "../../bll_shopping",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -502,6 +616,12 @@
     {
       "name": "source_span",
       "rootUri": "file:///Users/romankovalev/src/almas/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "special",
+      "rootUri": "../../bll_special",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -644,7 +764,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-11-15T12:11:08.257305Z",
+  "generated": "2021-11-16T14:25:08.371992Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }
