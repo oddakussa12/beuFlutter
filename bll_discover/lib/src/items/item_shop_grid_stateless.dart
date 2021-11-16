@@ -13,6 +13,26 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   const ItemShopGridStatelessWidget({Key? key, required this.shop})
       : super(key: key);
 
+  iconFlame(int? num) {
+    if ((num ?? 0) > 0) {
+      return Image.asset(
+        "res/icons/ic_flame_icon.png",
+        package: "resources",
+        width: 15,
+        height: 15,
+        color: Colors.transparent,
+      );
+    } else if ((num ?? 0) > 0) {
+      return Image.asset(
+        "res/icons/ic_flame_icon.png",
+        package: "resources",
+        width: 15,
+        height: 15,
+        color: Colors.transparent,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
@@ -23,6 +43,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
     // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
     min = ((shop.deliveryTime ?? 0) / 60);
+    // ignore: deprecated_member_use
 
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
@@ -83,15 +104,64 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_flame_icon.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-                ),
-              ),
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: (shop.orderCount ?? 0) == 0
+                      ? Image.asset(
+                          "res/icons/ic_flame_icon.png",
+                          package: "resources",
+                          width: 15,
+                          height: 15,
+                          color: Colors.transparent,
+                        )
+                      : (shop.orderCount ?? 0) > 0 &&
+                              (shop.orderCount ?? 0) < 99
+                          ? Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          : (shop.orderCount ?? 0) > 100 &&
+                                  (shop.orderCount ?? 0) < 500
+                              ? Row(
+                                  children: [
+                                    Image.asset(
+                                      "res/icons/ic_flame_icon.png",
+                                      package: "resources",
+                                      width: 15,
+                                      height: 15,
+                                    ),
+                                    Image.asset(
+                                      "res/icons/ic_flame_icon.png",
+                                      package: "resources",
+                                      width: 15,
+                                      height: 15,
+                                    )
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    Image.asset(
+                                      "res/icons/ic_flame_icon.png",
+                                      package: "resources",
+                                      width: 15,
+                                      height: 15,
+                                    ),
+                                    Image.asset(
+                                      "res/icons/ic_flame_icon.png",
+                                      package: "resources",
+                                      width: 15,
+                                      height: 15,
+                                    ),
+                                    Image.asset(
+                                      "res/icons/ic_flame_icon.png",
+                                      package: "resources",
+                                      width: 15,
+                                      height: 15,
+                                    )
+                                  ],
+                                )),
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 5),
