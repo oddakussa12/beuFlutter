@@ -3509,6 +3509,14 @@ class S {
       args: [],
     );
   }
+   String get number_of_orders_in_amharic {
+    return Intl.message(
+      'beU Delivery',
+      name: 'app_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
