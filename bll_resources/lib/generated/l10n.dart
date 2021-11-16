@@ -3509,10 +3509,20 @@ class S {
       args: [],
     );
   }
-   String get number_of_orders_in_amharic {
+
+  String get number_of_orders_in_amharic {
     return Intl.message(
-      'beU Delivery',
-      name: 'app_name',
+      ' በወር ትዕዛዞች',
+      name: 'number_of_orders_in_amharic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get average_price_in_amharic {
+    return Intl.message(
+      ' ብር አማካይ ዋጋ',
+      name: 'average_price_in_amharic',
       desc: '',
       args: [],
     );
