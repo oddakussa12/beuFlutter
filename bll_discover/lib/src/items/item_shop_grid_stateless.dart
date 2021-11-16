@@ -1,3 +1,4 @@
+import 'package:centre/centre.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,26 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   const ItemShopGridStatelessWidget({Key? key, required this.shop})
       : super(key: key);
 
+  iconFlame(int? num) {
+    if ((num ?? 0) > 0) {
+      return Image.asset(
+        "res/icons/ic_flame_icon.png",
+        package: "resources",
+        width: 15,
+        height: 15,
+        color: Colors.transparent,
+      );
+    } else if ((num ?? 0) > 0) {
+      return Image.asset(
+        "res/icons/ic_flame_icon.png",
+        package: "resources",
+        width: 15,
+        height: 15,
+        color: Colors.transparent,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
@@ -24,6 +45,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
     // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
     min = ((shop.deliveryTime ?? 0) / 60);
+    // ignore: deprecated_member_use
 
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
@@ -43,7 +65,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               buildShopBackgroundByCache(shop, context),
 
               /// 派送图标
-              buildDeliveryIcon(shop.mayDelivery()),
+              //buildDeliveryIcon(shop.mayDelivery()),
 
               /// 商铺头像
               buildShopAvatarByCache(shop)
@@ -173,7 +195,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
                   TextHelper.clean(
-                      "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0}  በወር  ትዕዛዞች"),
+                      "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
+                          S.of(context).number_of_orders_in_amharic),
                   textAlign: TextAlign.center,
                   maxLines: PlatformSupport.ios() ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
@@ -182,6 +205,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               ),
             ],
           ),
+
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -236,21 +260,23 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              // padding: EdgeInsets.only(top: 15),
-              alignment: Alignment.center,
-              //   margin: EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                TextHelper.clean("${shop.averagePrice ?? 0}  " +
-                    S.of(context).number_of_orders_in_amharic),
-                textAlign: TextAlign.center,
-                maxLines: PlatformSupport.ios() ? 2 : 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black54, fontSize: 15),
-              ),
-            ),
-          )
+          // Expanded(
+          //   child: Container(
+          //     // padding: EdgeInsets.only(top: 15),
+          //     alignment: Alignment.center,
+          //     //   margin: EdgeInsets.symmetric(horizontal: 5),
+
+          //     child: Text(
+          //       TextHelper.clean(
+          //           "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
+          //               S.of(context).average_price_in_amharic),
+          //       textAlign: TextAlign.center,
+          //       maxLines: PlatformSupport.ios() ? 2 : 1,
+          //       overflow: TextOverflow.ellipsis,
+          //       style: TextStyle(color: Colors.black54, fontSize: 15),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

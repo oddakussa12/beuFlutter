@@ -1,5 +1,6 @@
 import 'package:app/src/app_routes.dart';
 import 'package:app/src/pages/splash_page.dart';
+import 'package:centre/centre.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

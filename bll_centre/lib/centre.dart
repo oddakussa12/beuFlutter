@@ -9,3 +9,4 @@ export 'src/pages/user_centre_page.dart';
 export 'src/dialog/update_version_dialog.dart';
 
 export 'src/model/app_version_scope.dart';
+export 'src/model/settings_model.dart';

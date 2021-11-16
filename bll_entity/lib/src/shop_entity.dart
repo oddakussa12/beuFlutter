@@ -265,12 +265,10 @@ class Shop {
   @JsonKey(name: "distance")
   double? distance;
 
-  
   @JsonKey(name: "averagePrice")
-  String ? averagePrice;
+  List<dynamic>? averagePrice;
 
-
- @JsonKey(name: "orderCount")
+  @JsonKey(name: "orderCount")
   int? orderCount;
 
   @JsonKey(name: "user_shop")
@@ -374,7 +372,7 @@ class Shop {
         userPoint: shop.userPoint,
         deliveryTime: shop.deliveryTime,
         distance: shop.distance,
-        orderCount:shop.orderCount,
+        orderCount: shop.orderCount,
         averagePrice: shop.averagePrice);
   }
 
