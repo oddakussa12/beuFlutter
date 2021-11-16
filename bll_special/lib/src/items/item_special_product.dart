@@ -56,7 +56,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
                   Row(
                     children: [
                       /// 商品价格
-                      buildProductPrice(product),
+                      // buildProductPrice(product),
 
                       buildProductSpecialPrice(product),
                     ],
@@ -66,7 +66,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
                   buildProductTitle(product),
 
                   /// 商品星
-                  buildProductStars(product),
+                  // buildProductStars(product),
 
                   /// 商铺信息
                   buildShopInfo(context),
@@ -153,6 +153,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
   /**
    * 商品名称
    */
+
   Widget buildProductTitle(SpecProduct product) {
     return Container(
       alignment: Alignment.centerLeft,

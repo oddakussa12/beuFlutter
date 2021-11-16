@@ -133,7 +133,7 @@ class S {
   /// `Not shop found`
   String get allpage_shopnofind {
     return Intl.message(
-      'Not shop found',
+      'Check your internet access',
       name: 'allpage_shopnofind',
       desc: '',
       args: [],
@@ -143,7 +143,7 @@ class S {
   /// `Not products found`
   String get allpage_productnofind {
     return Intl.message(
-      'Not products found',
+      'Check your internet access',
       name: 'allpage_productnofind',
       desc: '',
       args: [],
@@ -3505,6 +3505,24 @@ class S {
     return Intl.message(
       'Promo Code',
       name: 'changeproduct_promocode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get number_of_orders_in_amharic {
+    return Intl.message(
+      ' በወር ትዕዛዞች',
+      name: 'number_of_orders_in_amharic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get average_price_in_amharic {
+    return Intl.message(
+      ' ብር አማካይ ዋጋ',
+      name: 'average_price_in_amharic',
       desc: '',
       args: [],
     );

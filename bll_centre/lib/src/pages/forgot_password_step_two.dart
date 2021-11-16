@@ -13,20 +13,21 @@ import 'country_code_page.dart';
  * @author: Ruoyegz
  * @date: 2021/7/7
  */
-class RegisterStepOnePage extends StatefulWidget {
-  const RegisterStepOnePage({Key? key}) : super(key: key);
+class ForgotPasswordPageTwo extends StatefulWidget {
+  const ForgotPasswordPageTwo({Key? key}) : super(key: key);
 
   @override
-  _RegisterStepOnePageState createState() =>
-      _RegisterStepOnePageState(RegisterStepOneActuator());
+  _ForgotPasswordOnePageState createState() =>
+      _ForgotPasswordOnePageState(RegisterStepOneActuator());
 }
 
-class _RegisterStepOnePageState
-    extends ReactableState<RegisterStepOneActuator, RegisterStepOnePage> {
+class _ForgotPasswordOnePageState
+    extends ReactableState<RegisterStepOneActuator, ForgotPasswordPageTwo> {
   String phone = "";
   CountryCode country = CountryCode.create();
 
-  _RegisterStepOnePageState(RegisterStepOneActuator actuator) : super(actuator);
+  _ForgotPasswordOnePageState(RegisterStepOneActuator actuator)
+      : super(actuator);
 
   /// 注册按钮的交互状态
   bool mutualStatus = false;
@@ -93,9 +94,9 @@ class _RegisterStepOnePageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Toolbar(
-          title: S.of(context).login_signup,
-        ),
+        appBar: Toolbar(title: "Forgot password"
+            //S.of(context).login_signup,
+            ),
         body: ListView(
           children: [
             SingleChildScrollView(
@@ -126,7 +127,6 @@ class _RegisterStepOnePageState
 
                       /// 登录按钮
                       buildNextStep(context),
-                   
                     ],
                   ),
                 ),

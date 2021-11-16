@@ -68,9 +68,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "allpage_no_product":
             MessageLookupByLibrary.simpleMessage("This category is empty"),
         "allpage_productnofind":
-            MessageLookupByLibrary.simpleMessage("Not products found"),
+            MessageLookupByLibrary.simpleMessage("Check your internet access"),
         "allpage_shopnofind":
-            MessageLookupByLibrary.simpleMessage("Not shop found"),
+            MessageLookupByLibrary.simpleMessage("Check your internet access"),
         "allpage_why": MessageLookupByLibrary.simpleMessage("Why?"),
         "alltip_biorule": MessageLookupByLibrary.simpleMessage(
             "Bio should be between 1 to 100 characters"),

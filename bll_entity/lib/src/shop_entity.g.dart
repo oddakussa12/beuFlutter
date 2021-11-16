@@ -117,6 +117,16 @@ Map<String, dynamic> _$DiscoveryShopsToJson(DiscoveryShops instance) =>
     };
 
 Shop _$ShopFromJson(Map<String, dynamic> json) {
+  // double? days = (sec) / (24 * 3600);
+  // double? hours = (( (json['deliveryTime'] as num?)?.toDouble())! % (24 * 3600)) / 3600;
+  // double? minutes = ((sec) % (24 * 3600 * 3600)) / 60;
+  // double? seconds = ((sec) % (24 * 3600 * 3600 * 60)) / 60;
+  // double average_perice = double.parse((json['avg_check'][0]['avg_check'] ?? 0)) ;
+  // print(average_perice);
+  // String? avg = (json['avg_check'].length()) == 0
+  //     ? "-"
+  //     : (json['avg_check'][0]['avg_check']);
+
   return Shop(
     json['user_id'] as String,
     uuid: json['user_uuid'] as String?,
@@ -142,6 +152,13 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     userPoint: json['userPoint'] == null
         ? null
         : UserPoint.fromJson(json['userPoint']),
+    deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
+    distance: (json['distance'] as num?)?.toDouble(),
+    orderCount: (json['orders_count'] as int?),
+    averagePrice: json['avg_check'] as List<dynamic>?,
+
+    // orderCount:(json['orderCount'] as int?) ,
+    // averagePrice:(json['averagePrice'] as num?)?.toDouble(),
     currency: json['user_currency'] as String?,
     coast: (json['deliveryCoast'] as num?)?.toDouble(),
     subTotal: (json['subTotal'] as num?)?.toDouble(),
@@ -179,6 +196,10 @@ Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
       'user_avatar_link': instance.avatarLink,
       'user_gender': instance.gender,
       'user_level': instance.level,
+      'deliveryTime': instance.deliveryTime,
+      'distance': instance.distance,
+      'averagePrice': instance.averagePrice,
+      'orderCount': instance.orderCount,
       'user_shop': instance.shop,
       'user_answer': instance.answer,
       'user_activation': instance.activation,

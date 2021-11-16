@@ -1,4 +1,6 @@
+// TODO Implement this library.import 'package:centre/src/actuator/login_actuator.dart';
 import 'package:centre/src/actuator/login_actuator.dart';
+import 'package:centre/src/pages/forgot_password_step_one.dart';
 import 'package:centre/src/pages/register_step_one_page.dart';
 import 'package:centre/src/widget/agreement_bar_widget.dart';
 import 'package:common/common.dart';
@@ -89,7 +91,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
         appBar: Toolbar(
           title: S.of(context).login_log_in,
         ),
-        body: Column(
+        body: ListView(
           children: [
             SingleChildScrollView(
               child: GestureDetector(
@@ -127,6 +129,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
 
                       /// 登录按钮
                       buildLoginIn(context),
+                      //  buildForgotPassword(context),
 
                       /// 注册分割线
                       Container(
@@ -304,6 +307,30 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
       ),
       onTap: () {
         tapLogin(context);
+      },
+    );
+  }
+
+  Widget buildForgotPassword(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 44,
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top: 16),
+        child: Text("Forgot password",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: AppColor.colorF7551D,
+                fontSize: 14,
+                fontWeight: FontWeight.bold)),
+      ),
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                type: TransitionType.rightToLeft,
+                child: ForgotPasswordOnePage()));
       },
     );
   }

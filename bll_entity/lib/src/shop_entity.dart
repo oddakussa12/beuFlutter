@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:entity/src/base_entity.dart';
 import 'package:entity/src/product_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -256,6 +259,17 @@ class Shop {
   /// 当时user_shop为1(商店)时，user_level为0表示普通商铺,user_level为1表示认证商铺
   @JsonKey(name: "user_level")
   int? level;
+  @JsonKey(name: "deliveryTime")
+  double? deliveryTime;
+
+  @JsonKey(name: "distance")
+  double? distance;
+
+  @JsonKey(name: "averagePrice")
+  List<dynamic>? averagePrice;
+
+  @JsonKey(name: "orderCount")
+  int? orderCount;
 
   @JsonKey(name: "user_shop")
   int? shop;
@@ -336,7 +350,11 @@ class Shop {
       this.avatarLink = "",
       this.star = 0,
       this.callCenter,
-      this.isChecked = false});
+      this.isChecked = false,
+      this.deliveryTime,
+      this.distance,
+      this.orderCount,
+      this.averagePrice});
 
   factory Shop.create(Shop shop) {
     return Shop(shop.id,
@@ -351,7 +369,11 @@ class Shop {
         about: shop.about,
         contact: shop.contact,
         address: shop.address,
-        userPoint: shop.userPoint);
+        userPoint: shop.userPoint,
+        deliveryTime: shop.deliveryTime,
+        distance: shop.distance,
+        orderCount: shop.orderCount,
+        averagePrice: shop.averagePrice);
   }
 
   bool isNotEmpty() {
@@ -376,7 +398,10 @@ class Shop {
 
   UserPoint getShopPoint() {
     if (userPoint == null) {
-      userPoint = UserPoint(0, 0);
+      userPoint = UserPoint(
+        0,
+        0,
+      );
     }
     return userPoint!;
   }
