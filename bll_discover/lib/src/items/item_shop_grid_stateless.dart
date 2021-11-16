@@ -169,7 +169,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
               child: Text(
                 TextHelper.clean(
-                    "${((shop.averagePrice ?? []).length) == 0 ? "-" : (shop.averagePrice ?? [])[0]['avg_check']}  " +
+                    "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
                         S.of(context).average_price_in_amharic),
                 textAlign: TextAlign.center,
                 maxLines: PlatformSupport.ios() ? 2 : 1,
