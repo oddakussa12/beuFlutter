@@ -206,60 +206,59 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
             ],
           ),
 
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
+          // Expanded(
+          //   child:
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 1),
+                child: Image.asset(
+                  "res/icons/ic_shop_delivery.png",
+                  package: "resources",
+                  width: 15,
+                  height: 15,
+                ),
+              ),
+              Expanded(
+                child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 1),
-                  child: Image.asset(
-                    "res/icons/ic_shop_delivery.png",
-                    package: "resources",
-                    width: 15,
-                    height: 15,
+                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  child: Text(
+                    TextHelper.clean(double.parse((min).toStringAsFixed(2)) < 0
+                        ? double.parse((min).toStringAsFixed(1)).toString() +
+                            " hours"
+                        : double.parse((min).toStringAsFixed(1)).toString() +
+                            " min"),
+                    textAlign: TextAlign.center,
+                    maxLines: PlatformSupport.ios() ? 2 : 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                   ),
                 ),
-                Expanded(
-                  child: Container(
+              ),
+              Text(
+                " | ",
+                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+              ),
+              Expanded(
+                child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
-                      TextHelper.clean(double.parse((min).toStringAsFixed(2)) <
-                              0
-                          ? double.parse((min).toStringAsFixed(1)).toString() +
-                              " hours"
-                          : double.parse((min).toStringAsFixed(1)).toString() +
-                              " min"),
+                      TextHelper.clean(((shop.distance ?? 0) / 1000)
+                              .toStringAsFixed(2)) +
+                          " Km",
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                    ),
-                  ),
-                ),
-                Text(
-                  " | ",
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-                ),
-                Expanded(
-                  child: Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: 2),
-                      child: Text(
-                        TextHelper.clean(((shop.distance ?? 0) / 1000)
-                                .toStringAsFixed(2)) +
-                            " Km",
-                        textAlign: TextAlign.center,
-                        maxLines: PlatformSupport.ios() ? 2 : 1,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            TextStyle(color: Colors.yellow[900], fontSize: 15),
-                      )),
-                )
-              ],
-            ),
+                    )),
+              )
+            ],
           ),
+          // ),
           // Expanded(
           //   child: Container(
           //     // padding: EdgeInsets.only(top: 15),
