@@ -139,13 +139,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
-<<<<<<< HEAD
-                child: Image.asset(
-                  "res/icons/ic_shop_delivery.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-=======
+ 
                 child: Consumer<SettingsModel>(
                   builder: (context, settings, child) {
                     Row iconResource = Row(children: [
@@ -225,7 +219,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
                     return iconResource;
                   },
->>>>>>> master
+ 
                 ),
               ),
               Container(
@@ -243,19 +237,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
               ),
-<<<<<<< HEAD
-              Text(
-                " | ",
-                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-              ),
-              Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 2),
-                  child: Text(
-                    TextHelper.clean(
-                            ((shop.distance ?? 0) / 1000).toStringAsFixed(1)) +
-                        " Km",
-=======
+ 
             ],
           ),
 
@@ -284,17 +266,12 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                             " hours"
                         : double.parse((min).toStringAsFixed(1)).toString() +
                             " min"),
->>>>>>> master
+ 
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-<<<<<<< HEAD
-                  )),
-            ],
-          ),
-
-=======
+ 
                   ),
                 ),
               ),
@@ -319,7 +296,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
             ],
           ),
           // ),
->>>>>>> master
+ 
           // Expanded(
           //   child: Container(
           //     // padding: EdgeInsets.only(top: 15),
