@@ -103,43 +103,12 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 1),
-                    child: Image.asset(
-                      "res/icons/ic_flame_icon.png",
-                      package: "resources",
-                      width: 15,
-                      height: 15,
-                    )),
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  child: Text(
-                    TextHelper.clean(
-                        "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
-                            S.of(context).number_of_orders_in_amharic),
-                    textAlign: TextAlign.center,
-                    maxLines: PlatformSupport.ios() ? 2 : 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
- 
                 child: Consumer<SettingsModel>(
                   builder: (context, settings, child) {
                     Row iconResource = Row(children: [
@@ -219,84 +188,78 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
                     return iconResource;
                   },
- 
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 2),
+                margin: EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
-                  TextHelper.clean(double.parse((min).toStringAsFixed(0)) < 0
-                      ? double.parse((min).toStringAsFixed(0)).toString() +
-                          " hours"
-                      : double.parse((min).toStringAsFixed(0)).toString() +
-                          " min"),
+                  TextHelper.clean(
+                      "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
+                          S.of(context).number_of_orders_in_amharic),
                   textAlign: TextAlign.center,
                   maxLines: PlatformSupport.ios() ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
               ),
- 
             ],
           ),
 
-          // Expanded(
-          //   child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_shop_delivery.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-                ),
-              ),
-              Expanded(
-                child: Container(
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 2),
-                  child: Text(
-                    TextHelper.clean(double.parse((min).toStringAsFixed(2)) < 0
-                        ? double.parse((min).toStringAsFixed(1)).toString() +
-                            " hours"
-                        : double.parse((min).toStringAsFixed(1)).toString() +
-                            " min"),
- 
-                    textAlign: TextAlign.center,
-                    maxLines: PlatformSupport.ios() ? 2 : 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
- 
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Image.asset(
+                    "res/icons/ic_shop_delivery.png",
+                    package: "resources",
+                    width: 15,
+                    height: 15,
                   ),
                 ),
-              ),
-              Text(
-                " | ",
-                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-              ),
-              Expanded(
-                child: Container(
+                Expanded(
+                  child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
-                      TextHelper.clean(((shop.distance ?? 0) / 1000)
-                              .toStringAsFixed(2)) +
-                          " Km",
+                      TextHelper.clean(double.parse((min).toStringAsFixed(2)) <
+                              0
+                          ? double.parse((min).toStringAsFixed(1)).toString() +
+                              " hours"
+                          : double.parse((min).toStringAsFixed(1)).toString() +
+                              " min"),
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                    )),
-              )
-            ],
+                    ),
+                  ),
+                ),
+                Text(
+                  " | ",
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
+                Expanded(
+                  child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: 2),
+                      child: Text(
+                        TextHelper.clean(((shop.distance ?? 0) / 1000)
+                                .toStringAsFixed(2)) +
+                            " Km",
+                        textAlign: TextAlign.center,
+                        maxLines: PlatformSupport.ios() ? 2 : 1,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(color: Colors.yellow[900], fontSize: 15),
+                      )),
+                )
+              ],
+            ),
           ),
-          // ),
- 
           // Expanded(
           //   child: Container(
           //     // padding: EdgeInsets.only(top: 15),
