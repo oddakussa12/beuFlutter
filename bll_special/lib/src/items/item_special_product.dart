@@ -56,7 +56,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
                   Row(
                     children: [
                       /// 商品价格
-                      // buildProductPrice(product),
+                      buildProductPrice(product),
 
                       buildProductSpecialPrice(product),
                     ],
