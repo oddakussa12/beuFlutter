@@ -90,8 +90,6 @@ class ShopsActuator extends RefreshActuator {
     });
   }
 
-  loadAvarageprice(int id) {}
-
   /** 
   * Load nearest
   */

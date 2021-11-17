@@ -69,4 +69,6 @@ class CentreUrl {
    * 获取版本更新信息
    */
   static final String appVersion = "/api/app/home";
+
+  static final String settings = "/api/business/settings/view";
 }

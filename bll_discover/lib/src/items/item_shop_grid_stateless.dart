@@ -1,5 +1,7 @@
+import 'package:centre/centre.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /**
  * item_shop_grid.dart
@@ -48,6 +50,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     // if (hours > 0) hours = hours * 60;
     // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
     // print("${sec} sec ${min} min ${hours} hours ");
+
     return Container(
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
@@ -136,11 +139,93 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 1),
+<<<<<<< HEAD
                 child: Image.asset(
                   "res/icons/ic_shop_delivery.png",
                   package: "resources",
                   width: 15,
                   height: 15,
+=======
+                child: Consumer<SettingsModel>(
+                  builder: (context, settings, child) {
+                    Row iconResource = Row(children: [
+                      Image.asset("res/icons/ic_flame_icon.png",
+                          package: "resources",
+                          width: 15,
+                          height: 15,
+                          color: Colors.transparent)
+                    ]);
+                    if (shop.orderCount != null) {
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().unpopularRestaurant) {
+                        iconResource = Row(children: [
+                          Image.asset(
+                            "res/icons/ic_flame_icon.png",
+                            package: "resources",
+                            width: 15,
+                            height: 15,
+                          )
+                        ]);
+                      }
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().popularRestaurant) {
+                        iconResource = Row(
+                          children: [
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          ],
+                        );
+                      }
+                      if (shop.orderCount! >=
+                          settings.getViewSettings().superPopularRestaurant) {
+                        iconResource = Row(
+                          children: [
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            ),
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          ],
+                        );
+                      }
+                      if (shop.orderCount! >
+                          settings.getViewSettings().blackHouseRestaurant) {
+                        iconResource = Row(children: [
+                          Image.asset("res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                              color: Colors.black)
+                        ]);
+                      }
+                    }
+
+                    return iconResource;
+                  },
+>>>>>>> master
                 ),
               ),
               Container(
@@ -158,6 +243,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                 ),
               ),
+<<<<<<< HEAD
               Text(
                 " | ",
                 style: TextStyle(color: Colors.yellow[900], fontSize: 12),
@@ -169,14 +255,71 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     TextHelper.clean(
                             ((shop.distance ?? 0) / 1000).toStringAsFixed(1)) +
                         " Km",
+=======
+            ],
+          ),
+
+          // Expanded(
+          //   child:
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 1),
+                child: Image.asset(
+                  "res/icons/ic_shop_delivery.png",
+                  package: "resources",
+                  width: 15,
+                  height: 15,
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  child: Text(
+                    TextHelper.clean(double.parse((min).toStringAsFixed(2)) < 0
+                        ? double.parse((min).toStringAsFixed(1)).toString() +
+                            " hours"
+                        : double.parse((min).toStringAsFixed(1)).toString() +
+                            " min"),
+>>>>>>> master
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+<<<<<<< HEAD
                   )),
             ],
           ),
 
+=======
+                  ),
+                ),
+              ),
+              Text(
+                " | ",
+                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+              ),
+              Expanded(
+                child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    child: Text(
+                      TextHelper.clean(((shop.distance ?? 0) / 1000)
+                              .toStringAsFixed(2)) +
+                          " Km",
+                      textAlign: TextAlign.center,
+                      maxLines: PlatformSupport.ios() ? 2 : 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                    )),
+              )
+            ],
+          ),
+          // ),
+>>>>>>> master
           // Expanded(
           //   child: Container(
           //     // padding: EdgeInsets.only(top: 15),
