@@ -159,7 +159,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(top: 10, left: 16, right: 16),
       child: Text(
-        product.description!,
+        product.name!,
         maxLines: 2,
         textAlign: TextAlign.left,
         overflow: TextOverflow.ellipsis,
