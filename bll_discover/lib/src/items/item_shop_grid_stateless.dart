@@ -35,6 +35,31 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     }
   }
 
+  String distance(double? distance_value) {
+    if ((distance_value ?? 0) >= 1)
+      return (double.parse(((distance_value ?? 0)).toStringAsFixed(1))
+              .toString()) +
+          " km";
+    else if ((distance_value ?? 0) < 1) {
+      return (double.parse(((distance_value ?? 0) * 1000).toStringAsFixed(0))
+              .toString()) +
+          " m";
+    }
+
+    return "";
+  }
+
+  String delivery_time(double? time) {
+    if ((time ?? 0) > 60) {
+      return (double.parse(((time ?? 0) / 60).toStringAsFixed(1)).toString()) +
+          " hours";
+    } else if ((time ?? 0) <= 60) {
+      return (double.parse(((time ?? 0)).toStringAsFixed(0)).toString()) +
+          " min";
+    }
+    return "";
+  }
+
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
@@ -44,7 +69,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     // sec = (shop.deliveryTime)! / (24 * 3600);
 
     // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    min = ((shop.deliveryTime ?? 0) / 60);
+    // min = ((shop.deliveryTime ?? 0) / 60);
     // ignore: deprecated_member_use
 
     // if (hours > 0) hours = hours * 60;
@@ -226,11 +251,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
-                    TextHelper.clean(double.parse((min).toStringAsFixed(2)) < 0
-                        ? double.parse((min).toStringAsFixed(1)).toString() +
-                            " hours"
-                        : double.parse((min).toStringAsFixed(1)).toString() +
-                            " min"),
+                    TextHelper.clean(
+                        delivery_time(((shop.deliveryTime ?? 0) / 60))),
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
@@ -239,7 +261,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                " | ",
+                "|",
                 style: TextStyle(color: Colors.yellow[900], fontSize: 12),
               ),
               Expanded(
@@ -247,9 +269,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
-                      TextHelper.clean(((shop.distance ?? 0) / 1000)
-                              .toStringAsFixed(2)) +
-                          " Km",
+                      TextHelper.clean(distance(((shop.distance ?? 0) / 1000))),
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
