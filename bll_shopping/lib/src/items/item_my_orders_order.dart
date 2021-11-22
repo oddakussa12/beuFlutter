@@ -81,7 +81,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
               height: 24,
             ),
 
-            /// 商铺标题
+            // 商铺标题
             Expanded(
                 child: Container(
               alignment: Alignment.centerLeft,
