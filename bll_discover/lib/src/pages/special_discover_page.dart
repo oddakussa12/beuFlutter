@@ -37,18 +37,18 @@ class SpecialDiscoverPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (tabNames.isEmpty) {
-      tabNames.add(S.of(context).discover_shops);
-      tabNames.add(S.of(context).discover_product);
+      tabNames.add(S.of(context).Restorants_tab);
+      // tabNames.add(S.of(context).discover_product);
     }
     if (_pageWidgets.isEmpty) {
       _pageWidgets.add(ShopsPage(callback: () {
         retryLoadSpecial();
       }));
-      _pageWidgets.add(ProductsPage(
-        callback: () {
-          retryLoadSpecial();
-        },
-      ));
+      // _pageWidgets.add(ProductsPage(
+      //   callback: () {
+      //     retryLoadSpecial();
+      //   },
+      // ));
     }
 
     _tabController = TabController(length: _pageWidgets.length, vsync: this);

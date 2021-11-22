@@ -94,7 +94,7 @@ class _RegisterStepThreePageState
       appBar: Toolbar(
         title: S.of(context).login_your_name,
       ),
-      body: Column(
+      body: ListView(
         children: [
           SingleChildScrollView(
             child: GestureDetector(

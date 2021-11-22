@@ -52,6 +52,11 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
   /// 开始登录
   void tapLogin(BuildContext context) {
     /// 检查区号
+    setState(() {
+      actuator.country.code = S.of(context).ethiopian_country_code;
+      actuator.country.areaCode = S.of(context).ethiopian_country_areaCode;
+      actuator.country.name = S.of(context).ethiopian_country_name;
+    });
     if (TextHelper.isEmpty(actuator.country.code) ||
         TextHelper.isEmpty(actuator.country.name)) {
       toast(message: S.of(context).reminder_country);
@@ -166,7 +171,7 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
           children: [
             Container(
               child: Text(
-                "+${TextHelper.clean(actuator.country.areaCode)}",
+                "+${TextHelper.clean(S.of(context).ethiopian_country_areaCode)}",
                 style: TextStyle(
                     color: AppColor.black,
                     fontSize: 14,
@@ -174,22 +179,22 @@ class _LoginPageState extends ReactableState<LoginActuator, LoginPage> {
               ),
               margin: EdgeInsets.only(right: 6),
             ),
-            Image.asset(
-              "res/icons/ic_arrow_down_red.png",
-              package: 'resources',
-              width: 15,
-              height: 15,
-            ),
+            // Image.asset(
+            //   "res/icons/ic_arrow_down_red.png",
+            //   package: 'resources',
+            //   width: 15,
+            //   height: 15,
+            // ),
           ],
         ),
       ),
-      onTap: () {
-        Navigator.push(
-                context,
-                PageTransition(
-                    type: TransitionType.rightToLeft, child: CountryCodePage()))
-            .then((value) => receivedCountryCode(value));
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //           context,
+      //           PageTransition(
+      //               type: TransitionType.rightToLeft, child: CountryCodePage()))
+      //       .then((value) => receivedCountryCode(value));
+      // },
     );
   }
 

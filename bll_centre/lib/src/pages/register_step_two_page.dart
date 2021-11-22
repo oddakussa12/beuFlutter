@@ -94,7 +94,7 @@ class _RegisterStepTwoPageState
         appBar: Toolbar(
           title: S.of(context).login_login_info,
         ),
-        body: Column(
+        body: ListView(
           children: [
             SingleChildScrollView(
               child: GestureDetector(

@@ -3527,6 +3527,42 @@ class S {
       args: [],
     );
   }
+
+  String get Restorants_tab {
+    return Intl.message(
+      'Restorants',
+      name: 'Restorants_tab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_code {
+    return Intl.message(
+      'et',
+      name: 'ethiopian_country_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_areaCode {
+    return Intl.message(
+      '251',
+      name: 'ethiopian_country_areaCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_name {
+    return Intl.message(
+      'Ethiopia',
+      name: 'ethiopian_country_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
