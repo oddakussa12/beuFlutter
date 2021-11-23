@@ -40,7 +40,7 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
       child: Column(
         children: [
           /// 商铺图标及标题
-          buildShopTitle(context),
+         buildShopTitle(context),
 
           /// 购物车中商品列表
           buildShopProducts(),
@@ -72,7 +72,7 @@ class _ItemMyBagShopState extends State<ItemMyBagShopWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(widget.shop.name),
+                TextHelper.clean(widget.shop.nickName),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

@@ -17,6 +17,7 @@ import 'my_orders_page.dart';
 class ShoppingCartPageWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new ShoppingCartPageState();
+  
 }
 
 class ShoppingCartPageState extends State<ShoppingCartPageWidget>

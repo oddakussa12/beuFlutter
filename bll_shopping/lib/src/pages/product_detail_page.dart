@@ -68,7 +68,7 @@ class _ProductDetailPageState
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],
       ),
-      buildShoppingCartBar()
+    buildShoppingCartBar()
     ]));
   }
 
