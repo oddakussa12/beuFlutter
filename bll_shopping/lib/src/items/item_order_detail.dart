@@ -50,7 +50,7 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
         buildOrderNumber(),
 
         /// 订单商品信息
-        buildOrderProductInfo(context),
+       buildOrderProductInfo(context),
       ],
     );
   }

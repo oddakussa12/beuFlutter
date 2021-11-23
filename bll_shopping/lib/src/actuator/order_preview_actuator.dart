@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:common/common.dart';
 import 'package:dio/dio.dart';
 import 'package:shopping/shopping.dart';
+import 'package:shopping/src/actuator/delivery_address_actuator.dart';
 import 'package:shopping/src/entity/user_address.dart';
 
 /**
@@ -13,6 +14,7 @@ import 'package:shopping/src/entity/user_address.dart';
  */
 class OrderPreviewActuator extends RetryActuator {
   /// 预览订单类型【特价】
+  DeliveryAddressActuator deliveryINfo = new DeliveryAddressActuator();
   String type = "";
 
   /// 配送费参数
@@ -48,6 +50,10 @@ class OrderPreviewActuator extends RetryActuator {
     return TextHelper.isEqual("special", type);
   }
 
+  void confirm(data) {
+    deliveryINfo.confirmUserInfo(data);
+  }
+
   /// 显示 Promo code 提示消息
   bool showPromoMessage() {
     return (orderP.code == 0 && TextHelper.isNotEmpty(promoCode)) ||
@@ -69,6 +75,7 @@ class OrderPreviewActuator extends RetryActuator {
         params.shopIds = shopIds;
       }
     }
+    print("params.name");
     success.call(params);
   }
 
@@ -79,6 +86,7 @@ class OrderPreviewActuator extends RetryActuator {
     orderP.address = result.address;
     deliveryCoastParam = result.deliveryCost ?? "";
     orderP.avatar = UserManager().getUser().avatarLink;
+    print(orderP.name);
     notifySetState();
 
     /// 从新加载订单信息

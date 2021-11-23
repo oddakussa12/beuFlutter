@@ -1,11 +1,14 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
+import 'package:shopping/src/actuator/delivery_address_actuator.dart';
 import 'package:shopping/src/actuator/order_preview_actuator.dart';
 import 'package:shopping/src/actuator/product_option_provider.dart';
 import 'package:shopping/src/entity/user_address.dart';
 import 'package:shopping/src/items/item_order_preview.dart';
 import 'package:shopping/src/items/item_order_price.dart';
+import 'package:shopping/src/pages/delivery_address_page.dart';
 
 /**
  * OrderPreviewPage
@@ -28,8 +31,10 @@ class _OrderPreviewPageState
 
   var args;
 
+  DeliveryAddressActuator userInfo = new DeliveryAddressActuator();
   @override
   bool get wantKeepAlive => true;
+  late UserAddress userAddress;
 
   @override
   void didChangeDependencies() {
@@ -48,6 +53,13 @@ class _OrderPreviewPageState
         actuator.loadPreviewOrder();
       }
     }
+    actuator.prepareDeliveryAddress((result) {
+      var args = result;
+
+      if (args != null && args is UserAddress) {
+        actuator.deliveryINfo.init(args);
+      }
+    });
   }
 
   /**
@@ -398,48 +410,351 @@ class _OrderPreviewPageState
    * 地址信息
    */
   Widget buildDeliveryUserInfo() {
-    return Container(
-        margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              /// 地址头像
-              buildAddressUserAvatar(),
+    return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          margin: EdgeInsets.all(16),
+          alignment: Alignment.topLeft,
+          child: buildBodyWidget(context),
+        ),
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        });
 
-              /// 地址用户
-              Expanded(
-                  child: Container(
-                height: 48,
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    /// 用户名
-                    buildUserName(),
+    //  Container(
+    //     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+    //     child: GestureDetector(
+    //       behavior: HitTestBehavior.opaque,
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.start,
+    //         children: [
+    //           /// 地址头像
+    //           buildAddressUserAvatar(),
 
-                    /// 联系方式
-                    buildUserPhone()
-                  ],
-                ),
-              )),
-              Icon(
-                Icons.keyboard_arrow_right,
-                color: AppColor.color99,
-              ),
-            ],
-          ),
-          onTap: () {
-            openDeliveryAddressPage(context);
-          },
-        ));
+    //           /// 地址用户
+    //           Expanded(
+    //               child: Container(
+    //             height: 48,
+    //             alignment: Alignment.centerLeft,
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.stretch,
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 /// 用户名
+    //                 buildUserName(),
+
+    //                 /// 联系方式
+    //                 buildUserPhone()
+    //               ],
+    //             ),
+    //           )),
+    //           Icon(
+    //             Icons.keyboard_arrow_right,
+    //             color: AppColor.color99,
+    //           ),
+    //         ],
+    //       ),
+    //       onTap: () {
+    //         openDeliveryAddressPage(context);
+    //       },
+    //     ));
   }
 
   /**
    * 地址头像
    */
+
+  Widget buildBodyWidget(BuildContext context) {
+    return Column(children: [
+      Container(
+          margin: EdgeInsets.only(top: 24),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            S.of(context).confirm_billing_info,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
+          )),
+
+      Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 16),
+          child: Text(
+            S.of(context).confirm_fill_your_info,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 12,
+                fontWeight: FontWeight.bold),
+          )),
+
+      Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 16),
+          child: Text(
+            S.of(context).confirm_name,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          )),
+
+      /// Name 输入框
+      buildNameTextField(),
+
+      /// 手机输入
+      Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 16),
+          child: Text(
+            S.of(context).confirm_phone_number,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          )),
+
+      /// Phone 输入框
+      buildPhoneTextField(),
+
+      /// 地址输入
+      Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 16),
+          child: Text(
+            S.of(context).confirm_address,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          )),
+
+      /// Address 输入框
+      buildAddressTextField(),
+
+      Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(top: 32),
+          child: Text(
+            S.of(context).confirm_check_information,
+            maxLines: 2,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                color: AppColor.black,
+                fontSize: 12,
+                fontWeight: FontWeight.bold),
+          )),
+    ]);
+  }
+
+  Container buildNameTextField() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 12),
+      child: TextField(
+        strutStyle: StrutStyle(),
+        decoration: InputDecoration(
+            counter: Container(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColor.color08000, width: 1)),
+            contentPadding:
+                EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+            hintText: S.of(context).confirm_name,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              color: AppColor.hint,
+            )),
+        maxLines: 2,
+        minLines: 1,
+        maxLength: 32,
+        textAlign: TextAlign.left,
+        textAlignVertical: TextAlignVertical.center,
+        cursorColor: AppColor.colorF7551D,
+        cursorWidth: 2,
+        cursorRadius: Radius.circular(2),
+        style: TextStyle(color: AppColor.black, fontSize: 16),
+        onChanged: (text) {
+          actuator.deliveryINfo.name = text;
+        },
+        controller: TextEditingController.fromValue(TextEditingValue(
+            //判断 name 是否为空
+            // text: 'name',
+            text:
+                '${this.actuator.deliveryINfo.name == null ? "" : this.actuator.deliveryINfo.name}',
+            // 保持光标在最后
+
+            selection: TextSelection.fromPosition(TextPosition(
+                affinity: TextAffinity.downstream,
+                offset: '${this.actuator.deliveryINfo.name}'.length)))),
+      ),
+    );
+  }
+
+  /**
+   * Phone 输入框
+   */
+  Container buildPhoneTextField() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 12),
+      child: TextField(
+        strutStyle: StrutStyle(),
+        decoration: InputDecoration(
+            counter: Container(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColor.color08000, width: 1)),
+            contentPadding:
+                EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+            hintText: S.of(context).reminder_enterphone,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              color: AppColor.hint,
+            )),
+        maxLines: 1,
+        minLines: 1,
+        maxLength: 14,
+        keyboardType: TextInputType.number,
+        cursorColor: AppColor.colorF7551D,
+        cursorWidth: 2,
+        cursorRadius: Radius.circular(2),
+        textAlign: TextAlign.left,
+        style: TextStyle(color: AppColor.black, fontSize: 16),
+        onChanged: (text) {
+          actuator.deliveryINfo.phone = text;
+        },
+        controller: TextEditingController.fromValue(TextEditingValue(
+            //判断 phone 是否为空
+
+            text:
+                '${actuator.deliveryINfo.phone == null ? "" : this.actuator.deliveryINfo.phone}',
+            // 保持光标在最后
+
+            selection: TextSelection.fromPosition(TextPosition(
+                affinity: TextAffinity.downstream,
+                offset: '${this.actuator.deliveryINfo.phone}'.length)))),
+      ),
+    );
+  }
+
+  /**
+   * Address 输入框
+   */
+  Container buildAddressTextField() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 12),
+      child: TextField(
+        strutStyle: StrutStyle(),
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+            counter: Container(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColor.color08000, width: 1)),
+            contentPadding:
+                EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+            hintText: S.of(context).confirm_address,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              color: AppColor.hint,
+            )),
+        maxLines: 5,
+        maxLength: 100,
+        cursorColor: AppColor.colorF7551D,
+        cursorWidth: 2,
+        cursorRadius: Radius.circular(2),
+        textAlign: TextAlign.left,
+        style: TextStyle(color: AppColor.black, fontSize: 16),
+        onChanged: (text) {
+          actuator.deliveryINfo.address = text;
+        },
+        controller: TextEditingController.fromValue(TextEditingValue(
+            //判断 phone 是否为空
+
+            text:
+                '${this.actuator.deliveryINfo.address == null ? "" : this.actuator.deliveryINfo.address}',
+            // 保持光标在最后
+
+            selection: TextSelection.fromPosition(TextPosition(
+                affinity: TextAffinity.downstream,
+                offset: '${this.actuator.deliveryINfo.address}'.length)))),
+      ),
+    );
+  }
+
+  /**
+   * 提交按钮
+   */
+  Widget buildConfirmButton(BuildContext context) {
+    return Container(
+        height: 64,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          boxShadow: [
+            BoxShadow(
+                color: AppColor.bg,
+                offset: Offset(2.0, 2.0),
+                blurRadius: 5.0,
+                spreadRadius: 0.6),
+            BoxShadow(color: AppColor.bg, offset: Offset(1.0, 1.0)),
+            BoxShadow(color: AppColor.bg)
+          ],
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+              height: 44,
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(44),
+                  gradient: LinearGradient(
+                      colors: [Color(0xFFFF8913), Color(0xFFFF0080)],
+                      begin: FractionalOffset(1, 0),
+                      end: FractionalOffset(0, 1))),
+              child: Text(
+                S.of(context).button_confirm,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: AppColor.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              )),
+          onTap: () {
+            // print(actuator.deliveryINfo.name);
+            //confirmUserInfo();
+          },
+        ));
+  }
+
+  void confirmUserInfoMethod(BuildContext context) {
+    //FocusScope.of(context).requestFocus(FocusNode());
+    // print(actuator.deliveryINfo.name);
+
+    confirmUserInfo(context, (UserAddress result) {
+      processAddressResult(result);
+    }, start: () {
+      LoadingDialog.show(context);
+    }, end: () {
+      // Navigator.pop(context);
+    });
+  }
+
   Widget buildAddressUserAvatar() {
     var avatarUri =
         actuator.orderP.avatar ?? UserManager().getUser().avatarLink ?? "";
@@ -778,7 +1093,8 @@ class _OrderPreviewPageState
                 fontWeight: FontWeight.bold),
           )),
       onTap: () {
-        prepareConfirmOrder();
+        confirmUserInfoMethod(context);
+        //prepareConfirmOrder();
       },
     );
   }
@@ -794,7 +1110,8 @@ class _OrderPreviewPageState
   void prepareConfirmOrder() {
     actuator.checkoutPreviewOrder((status) {
       if (status == 1) {
-        openDeliveryAddressPage(context);
+        toast(message: S.of(context).confirm_address_no);
+        // openDeliveryAddressPage(context);
       } else if (status == 2) {
         LoadingDialog.show(context);
       } else if (status == 3) {
@@ -808,5 +1125,44 @@ class _OrderPreviewPageState
         Navigator.pop(context);
       }
     });
+  }
+
+  void confirmUserInfo(BuildContext context, Success<UserAddress> success,
+      {Complete? start, Complete? end}) {
+    if (TextHelper.isEmpty(actuator.deliveryINfo.name!) ||
+        actuator.deliveryINfo.name!.length < 2 ||
+        actuator.deliveryINfo.name!.length > 32) {
+      notifyToasty(S.of(context).confirm_name_rule);
+      //S.of(context).confirm_name_rule
+      return;
+    }
+
+    if (TextHelper.isEmpty(actuator.deliveryINfo.phone!) ||
+        actuator.deliveryINfo.phone!.length < 7 ||
+        actuator.deliveryINfo.phone!.length > 14) {
+      notifyToasty(S.of(context).confirm_phone_rule);
+      return;
+    }
+
+    if (TextHelper.isEmpty(actuator.deliveryINfo.address!) ||
+        actuator.deliveryINfo.address!.length < 10 ||
+        actuator.deliveryINfo.address!.length > 100) {
+      notifyToasty(S.of(context).confirm_address_rule);
+
+      return;
+    }
+
+    success.call(UserAddress(
+        name: actuator.deliveryINfo.name,
+        phone: actuator.deliveryINfo.phone,
+        address: actuator.deliveryINfo.address));
+    // if (locAddress == null || shopIds == null || shopIds!.isEmpty) {
+    //   success.call(UserAddress(name: name, phone: phone, address: address));
+    // } else {
+    //   if (start != null) {
+    //     start.call();
+    //   }
+    //   calcDeliveryCoast(success, start: start, end: end);
+    // }
   }
 }
