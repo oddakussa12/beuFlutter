@@ -186,7 +186,9 @@ class ShoppingCartActuator extends ReactActuator {
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车
+
         processCartUpdateSuccessResult(body, shop, product);
+        print(product.disPrice);
         LogDog.d("appendProduct: ${shopCart}");
       } else {
         processCartUpdateFailureResult(context, isAppend, shop, product);

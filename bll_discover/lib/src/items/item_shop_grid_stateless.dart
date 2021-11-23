@@ -42,6 +42,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           " km";
     else if ((distance_value ?? 0) < 1) {
       return (double.parse(((distance_value ?? 0) * 1000).toStringAsFixed(0))
+              .toInt()
               .toString()) +
           " m";
     }
@@ -50,31 +51,21 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   }
 
   String delivery_time(double? time) {
-    if ((time ?? 0) > 60) {
-      return (double.parse(((time ?? 0) / 60).toStringAsFixed(1)).toString()) +
-          " hours";
-    } else if ((time ?? 0) <= 60) {
-      return (double.parse(((time ?? 0)).toStringAsFixed(0)).toString()) +
-          " min";
-    }
-    return "";
+    // if ((time ?? 0) > 60) {
+    //   return (double.parse(((time ?? 0) / 60).toStringAsFixed(0)).toInt().toString()) +
+    //       " hours";
+    // } else if ((time ?? 0) <= 60) {
+    //   return (double.parse(((time ?? 0)).toStringAsFixed(0)).toInt().toString()) +
+    //       " min";
+    // }
+
+    return (double.parse(((time ?? 0)).toStringAsFixed(0)).toInt().toString()) +
+        " min";
   }
 
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
-    double? min, sec, hours;
-
-    // double? sec = (json['deliveryTime'] as num?)?.toDouble();
-    // sec = (shop.deliveryTime)! / (24 * 3600);
-
-    // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    // min = ((shop.deliveryTime ?? 0) / 60);
-    // ignore: deprecated_member_use
-
-    // if (hours > 0) hours = hours * 60;
-    // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
-    // print("${sec} sec ${min} min ${hours} hours ");
 
     return Container(
       alignment: Alignment.topCenter,
@@ -246,8 +237,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   height: 15,
                 ),
               ),
-              Expanded(
-                child: Container(
+              Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
@@ -259,13 +249,12 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                   ),
                 ),
-              ),
+               
               Text(
-                "|",
+                " | ",
                 style: TextStyle(color: Colors.yellow[900], fontSize: 12),
               ),
-              Expanded(
-                child: Container(
+              Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
@@ -275,7 +264,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                     )),
-              )
+              
             ],
           ),
           // ),
