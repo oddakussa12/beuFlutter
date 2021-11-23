@@ -1094,7 +1094,7 @@ class _OrderPreviewPageState
           )),
       onTap: () {
         confirmUserInfoMethod(context);
-        //prepareConfirmOrder();
+        // prepareConfirmOrder();
       },
     );
   }
@@ -1133,7 +1133,7 @@ class _OrderPreviewPageState
         actuator.deliveryINfo.name!.length < 2 ||
         actuator.deliveryINfo.name!.length > 32) {
       notifyToasty(S.of(context).confirm_name_rule);
-      //S.of(context).confirm_name_rule
+
       return;
     }
 
@@ -1151,7 +1151,7 @@ class _OrderPreviewPageState
 
       return;
     }
-
+    print(actuator.deliveryINfo.name);
     success.call(UserAddress(
         name: actuator.deliveryINfo.name,
         phone: actuator.deliveryINfo.phone,

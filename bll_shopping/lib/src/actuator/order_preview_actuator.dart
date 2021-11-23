@@ -79,14 +79,22 @@ class OrderPreviewActuator extends RetryActuator {
     success.call(params);
   }
 
+  void getStoredValue() async {
+    List<String>? adress = await Storage.getStrings("user_adress");
+    print((adress)![0]);
+  }
+
   /// 用户填写地址后更加经纬度信息更新预览订单
   void updateDeliveryAddress(UserAddress result) {
     orderP.name = result.name;
     orderP.phone = result.phone;
     orderP.address = result.address;
+
     deliveryCoastParam = result.deliveryCost ?? "";
     orderP.avatar = UserManager().getUser().avatarLink;
     print(orderP.name);
+    userAddressSeeder((orderP.name)!, (orderP.phone)!, (orderP.address)!);
+   // getSavedUserAddress("user_address_name");
     notifySetState();
 
     /// 从新加载订单信息
@@ -95,11 +103,11 @@ class OrderPreviewActuator extends RetryActuator {
         TextHelper.isNotEmpty(deliveryCoastParam)) {
       // if the information is relevant we can update User cash in local storage
       // todo: update that on backend side and for future request
-      var user = UserManager().getUser();
-      user.phone = orderP.phone;
-      UserManager().saveUser(user); // todo: review by Flutter developer
+      // var user = UserManager().getUser();
+      // user.phone = orderP.phone;
+      // UserManager().saveUser(user); // todo: review by Flutter developer
 
-      loadPreviewOrder();
+      // loadPreviewOrder();
     }
   }
 
@@ -229,7 +237,24 @@ class OrderPreviewActuator extends RetryActuator {
    * 2：加载进度条
    * 3：订单创建完成
    * 4: 下单失败
+   * 
    */
+  void userAddressSeeder(name, phone, address_description) async {
+    // List<String?> address = [];
+    // address[0] = name;
+    // address[1] = phone;
+    // address[3] = address_description;
+
+    Storage.putString("user_address_name", name);
+    Storage.putString("user_address_phone", phone);
+    Storage.putString("user_address_address", address_description);
+  }
+
+  void getSavedUserAddress(String key) async {
+    String? value = await Storage.getString(key);
+    print(value);
+  }
+
   void checkoutPreviewOrder(StatusAction action) async {
     /// 检查预览订单信息
     if (orderP == null || orderItems == null || orderItems.isEmpty) {

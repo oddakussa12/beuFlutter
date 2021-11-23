@@ -35,18 +35,28 @@ class DeliveryAddressActuator extends RetryActuator {
 
   @override
   void toRetry() {}
+  void getSavedUserAddress() async {
+    String? stored_name = await Storage.getString("user_address_name");
+    String? stored_phone = await Storage.getString("user_address_phone");
+    String? stored_address = await Storage.getString("user_address_address");
+    name = stored_name;
+    phone = stored_phone;
+    address = stored_address;
+  }
 
-  void init(UserAddress params) {
+  Future<void> init(UserAddress params) async {
     if (!alreadyInit) {
       alreadyInit = true;
+      getSavedUserAddress();
+      // if (TextHelper.isAllEmpty(user ?? [])) print("empty");
       if (params != null) {
-        name = params.name;
-        phone = params.phone;
-        address = params.address;
-        shopIds = params.shopIds;
+        //    name = params.name;
+        // phone = params.phone;
+        // address = params.address;
+        // shopIds = params.shopIds;
         if (name == "" || phone == "") {
           var user = UserManager().getUser();
-          if (name == "") name = user.nickName;
+          // if (name == "") name = user.nickName;
           if (phone == "") phone = user.phone;
         }
       }
