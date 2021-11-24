@@ -3043,7 +3043,7 @@ class S {
   /// `Order Info`
   String get order_info {
     return Intl.message(
-      'Order Info',
+      'Order Information',
       name: 'order_info',
       desc: '',
       args: [],
@@ -3083,7 +3083,7 @@ class S {
   /// `Your Info`
   String get order_beneficiary {
     return Intl.message(
-      'Your Info',
+      'Your Information',
       name: 'order_beneficiary',
       desc: '',
       args: [],
@@ -3586,6 +3586,22 @@ class S {
     return Intl.message(
       'user_address_address',
       name: 'user_address_address',
+      desc: '',
+      args: [],
+    );
+  }
+  String get your_information{
+    return Intl.message(
+      'Your Information',
+      name: 'your_information',
+      desc: '',
+      args: [],
+    );
+  }
+   String get order_information {
+    return Intl.message(
+      'Order Information',
+      name: 'order_info',
       desc: '',
       args: [],
     );

@@ -58,7 +58,7 @@ class _OrderPreviewPageState
 
       if (args != null && args is UserAddress) {
         FocusScope.of(context).requestFocus(FocusNode());
-        actuator.deliveryINfo.init(args,context);
+        actuator.deliveryINfo.init(args, context);
       }
     });
   }
@@ -143,9 +143,9 @@ class _OrderPreviewPageState
           /// 派送用户信息地址
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+            margin: EdgeInsets.only(left: 16, right: 16, top: 32),
             child: Text(
-              S.of(context).order_beneficiary,
+              S.of(context).your_information,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -159,27 +159,27 @@ class _OrderPreviewPageState
           buildDeliveryUserInfo(),
 
           /// 派送用户地址Delivery address
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 32),
-            child: Text(
-              S.of(context).order_delivery_address,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: AppColor.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+          // Container(
+          //   alignment: Alignment.centerLeft,
+          //   margin: EdgeInsets.only(left: 16, right: 16, top: 32),
+          //   child: Text(
+          //     S.of(context).order_delivery_address,
+          //     maxLines: 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(
+          //         color: AppColor.black,
+          //         fontSize: 16,
+          //         fontWeight: FontWeight.bold),
+          //   ),
+          // ),
 
           /// 地址定位
-          buildDeliveryAddress(),
+          // buildDeliveryAddress(),
 
           /// 支付方式
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 30),
+            margin: EdgeInsets.only(left: 16, right: 16, top: 32),
             child: Text(
               S.of(context).order_payment_method,
               maxLines: 1,
@@ -205,7 +205,7 @@ class _OrderPreviewPageState
           /// 所有订单总价信息【Order Summary】
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+            margin: EdgeInsets.only(left: 16, right: 16, top: 32),
             child: Text(
               S.of(context).order_summary,
               maxLines: 1,
@@ -419,7 +419,7 @@ class _OrderPreviewPageState
           child: buildBodyWidget(context),
         ),
         onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
+          //FocusScope.of(context).requestFocus(FocusNode());
         });
 
     //  Container(
@@ -467,43 +467,46 @@ class _OrderPreviewPageState
 
   Widget buildBodyWidget(BuildContext context) {
     return Column(children: [
-      Container(
-          margin: EdgeInsets.only(top: 24),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            S.of(context).confirm_billing_info,
-            maxLines: 1,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                color: AppColor.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
-          )),
+      // Container(
+      //     margin: EdgeInsets.only(top: 24),
+      //     alignment: Alignment.centerLeft,
+      //     child: Text(
+      //       S.of(context).confirm_billing_info,
+      //       maxLines: 1,
+      //       textAlign: TextAlign.left,
+      //       style: TextStyle(
+      //           color: AppColor.black,
+      //           fontSize: 24,
+      //           fontWeight: FontWeight.bold),
+      //     )),
+
+      // Container(
+      //     alignment: Alignment.centerLeft,
+      //     margin: EdgeInsets.only(top: 16),
+      //     child: Text(
+      //       S.of(context).confirm_fill_your_info,
+      //       maxLines: 1,
+      //       textAlign: TextAlign.left,
+      //       style: TextStyle(
+      //           color: AppColor.black,
+      //           fontSize: 12,
+      //           fontWeight: FontWeight.bold),
+      //     )),
 
       Container(
           alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(top: 16),
-          child: Text(
-            S.of(context).confirm_fill_your_info,
-            maxLines: 1,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                color: AppColor.black,
-                fontSize: 12,
-                fontWeight: FontWeight.bold),
-          )),
-
-      Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(top: 16),
+          margin: EdgeInsets.only(
+            top: 12,
+          ),
           child: Text(
             S.of(context).confirm_name,
             maxLines: 1,
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColor.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+                fontSize: 14,
+              //  fontWeight: FontWeight.bold
+                ),
           )),
 
       /// Name 输入框
@@ -519,8 +522,9 @@ class _OrderPreviewPageState
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColor.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+                fontSize: 14,
+              //  fontWeight: FontWeight.bold
+                ),
           )),
 
       /// Phone 输入框
@@ -536,25 +540,15 @@ class _OrderPreviewPageState
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColor.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+                fontSize: 14,
+                //fontWeight: FontWeight.bold
+                ),
           )),
 
       /// Address 输入框
       buildAddressTextField(),
 
-      Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(top: 32),
-          child: Text(
-            S.of(context).confirm_check_information,
-            maxLines: 2,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                color: AppColor.black,
-                fontSize: 12,
-                fontWeight: FontWeight.bold),
-          )),
+  
     ]);
   }
 
@@ -584,7 +578,7 @@ class _OrderPreviewPageState
         cursorColor: AppColor.colorF7551D,
         cursorWidth: 2,
         cursorRadius: Radius.circular(2),
-        style: TextStyle(color: AppColor.black, fontSize: 16),
+        style: TextStyle(color: AppColor.black, fontSize: 14),
         onChanged: (text) {
           actuator.deliveryINfo.name = text;
         },
@@ -631,7 +625,7 @@ class _OrderPreviewPageState
         cursorWidth: 2,
         cursorRadius: Radius.circular(2),
         textAlign: TextAlign.left,
-        style: TextStyle(color: AppColor.black, fontSize: 16),
+        style: TextStyle(color: AppColor.black, fontSize: 14),
         onChanged: (text) {
           actuator.deliveryINfo.phone = text;
         },
@@ -677,7 +671,7 @@ class _OrderPreviewPageState
         cursorWidth: 2,
         cursorRadius: Radius.circular(2),
         textAlign: TextAlign.left,
-        style: TextStyle(color: AppColor.black, fontSize: 16),
+        style: TextStyle(color: AppColor.black, fontSize: 14),
         onChanged: (text) {
           actuator.deliveryINfo.address = text;
         },
@@ -1095,7 +1089,7 @@ class _OrderPreviewPageState
           )),
       onTap: () {
         confirmUserInfoMethod(context);
-        // prepareConfirmOrder();
+        prepareConfirmOrder();
       },
     );
   }

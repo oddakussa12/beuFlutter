@@ -1,4 +1,3 @@
-
 import 'package:common/common.dart';
 import 'package:shopping/src/widget/cart/shopping_cart_bar.dart';
 

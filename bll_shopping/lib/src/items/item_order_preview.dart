@@ -130,7 +130,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(widget.shop.name),
+                TextHelper.clean(widget.shop.nickName),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -182,7 +182,7 @@ class _ItemOrderPreviewState extends State<ItemOrderPreviewWidget> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(left: 10, right: 10, top: 20),
       child: Text(
-        S.of(context).order_info,
+        S.of(context).order_information,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
