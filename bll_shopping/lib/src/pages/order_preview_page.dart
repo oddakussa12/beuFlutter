@@ -56,7 +56,7 @@ class _OrderPreviewPageState
 
     actuator.prepareDeliveryAddress((result) {
       var args = result;
-       
+
       actuator.deliveryINfo.init(args, context);
 
       // print(actuator.deliveryINfo.name);
@@ -746,7 +746,7 @@ class _OrderPreviewPageState
 
     confirmUserInfo(context, (UserAddress result) {
       processAddressResult(result);
-      // prepareConfirmOrder();
+      prepareConfirmOrder();
     }, start: () {
       LoadingDialog.show(context);
     }, end: () {
