@@ -53,13 +53,18 @@ class _OrderPreviewPageState
         actuator.loadPreviewOrder();
       }
     }
+
     actuator.prepareDeliveryAddress((result) {
       var args = result;
+       
+      actuator.deliveryINfo.init(args, context);
 
-      if (args != null && args is UserAddress) {
-        FocusScope.of(context).requestFocus(FocusNode());
-        actuator.deliveryINfo.init(args, context);
-      }
+      // print(actuator.deliveryINfo.name);
+
+      // if (args != null && args is UserAddress) {
+      //   FocusScope.of(context).requestFocus(FocusNode());
+      //   actuator.deliveryINfo.init(args, context);
+      // }
     });
   }
 
@@ -419,7 +424,7 @@ class _OrderPreviewPageState
           child: buildBodyWidget(context),
         ),
         onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         });
 
     //  Container(
@@ -503,10 +508,10 @@ class _OrderPreviewPageState
             maxLines: 1,
             textAlign: TextAlign.left,
             style: TextStyle(
-                color: AppColor.black,
-                fontSize: 14,
+              color: AppColor.black,
+              fontSize: 14,
               //  fontWeight: FontWeight.bold
-                ),
+            ),
           )),
 
       /// Name 输入框
@@ -521,10 +526,10 @@ class _OrderPreviewPageState
             maxLines: 1,
             textAlign: TextAlign.left,
             style: TextStyle(
-                color: AppColor.black,
-                fontSize: 14,
+              color: AppColor.black,
+              fontSize: 14,
               //  fontWeight: FontWeight.bold
-                ),
+            ),
           )),
 
       /// Phone 输入框
@@ -539,16 +544,14 @@ class _OrderPreviewPageState
             maxLines: 1,
             textAlign: TextAlign.left,
             style: TextStyle(
-                color: AppColor.black,
-                fontSize: 14,
-                //fontWeight: FontWeight.bold
-                ),
+              color: AppColor.black,
+              fontSize: 14,
+              //fontWeight: FontWeight.bold
+            ),
           )),
 
       /// Address 输入框
       buildAddressTextField(),
-
-  
     ]);
   }
 
@@ -743,6 +746,7 @@ class _OrderPreviewPageState
 
     confirmUserInfo(context, (UserAddress result) {
       processAddressResult(result);
+      // prepareConfirmOrder();
     }, start: () {
       LoadingDialog.show(context);
     }, end: () {
@@ -1089,7 +1093,6 @@ class _OrderPreviewPageState
           )),
       onTap: () {
         confirmUserInfoMethod(context);
-        prepareConfirmOrder();
       },
     );
   }
@@ -1105,7 +1108,7 @@ class _OrderPreviewPageState
   void prepareConfirmOrder() {
     actuator.checkoutPreviewOrder((status) {
       if (status == 1) {
-        toast(message: S.of(context).confirm_address_no);
+        // toast(message: S.of(context).confirm_address_no);
         // openDeliveryAddressPage(context);
       } else if (status == 2) {
         LoadingDialog.show(context);

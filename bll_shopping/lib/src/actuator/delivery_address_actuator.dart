@@ -55,13 +55,13 @@ class DeliveryAddressActuator extends RetryActuator {
       getSavedUserAddress(context);
       // if (TextHelper.isAllEmpty(user ?? [])) print("empty");
       if (params != null) {
-        //    name = params.name;
-        // phone = params.phone;
-        // address = params.address;
-        // shopIds = params.shopIds;
+        name = params.name;
+        phone = params.phone;
+        address = params.address;
+        shopIds = params.shopIds;
         if (name == "" || phone == "") {
           var user = UserManager().getUser();
-          // if (name == "") name = user.nickName;
+          if (name == "") name = user.nickName;
           if (phone == "") phone = user.phone;
         }
       }
