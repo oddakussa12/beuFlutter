@@ -57,7 +57,8 @@ class _OrderPreviewPageState
       var args = result;
 
       if (args != null && args is UserAddress) {
-        actuator.deliveryINfo.init(args);
+        FocusScope.of(context).requestFocus(FocusNode());
+        actuator.deliveryINfo.init(args,context);
       }
     });
   }

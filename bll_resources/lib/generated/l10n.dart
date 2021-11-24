@@ -3530,7 +3530,7 @@ class S {
 
   String get Restorants_tab {
     return Intl.message(
-      'Restorants',
+      'Restaurants',
       name: 'Restorants_tab',
       desc: '',
       args: [],
@@ -3559,6 +3559,33 @@ class S {
     return Intl.message(
       'Ethiopia',
       name: 'ethiopian_country_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_name {
+    return Intl.message(
+      'user_address_name',
+      name: 'user_address_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_phone {
+    return Intl.message(
+      'user_address_phone',
+      name: 'user_address_phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_address {
+    return Intl.message(
+      'user_address_address',
+      name: 'user_address_address',
       desc: '',
       args: [],
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:common/common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:shopping/shopping.dart';
 import 'package:shopping/src/entity/user_address.dart';
@@ -35,19 +36,23 @@ class DeliveryAddressActuator extends RetryActuator {
 
   @override
   void toRetry() {}
-  void getSavedUserAddress() async {
-    String? stored_name = await Storage.getString("user_address_name");
-    String? stored_phone = await Storage.getString("user_address_phone");
-    String? stored_address = await Storage.getString("user_address_address");
+
+  void getSavedUserAddress(context) async {
+    String? stored_name =
+        await Storage.getString(S.of(context).user_address_name);
+    String? stored_phone =
+        await Storage.getString(S.of(context).user_address_phone);
+    String? stored_address =
+        await Storage.getString(S.of(context).user_address_address);
     name = stored_name;
     phone = stored_phone;
     address = stored_address;
   }
 
-  Future<void> init(UserAddress params) async {
+  Future<void> init(UserAddress params, BuildContext context) async {
     if (!alreadyInit) {
       alreadyInit = true;
-      getSavedUserAddress();
+      getSavedUserAddress(context);
       // if (TextHelper.isAllEmpty(user ?? [])) print("empty");
       if (params != null) {
         //    name = params.name;
