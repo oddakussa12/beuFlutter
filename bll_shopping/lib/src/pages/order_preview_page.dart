@@ -419,7 +419,7 @@ class _OrderPreviewPageState
           child: buildBodyWidget(context),
         ),
         onTap: () {
-          //FocusScope.of(context).requestFocus(FocusNode());
+        FocusScope.of(context).requestFocus(FocusNode());
         });
 
     //  Container(

@@ -17,6 +17,9 @@ class UserManager {
 
   /// user_profile
   static const String USER_PROFILE = "Upsreorfle";
+  static const String user_address_name = "user_address_name";
+  static const String user_address_phone = "user_address_phonr";
+  static const String user_address_adress = "user_address_adress";
 
   /// Token 类型
   String _type = "";
@@ -153,6 +156,9 @@ class UserManager {
 
     /// 缓存用户 token
     Storage.putString(USER_PROFILE, jsonEncode(_user));
+    Storage.putString(user_address_name, "");
+    Storage.putString(user_address_phone, "");
+    Storage.putString(user_address_adress, "");
 
     /// 发送退出登录事件
     BusClient().fire(LogoutEvent());
@@ -161,6 +167,7 @@ class UserManager {
   /**
    * 对当前用户来说，商品是否可以外卖
    */
+  
   bool delivery(Shop? shop) {
     return /*isLogin() &&*/ shop != null && shop.mayDelivery();
   }
