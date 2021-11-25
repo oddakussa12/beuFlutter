@@ -47,29 +47,27 @@ class DeliveryAddressActuator extends RetryActuator {
     name = stored_name;
     phone = stored_phone;
     address = stored_address;
+    if (name == "" || phone == "") {
+      var user = UserManager().getUser();
+      if (name == "") name = user.nickName;
+      if (phone == "") phone = "";
+      if (address == "") address = "";
+    }
   }
 
   Future<void> init(UserAddress params, BuildContext context) async {
     if (!alreadyInit) {
       alreadyInit = true;
       getSavedUserAddress(context);
-      // if (TextHelper.isAllEmpty(user ?? [])) print("empty");
-      if (params != null) {
-        name = params.name;
-        phone = params.phone;
-        address = params.address;
-        shopIds = params.shopIds;
-        if (name == "" || phone == "") {
-          var user = UserManager().getUser();
-          if (name == "") name = user.nickName;
-          if (phone == "") phone = user.phone;
-        }
-      }
-      if (Constants.isTesting) {
-        name = "XMT-beU";
-        phone = "1314520999";
-        address = "太阳系地球村中国北京市";
-      }
+
+      // if (params != null) {
+      // name = params.name;
+      // phone = params.phone;
+      // address = params.address;
+      // shopIds = params.shopIds;
+
+      // }
+
     }
   }
 

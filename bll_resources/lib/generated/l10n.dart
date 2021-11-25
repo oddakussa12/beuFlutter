@@ -3590,7 +3590,8 @@ class S {
       args: [],
     );
   }
-  String get your_information{
+
+  String get your_information {
     return Intl.message(
       'Your Information',
       name: 'your_information',
@@ -3598,10 +3599,38 @@ class S {
       args: [],
     );
   }
-   String get order_information {
+
+  String get order_information {
     return Intl.message(
       'Order Information',
       name: 'order_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name_validation_empty {
+    return Intl.message(
+      'Please insert your name',
+      name: 'name_validation_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone_validation_empty {
+    return Intl.message(
+      'Please insert your phone number',
+      name: 'phone_validation_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get address_validation_empty {
+    return Intl.message(
+      'Please insert your address',
+      name: 'address_validation_empty',
       desc: '',
       args: [],
     );

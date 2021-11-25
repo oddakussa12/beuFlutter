@@ -36,6 +36,8 @@ class _OrderPreviewPageState
   bool get wantKeepAlive => true;
   late UserAddress userAddress;
 
+  bool nameValidator = false, phoneValidator = false, addressValidator = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -472,32 +474,6 @@ class _OrderPreviewPageState
 
   Widget buildBodyWidget(BuildContext context) {
     return Column(children: [
-      // Container(
-      //     margin: EdgeInsets.only(top: 24),
-      //     alignment: Alignment.centerLeft,
-      //     child: Text(
-      //       S.of(context).confirm_billing_info,
-      //       maxLines: 1,
-      //       textAlign: TextAlign.left,
-      //       style: TextStyle(
-      //           color: AppColor.black,
-      //           fontSize: 24,
-      //           fontWeight: FontWeight.bold),
-      //     )),
-
-      // Container(
-      //     alignment: Alignment.centerLeft,
-      //     margin: EdgeInsets.only(top: 16),
-      //     child: Text(
-      //       S.of(context).confirm_fill_your_info,
-      //       maxLines: 1,
-      //       textAlign: TextAlign.left,
-      //       style: TextStyle(
-      //           color: AppColor.black,
-      //           fontSize: 12,
-      //           fontWeight: FontWeight.bold),
-      //     )),
-
       Container(
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.only(
@@ -602,6 +578,7 @@ class _OrderPreviewPageState
   /**
    * Phone 输入框
    */
+
   Container buildPhoneTextField() {
     return Container(
       alignment: Alignment.centerLeft,
@@ -615,6 +592,7 @@ class _OrderPreviewPageState
                 borderSide: BorderSide(color: AppColor.color08000, width: 1)),
             contentPadding:
                 EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+            errorText: phoneValidator ? " " : null,
             hintText: S.of(context).reminder_enterphone,
             hintStyle: TextStyle(
               fontSize: 14,
@@ -664,6 +642,7 @@ class _OrderPreviewPageState
             contentPadding:
                 EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
             hintText: S.of(context).confirm_address,
+            errorText: addressValidator ? " " : null,
             hintStyle: TextStyle(
               fontSize: 14,
               color: AppColor.hint,
@@ -746,7 +725,7 @@ class _OrderPreviewPageState
 
     confirmUserInfo(context, (UserAddress result) {
       processAddressResult(result);
-      prepareConfirmOrder();
+      //prepareConfirmOrder();
     }, start: () {
       LoadingDialog.show(context);
     }, end: () {
@@ -1127,9 +1106,22 @@ class _OrderPreviewPageState
 
   void confirmUserInfo(BuildContext context, Success<UserAddress> success,
       {Complete? start, Complete? end}) {
+    setState(() {
+      phoneValidator = false;
+      nameValidator = false;
+      addressValidator = false;
+    });
+
     if (TextHelper.isEmpty(actuator.deliveryINfo.name!) ||
         actuator.deliveryINfo.name!.length < 2 ||
         actuator.deliveryINfo.name!.length > 32) {
+      if (TextHelper.isEmpty(actuator.deliveryINfo.name!)) {
+        notifyToasty(S.of(context).name_validation_empty);
+        return;
+      }
+      setState(() {
+        nameValidator = true;
+      });
       notifyToasty(S.of(context).confirm_name_rule);
 
       return;
@@ -1138,6 +1130,14 @@ class _OrderPreviewPageState
     if (TextHelper.isEmpty(actuator.deliveryINfo.phone!) ||
         actuator.deliveryINfo.phone!.length < 7 ||
         actuator.deliveryINfo.phone!.length > 14) {
+      setState(() {
+        phoneValidator = true;
+      });
+      if (TextHelper.isEmpty(actuator.deliveryINfo.phone!)) {
+        notifyToasty(S.of(context).phone_validation_empty);
+        return;
+      }
+
       notifyToasty(S.of(context).confirm_phone_rule);
       return;
     }
@@ -1145,6 +1145,13 @@ class _OrderPreviewPageState
     if (TextHelper.isEmpty(actuator.deliveryINfo.address!) ||
         actuator.deliveryINfo.address!.length < 10 ||
         actuator.deliveryINfo.address!.length > 100) {
+      setState(() {
+        addressValidator = true;
+      });
+      if (TextHelper.isEmpty(actuator.deliveryINfo.address!)) {
+        notifyToasty(S.of(context).address_validation_empty);
+        return;
+      }
       notifyToasty(S.of(context).confirm_address_rule);
 
       return;

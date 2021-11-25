@@ -540,7 +540,7 @@ class _ShopDetailPageState
                 onTap: () {
                   barController.closeShopCart();
                   Navigator.pushNamed(context, Routes.shopping.ProductDetail,
-                      arguments: [product.id, null]);
+                      arguments: product.id);
                 },
               );
             });

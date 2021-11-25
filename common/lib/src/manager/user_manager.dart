@@ -128,6 +128,7 @@ class UserManager {
   void _updateUser(User target) {
     if (target != null) {
       _user = target;
+       
       if (TextHelper.isNotEmpty(getToken())) {
         logined = true;
       }

@@ -145,6 +145,7 @@ class RegisterStepThreeActuator extends ReactActuator {
 
     showLoading();
     isRequesting = true;
+    print(phone);
 
     FormData requestBody = FormData.fromMap({
       "user_phone": phone,

@@ -141,9 +141,10 @@ class _SpecialProductsPageState
                 key: Key("${product.id}-${product.name}"),
                 product: product,
                 showOptions: false),
-            onTap: () => Navigator.pushNamed(
-                context, Routes.shopping.ProductDetail,
-                arguments: [product.id, product.specialPrice]),
+            // onTap: () => 
+            // Navigator.pushNamed(
+            //     context, Routes.shopping.ProductDetail,
+            //     arguments: [product.id, product.specialPrice]),
           );
         });
   }

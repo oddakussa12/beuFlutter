@@ -73,6 +73,7 @@ class ShoppingCartActuator extends ReactActuator {
       double coast = 0;
       int productNumber = 0;
       String currency = "";
+
       cart.data.forEach((shop) {
         if (shop.goods != null) {
           currency = currency == "" ? shop.currency! : currency;
@@ -82,6 +83,8 @@ class ShoppingCartActuator extends ReactActuator {
                 ValueFormat.cleanDouble(product.disPrice, def: -1);
 
             /// 折扣计算
+            ///
+
             if (product.disPrice != -1) {
               total += product.disPrice! * product.goodsNumber!;
             } else {
@@ -120,6 +123,7 @@ class ShoppingCartActuator extends ReactActuator {
    */
   void outsideAppendProduct(Shop shop, Product product) {
     /// 商品数量以购物车为主，避免出现置零 bug
+
     var cartP = cartProducts[product.id];
     if (cartP != null) {
       if (cartP.goodsNumber! >= 50) {
@@ -143,6 +147,7 @@ class ShoppingCartActuator extends ReactActuator {
    * 增加购物车中商品的数量
    */
   void appendCartProduct(Shop shop, Product product) {
+    
     if (product.goodsNumber == null) {
       product.goodsNumber = 1;
     } else {
@@ -188,7 +193,7 @@ class ShoppingCartActuator extends ReactActuator {
         /// 处理购物车
 
         processCartUpdateSuccessResult(body, shop, product);
-        print(product.disPrice);
+        //  print(product.disPrice);
         LogDog.d("appendProduct: ${shopCart}");
       } else {
         processCartUpdateFailureResult(context, isAppend, shop, product);

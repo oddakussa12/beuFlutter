@@ -237,7 +237,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                   height: 15,
                 ),
               ),
-              Container(
+              Expanded(
+                child: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
@@ -249,12 +250,13 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                   ),
                 ),
-               
+              ),
               Text(
                 " | ",
                 style: TextStyle(color: Colors.yellow[900], fontSize: 12),
               ),
-              Container(
+              Expanded(
+                child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
@@ -264,7 +266,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                     )),
-              
+              )
             ],
           ),
           // ),
