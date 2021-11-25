@@ -29,12 +29,11 @@ class _ShopDetailPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
 
     /// 外部传入的商铺参数
 
-   var args = ModalRoute.of(context)!.settings.arguments;
-   actuator.initShopDetail(args as Shop, barController);
+    var args = ModalRoute.of(context)!.settings.arguments;
+    actuator.initShopDetail(args as Shop, barController);
   }
 
   @override
@@ -145,6 +144,8 @@ class _ShopDetailPageState
                   /// 商铺头像
                   buildShopAvatar(),
                   // Text("data")
+
+                  buildShopOpenHours()
                 ],
               ),
 
@@ -217,6 +218,34 @@ class _ShopDetailPageState
             fit: BoxFit.cover,
           ),
         ));
+  }
+
+  Widget buildShopOpenHours() {
+    String? workingHoursLabel = null;
+    if (actuator.shopDetail.openTime != null &&
+        actuator.shopDetail.closeTime != null) {
+      workingHoursLabel =
+          "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
+    }
+    if (workingHoursLabel != null) {
+      return Center(
+          child: Container(
+              margin: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              child: Flexible(
+                  child: Text(
+                workingHoursLabel,
+                softWrap: false,
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                    color: Colors.orange[500], fontWeight: FontWeight.bold),
+              ))));
+    } else {
+      return Text("");
+    }
   }
 
   /**
@@ -523,7 +552,7 @@ class _ShopDetailPageState
             itemCount: actuator.products.length,
             itemBuilder: (BuildContext context, int index) {
               Product product = actuator.products[index];
-            
+
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 child: ItemCommonProductBlock(

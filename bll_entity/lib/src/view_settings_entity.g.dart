@@ -8,11 +8,11 @@ part of 'view_settings_entity.dart';
 
 ViewSettings _$ViewSettingsFromJson(Map<String, dynamic> json) {
   return ViewSettings(
-    json['unpopular_restaurant'] as int,
-    json['popular_restaurant'] as int,
-    json['very_popular_restaurant'] as int,
-    json['super_popular_restaurant'] as int,
-    json['black_house_restaurant'] as int,
+    json['unpopular_restaurant'] as int? ?? 10,
+    json['popular_restaurant'] as int? ?? 30,
+    json['very_popular_restaurant'] as int? ?? 50,
+    json['super_popular_restaurant'] as int? ?? 100,
+    json['black_house_restaurant'] as int? ?? 200,
   );
 }
 
