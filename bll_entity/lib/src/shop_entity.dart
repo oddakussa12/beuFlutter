@@ -292,6 +292,12 @@ class Shop {
   @JsonKey(name: "deliveryCoast")
   double? coast;
 
+  @JsonKey(name: "open_time")
+  String? openTime;
+
+  @JsonKey(name: "close_time")
+  String? closeTime;
+
   double? subTotal;
 
   List<Product>? goods;
@@ -354,7 +360,9 @@ class Shop {
       this.deliveryTime,
       this.distance,
       this.orderCount,
-      this.averagePrice});
+      this.averagePrice,
+      this.openTime,
+      this.closeTime});
 
   factory Shop.create(Shop shop) {
     return Shop(shop.id,
@@ -373,7 +381,9 @@ class Shop {
         deliveryTime: shop.deliveryTime,
         distance: shop.distance,
         orderCount: shop.orderCount,
-        averagePrice: shop.averagePrice);
+        averagePrice: shop.averagePrice,
+        openTime: shop.openTime,
+        closeTime: shop.closeTime);
   }
 
   bool isNotEmpty() {
