@@ -79,7 +79,9 @@ class _ShoppingMyBagState
 
           /// 购物车商品列表
           child: actuator.isNotNormal()
-              ? buildEmptyWidget(context)
+              ? Row( mainAxisAlignment: MainAxisAlignment.center,
+                children: [buildEmptyWidget(context,
+                  message: S.of(context).shopping_cart_empty_data),Icon(Icons.emoji_emotions,color: Colors.yellow[700],)],)
               : buildCartProducts()),
       bottomNavigationBar: buildCartMeter(),
     );

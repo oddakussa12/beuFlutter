@@ -47,12 +47,13 @@ class LoginActuator extends ReactActuator {
         body: requestBody, success: (UserToken body) {
       if (body != null && TextHelper.isNotEmpty(body.token)) {
         UserManager().saveToken(body);
-        // user = UserManager().getUser();
-        // print(user.phone);
+        user = UserManager().getUser();
+        Storage.putString("user_address_name", user.nickName);
+        Storage.putString("user_address_phone", "");
+        Storage.putString("user_address_address", "");
 
         /// 加载用户信息
         UserInfoModel().loadUserInfo(callback);
-        
       } else {
         toast(message: S.of(context).alltip_loading_error);
       }

@@ -544,6 +544,7 @@ class _OrderPreviewPageState
                 borderSide: BorderSide(color: AppColor.color08000, width: 1)),
             contentPadding:
                 EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+            errorText: nameValidator ? " " : null,
             hintText: S.of(context).confirm_name,
             hintStyle: TextStyle(
               fontSize: 14,
@@ -725,7 +726,7 @@ class _OrderPreviewPageState
 
     confirmUserInfo(context, (UserAddress result) {
       processAddressResult(result);
-      //prepareConfirmOrder();
+      prepareConfirmOrder();
     }, start: () {
       LoadingDialog.show(context);
     }, end: () {
@@ -1115,13 +1116,14 @@ class _OrderPreviewPageState
     if (TextHelper.isEmpty(actuator.deliveryINfo.name!) ||
         actuator.deliveryINfo.name!.length < 2 ||
         actuator.deliveryINfo.name!.length > 32) {
+      setState(() {
+        nameValidator = true;
+      });
       if (TextHelper.isEmpty(actuator.deliveryINfo.name!)) {
         notifyToasty(S.of(context).name_validation_empty);
         return;
       }
-      setState(() {
-        nameValidator = true;
-      });
+
       notifyToasty(S.of(context).confirm_name_rule);
 
       return;

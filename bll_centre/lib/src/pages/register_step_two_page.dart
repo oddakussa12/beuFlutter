@@ -92,7 +92,7 @@ class _RegisterStepTwoPageState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Toolbar(
-          title: S.of(context).login_login_info,
+          title: S.of(context).login_signup,
         ),
         body: ListView(
           children: [

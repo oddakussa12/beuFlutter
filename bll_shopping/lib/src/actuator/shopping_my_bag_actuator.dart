@@ -344,11 +344,13 @@ class ShoppingMyBagActuator extends RefreshActuator {
         });
       }
     });
+  
     if (idNumbers.isEmpty) {
       // "请选择商品"
       notifyToasty(S.of(context).shopcart_choose_product);
       return;
     }
+   
 
     callback.call(context, idNumbers);
   }

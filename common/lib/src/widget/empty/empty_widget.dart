@@ -40,7 +40,7 @@ class EmptyWidget extends StatefulWidget {
   EmptyWidget.classics({
     Key? key,
     this.state = EmptyStatus.Loading,
-    String? emptyIcon = "",
+    String? emptyIcon ,
     bool? showEmptyIcon = false,
     String? emptyMessage,
     String? emptyOption,

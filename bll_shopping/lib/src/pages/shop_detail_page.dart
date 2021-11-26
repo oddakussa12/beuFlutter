@@ -491,7 +491,7 @@ class _ShopDetailPageState
           margin: EdgeInsets.only(left: 16, right: 16),
           alignment: Alignment.centerLeft,
           child: Text(
-            S.of(context).discover_product,
+            S.of(context).discover_meal,
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColor.black,

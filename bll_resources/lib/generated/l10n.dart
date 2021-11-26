@@ -3635,6 +3635,22 @@ class S {
       args: [],
     );
   }
+    String get discover_meal {
+    return Intl.message(
+      'Meal',
+      name: 'discover_meal',
+      desc: '',
+      args: [],
+    );
+  } 
+    String get shopping_cart_empty_data {
+    return Intl.message(
+      'Nothing yet. The cart is hungry ',
+      name: 'shopping_cart_empty_data',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

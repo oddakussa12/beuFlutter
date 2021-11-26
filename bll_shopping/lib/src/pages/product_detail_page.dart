@@ -66,7 +66,8 @@ class _ProductDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return 
+     Material(
         child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],

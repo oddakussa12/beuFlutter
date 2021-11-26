@@ -86,7 +86,7 @@ class SpecialDiscoverPageState
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 360,
+            expandedHeight: MediaQuery. of(context). size.height-300,
             pinned: true,
             floating: Constants.isTesting ? false : true,
             leading: Constants.isTesting
@@ -112,7 +112,7 @@ class SpecialDiscoverPageState
                   elevation: 0.1,
                   child: ListTile(
                     title: Text(S.of(context).Restorants_tab,style:  TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                    subtitle: Divider(color: Colors.red,thickness: 3,endIndent:310,),
+                    subtitle: Divider(color: Colors.red,thickness: 3,endIndent:MediaQuery. of(context). size. width-110,),
                   ),
                 )
               ),

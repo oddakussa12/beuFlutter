@@ -36,6 +36,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
   }
 
   String distance(double? distance_value) {
+    if ((distance_value ?? 0) == 0) return "- m";
     if ((distance_value ?? 0) >= 1)
       return (double.parse(((distance_value ?? 0)).toStringAsFixed(1))
               .toString()) +
@@ -59,8 +60,12 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     //       " min";
     // }
 
-    return (double.parse(((time ?? 0)).toStringAsFixed(0)).toInt().toString()) +
-        " min";
+    return ((time ?? 0) == 0
+            ? "-"
+            : double.parse(((time ?? 0)).toStringAsFixed(0))
+                .toInt()
+                .toString()) +
+        " mins";
   }
 
   @override
@@ -90,7 +95,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
           /// 商铺标题
           Container(
-            margin: EdgeInsets.only(top: 5),
+            //  margin: EdgeInsets.only(top: 1),
             child: Text(
               TextHelper.clean(shop.nickName),
               textAlign: TextAlign.center,
@@ -119,174 +124,176 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Consumer<SettingsModel>(
-                  builder: (context, settings, child) {
-                    Row iconResource = Row(children: [
-                      Image.asset("res/icons/ic_flame_icon.png",
-                          package: "resources",
-                          width: 15,
-                          height: 15,
-                          color: Colors.transparent)
-                    ]);
-                    if (shop.orderCount != null) {
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().unpopularRestaurant) {
-                        iconResource = Row(children: [
-                          Image.asset(
-                            "res/icons/ic_flame_icon.png",
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Consumer<SettingsModel>(
+                    builder: (context, settings, child) {
+                      Row iconResource = Row(children: [
+                        Image.asset("res/icons/ic_flame_icon.png",
                             package: "resources",
                             width: 15,
                             height: 15,
-                          )
-                        ]);
-                      }
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().popularRestaurant) {
-                        iconResource = Row(
-                          children: [
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
+                            color: Colors.transparent)
+                      ]);
+                      if (shop.orderCount != null) {
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().unpopularRestaurant) {
+                          iconResource = Row(children: [
                             Image.asset(
                               "res/icons/ic_flame_icon.png",
                               package: "resources",
                               width: 15,
                               height: 15,
                             )
-                          ],
-                        );
+                          ]);
+                        }
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().popularRestaurant) {
+                          iconResource = Row(
+                            children: [
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              )
+                            ],
+                          );
+                        }
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().superPopularRestaurant) {
+                          iconResource = Row(
+                            children: [
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              )
+                            ],
+                          );
+                        }
+                        if (shop.orderCount! >
+                            settings.getViewSettings().blackHouseRestaurant) {
+                          iconResource = Row(children: [
+                            Image.asset("res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                                color: Colors.black)
+                          ]);
+                        }
                       }
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().superPopularRestaurant) {
-                        iconResource = Row(
-                          children: [
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            )
-                          ],
-                        );
-                      }
-                      if (shop.orderCount! >
-                          settings.getViewSettings().blackHouseRestaurant) {
-                        iconResource = Row(children: [
-                          Image.asset("res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                              color: Colors.black)
-                        ]);
-                      }
-                    }
 
-                    return iconResource;
-                  },
+                      return iconResource;
+                    },
+                  ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  TextHelper.clean(
-                      "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
-                          S.of(context).number_of_orders_in_amharic),
-                  textAlign: TextAlign.center,
-                  maxLines: PlatformSupport.ios() ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                ),
-              ),
-            ],
-          ),
-
-          // Expanded(
-          //   child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_shop_delivery.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-                ),
-              ),
-              Expanded(
-                child: Container(
+                Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  margin: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     TextHelper.clean(
-                        delivery_time(((shop.deliveryTime ?? 0) / 60))),
+                        "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
+                            S.of(context).number_of_orders_in_amharic),
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.yellow[900], fontSize: 15),
                   ),
                 ),
-              ),
-              Text(
-                " | ",
-                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-              ),
-              Expanded(
-                child: Container(
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Image.asset(
+                    "res/icons/ic_shop_delivery.png",
+                    package: "resources",
+                    width: 15,
+                    height: 15,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
-                      TextHelper.clean(distance(((shop.distance ?? 0) / 1000))),
+                      TextHelper.clean(
+                          delivery_time(((shop.deliveryTime ?? 0) / 60))),
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                    )),
-              )
-            ],
+                    ),
+                  ),
+                ),
+                Text(
+                  " | ",
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                ),
+                Expanded(
+                  child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: 2),
+                      child: Text(
+                        TextHelper.clean(
+                            distance(((shop.distance ?? 0) / 1000))),
+                        textAlign: TextAlign.center,
+                        maxLines: PlatformSupport.ios() ? 2 : 1,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(color: Colors.yellow[900], fontSize: 15),
+                      )),
+                )
+              ],
+            ),
           ),
-          // ),
-          // Expanded(
-          //   child: Container(
-          //     // padding: EdgeInsets.only(top: 15),
-          //     alignment: Alignment.center,
-          //     //   margin: EdgeInsets.symmetric(horizontal: 5),
+          Expanded(
+            child: Container(
+              // padding: EdgeInsets.only(top: 15),
+              alignment: Alignment.center,
+              //   margin: EdgeInsets.symmetric(horizontal: 5),
 
-          //     child: Text(
-          //       TextHelper.clean(
-          //           "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
-          //               S.of(context).average_price_in_amharic),
-          //       textAlign: TextAlign.center,
-          //       maxLines: PlatformSupport.ios() ? 2 : 1,
-          //       overflow: TextOverflow.ellipsis,
-          //       style: TextStyle(color: Colors.black54, fontSize: 15),
-          //     ),
-          //   ),
-          // )
+              child: Text(
+                TextHelper.clean(
+                    "${(shop.averagePrice ?? 0) == 0 ? "- " : (double.parse(((shop.averagePrice ?? 0)).toStringAsFixed(0)).toInt().toString())} " +
+                        S.of(context).average_price_in_amharic),
+                textAlign: TextAlign.center,
+                maxLines: PlatformSupport.ios() ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black54, fontSize: 15),
+              ),
+            ),
+          )
         ],
       ),
     );

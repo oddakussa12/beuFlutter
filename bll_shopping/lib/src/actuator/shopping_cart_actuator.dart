@@ -88,8 +88,10 @@ class ShoppingCartActuator extends ReactActuator {
             if (product.disPrice != -1) {
               total += product.disPrice! * product.goodsNumber!;
             } else {
-              total += product.price! * product.goodsNumber!;
+              // total += product.price! * product.goodsNumber!;
+                total += product.price! * product.goodsNumber!;
             }
+            
 
             productNumber += product.goodsNumber!;
             if (target != null && target.id == product.id) {

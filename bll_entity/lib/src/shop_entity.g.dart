@@ -155,7 +155,7 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
     distance: (json['distance'] as num?)?.toDouble(),
     orderCount: (json['orders_count'] as int?),
-    averagePrice: json['avg_check'] as List<dynamic>?,
+    averagePrice: (json['average_price']as num?)?.toDouble(),
 
     // orderCount:(json['orderCount'] as int?) ,
     // averagePrice:(json['averagePrice'] as num?)?.toDouble(),

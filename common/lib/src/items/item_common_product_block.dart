@@ -177,24 +177,47 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
    * 商品价格【折扣价】官方分类
    */
   Widget buildProductPrice(Product product) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: 8, left: 5, right: 5),
-      child: Text(
-        /// 是官方分类则此处显示原价并加删除线
-        TextHelper.clean(product.formatPrice),
-        textAlign: TextAlign.left,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-            decoration: product.isGFCategory()
-                ? TextDecoration.lineThrough
-                : TextDecoration.none,
-            decorationThickness: 2,
-            color: AppColor.colorBE,
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
-      ),
+    return Row(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 8, left: 5, right: 5),
+          child: Text(
+            /// 是官方分类则此处显示原价并加删除线
+            TextHelper.clean(product.formatPrice),
+            textAlign: TextAlign.left,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                decoration: product.isGFCategory()
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+                decorationThickness: 2,
+                color: AppColor.colorBE,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        // (product.discountPrice?? 0)!= 0?  Container(
+        //   alignment: Alignment.centerLeft,
+        //   margin: EdgeInsets.only(top: 8, left: 5, right: 5),
+        //   child: Text(
+        //     /// 是官方分类则此处显示原价并加删除线
+        //     TextHelper.clean(product.discountPrice.toString()),
+        //     textAlign: TextAlign.left,
+        //     maxLines: 1,
+        //     overflow: TextOverflow.ellipsis,
+        //     style: TextStyle(
+        //         decoration: product.isGFCategory()
+        //             ? TextDecoration.lineThrough
+        //             : TextDecoration.none,
+        //         decorationThickness: 2,
+        //         color: AppColor.colorBE,
+        //         fontSize: 16,
+        //         fontWeight: FontWeight.bold),
+        //   ),
+        // ):Container()
+      ],
     );
   }
 
