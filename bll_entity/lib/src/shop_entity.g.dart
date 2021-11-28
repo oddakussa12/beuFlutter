@@ -37,6 +37,7 @@ Map<String, dynamic> _$DiscoverShopEntityToJson(DiscoverShopEntity instance) =>
     };
 
 ShoppingCart _$ShoppingCartFromJson(Map<String, dynamic> json) {
+  print(json);
   return ShoppingCart(
     (json['data'] as List<dynamic>)
         .map((e) => Shop.fromJson(e as Map<String, dynamic>))
@@ -155,7 +156,7 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
     distance: (json['distance'] as num?)?.toDouble(),
     orderCount: (json['orders_count'] as int?),
-    averagePrice: (json['average_price']as num?)?.toDouble(),
+    averagePrice: (json['average_price'] as num?)?.toDouble(),
 
     // orderCount:(json['orderCount'] as int?) ,
     // averagePrice:(json['averagePrice'] as num?)?.toDouble(),

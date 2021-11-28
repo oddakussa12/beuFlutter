@@ -84,14 +84,18 @@ class ShoppingCartActuator extends ReactActuator {
 
             /// 折扣计算
             ///
+            //
+            // print(product.discountPrice);
 
             if (product.disPrice != -1) {
               total += product.disPrice! * product.goodsNumber!;
+            } else if (product.discountPrice! > 0) {
+              total += product.discountPrice! * product.goodsNumber!;
             } else {
               // total += product.price! * product.goodsNumber!;
-                total += product.price! * product.goodsNumber!;
+
+              total += product.price! * product.goodsNumber!;
             }
-            
 
             productNumber += product.goodsNumber!;
             if (target != null && target.id == product.id) {
@@ -149,7 +153,6 @@ class ShoppingCartActuator extends ReactActuator {
    * 增加购物车中商品的数量
    */
   void appendCartProduct(Shop shop, Product product) {
-    
     if (product.goodsNumber == null) {
       product.goodsNumber = 1;
     } else {
@@ -157,7 +160,7 @@ class ShoppingCartActuator extends ReactActuator {
         toast(message: S.of(context).shopcart_product_rule);
         return;
       }
-
+      // print("object");
       product.goodsNumber = product.goodsNumber! + 1;
     }
 
@@ -195,7 +198,7 @@ class ShoppingCartActuator extends ReactActuator {
         /// 处理购物车
 
         processCartUpdateSuccessResult(body, shop, product);
-        //  print(product.disPrice);
+
         LogDog.d("appendProduct: ${shopCart}");
       } else {
         processCartUpdateFailureResult(context, isAppend, shop, product);
@@ -214,6 +217,7 @@ class ShoppingCartActuator extends ReactActuator {
   void processCartUpdateSuccessResult(
       ShoppingCart result, Shop shop, Product product) {
     /// 当前操作的商品的购物车已被清空
+
     if (result.data == null || result.data.isEmpty) {
       /// 将当前的商品从本地购物车中移除
       if (shopCart.data != null && shopCart.data.contains(shop)) {

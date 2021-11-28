@@ -106,6 +106,8 @@ class Product {
   @JsonKey(name: "discount_price")
   double? discountPrice;
 
+  
+
 
   /// 1.1.0: 格式化包装费
   @JsonKey(name: "format_packaging_cost")

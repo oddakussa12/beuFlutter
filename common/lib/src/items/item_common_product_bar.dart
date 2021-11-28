@@ -44,7 +44,7 @@ class _ItemOrderPreviewProductState extends State<ItemCommonProductBar> {
           buildProductImage(),
 
           /// 购物车商品信息
-          buildProductPriceInfo(),
+         buildProductPriceInfo(),
 
           /// 购物车商品数量
           buildProductNumber()
@@ -112,19 +112,21 @@ class _ItemOrderPreviewProductState extends State<ItemCommonProductBar> {
               margin: EdgeInsets.only(left: 10, right: 10),
               alignment: Alignment.topLeft,
               child: Text(
-                TextHelper.clean(widget.product.formatPrice),
+                TextHelper.clean(widget.product.discountPrice.toString()+ " "+widget.product.currency.toString()),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     color: AppColor.colorBE,
                     fontSize: 16,
-                    decoration: widget.product.isGFCategory()
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
+                    // decoration:  widget.product.discountPrice!>0
+                    //     ? TextDecoration.lineThrough
+                    //     : TextDecoration.none,
                     decorationThickness: 2),
               )),
+              
 
           /// 官方分类下的商品展示折扣价
+       
           Visibility(
             visible: widget.product.isGFCategory(),
             child: Container(

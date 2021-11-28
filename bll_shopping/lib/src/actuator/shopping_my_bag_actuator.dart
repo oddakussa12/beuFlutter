@@ -148,6 +148,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
       refreshCompleted(PullType.Both);
 
       /// 计算购物车金额
+       
       _processShoppingCartInfo();
     });
   }
@@ -171,6 +172,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
         toast(message: S.of(context).shopcart_product_rule);
         return;
       }
+       
 
       product.goodsNumber = product.goodsNumber! + 1;
     }
@@ -205,6 +207,7 @@ class ShoppingMyBagActuator extends RefreshActuator {
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车
+
         processCartUpdateSuccessResult(body, shop, product);
       } else {
         processCartUpdateFailureResult(isAppend, shop, product);
@@ -287,10 +290,11 @@ class ShoppingMyBagActuator extends RefreshActuator {
               currency = currency == "" ? shop.currency! : currency;
 
               /// 折扣计算
+
               if (product.disPrice != -1) {
                 total += product.disPrice! * product.goodsNumber!;
               } else {
-                total += product.price! * product.goodsNumber!;
+                total += product.discountPrice! * product.goodsNumber!;
               }
 
               /// 不同的币种【对每个商品都需要检查】
@@ -344,13 +348,12 @@ class ShoppingMyBagActuator extends RefreshActuator {
         });
       }
     });
-  
+
     if (idNumbers.isEmpty) {
       // "请选择商品"
       notifyToasty(S.of(context).shopcart_choose_product);
       return;
     }
-   
 
     callback.call(context, idNumbers);
   }

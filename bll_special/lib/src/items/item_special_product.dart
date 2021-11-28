@@ -127,7 +127,7 @@ class ItemSpecialProductWidget extends StatelessWidget {
             color: AppColor.colorBE,
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            decoration: TextDecoration.lineThrough),
+            decoration: TextDecoration.lineThrough ),
       ),
     );
   }

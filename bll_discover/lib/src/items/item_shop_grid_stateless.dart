@@ -103,7 +103,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: AppColor.h1,
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -124,20 +124,19 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           //   ),
           // ),
 
-          Expanded(
-            child: Row(
+          Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  margin: EdgeInsets.symmetric(horizontal: 1,  vertical: 7),
                   child: Consumer<SettingsModel>(
                     builder: (context, settings, child) {
                       Row iconResource = Row(children: [
                         Image.asset("res/icons/ic_flame_icon.png",
                             package: "resources",
-                            width: 15,
-                            height: 15,
+                            width: 12,
+                            height: 12,
                             color: Colors.transparent)
                       ]);
                       if (shop.orderCount != null) {
@@ -214,7 +213,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 5 , vertical: 7),
                   child: Text(
                     TextHelper.clean(
                         "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
@@ -222,14 +221,13 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 13),
                   ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: Row(
+          
+           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
@@ -245,25 +243,25 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 2),
+                  //  margin: EdgeInsets.symmetric(horizontal: 1),
                     child: Text(
                       TextHelper.clean(
                           delivery_time(((shop.deliveryTime ?? 0) / 60))),
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 13),
                     ),
                   ),
                 ),
                 Text(
                   " | ",
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 12),
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 13),
                 ),
                 Expanded(
                   child: Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: 2),
+                 //     margin: EdgeInsets.symmetric(horizontal: 1),
                       child: Text(
                         TextHelper.clean(
                             distance(((shop.distance ?? 0) / 1000))),
@@ -271,17 +269,16 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                         maxLines: PlatformSupport.ios() ? 2 : 1,
                         overflow: TextOverflow.ellipsis,
                         style:
-                            TextStyle(color: Colors.yellow[900], fontSize: 15),
+                            TextStyle(color: Colors.yellow[900], fontSize: 13),
                       )),
                 )
               ],
             ),
-          ),
-          Expanded(
-            child: Container(
+          
+          Container(
               // padding: EdgeInsets.only(top: 15),
               alignment: Alignment.center,
-              //   margin: EdgeInsets.symmetric(horizontal: 5),
+             margin: EdgeInsets.symmetric(horizontal: 5, vertical: 7),
 
               child: Text(
                 TextHelper.clean(
@@ -290,10 +287,10 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: PlatformSupport.ios() ? 2 : 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black54, fontSize: 15),
+                style: TextStyle(color: Colors.black54, fontSize: 13),
               ),
             ),
-          )
+          
         ],
       ),
     );
@@ -340,8 +337,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 height: 100,
                 gaplessPlayback: true,
                 width: MediaQuery.of(context).size.width),
-            height: 100,
-            width: MediaQuery.of(context).size.width,
+            height: 95,
+            width: MediaQuery.of(context).size.width-10,
             fit: BoxFit.cover,
           ),
         ));
@@ -380,7 +377,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
    */
   Widget buildShopAvatarByCache(Shop shop) {
     return Container(
-      margin: EdgeInsets.only(top: 68),
+      margin: EdgeInsets.only(top: 48),
       alignment: Alignment.topCenter,
       child: Container(
         height: 64,
@@ -423,7 +420,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
    */
   Container buildShopAvatar(Shop shop) {
     return Container(
-      margin: EdgeInsets.only(top: 68),
+      margin: EdgeInsets.only(top: 38),
       alignment: Alignment.topCenter,
       child: Container(
         height: 64,

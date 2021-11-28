@@ -75,8 +75,7 @@ class OrderPreviewActuator extends RetryActuator {
         params.shopIds = shopIds;
       }
     }
-    
-    
+
     success.call(params);
   }
 
@@ -153,6 +152,7 @@ class OrderPreviewActuator extends RetryActuator {
       if (body != null && body.data != null && body.data.isNotEmpty) {
         orderItems.clear();
         orderItems.addAll(body.data);
+        
         orderP.data = orderItems;
 
         /// 优惠码状态
@@ -164,7 +164,7 @@ class OrderPreviewActuator extends RetryActuator {
           orderP.message = null;
         }
 
-       _processOrderInfo();
+        _processOrderInfo();
       }
     }, fail: (message, error) {
       notifyToasty(message);
@@ -184,13 +184,14 @@ class OrderPreviewActuator extends RetryActuator {
     double previewTotal = 0.0;
 
     orderItems.forEach((order) {
+     
       order.currency = TextHelper.clean(order.currency);
 
       /// 整理数值，避免出现 null 【派送费，包装费，折扣，小计】
       order.deliveryCoast = ValueFormat.cleanDouble(order.deliveryCoast);
       order.packageFee = ValueFormat.cleanDouble(order.packageFee);
-     order.subDisTotal = ValueFormat.cleanDouble(order.subDisTotal);
-    order.subTotal = ValueFormat.cleanDouble(order.subTotal);
+      order.subDisTotal = ValueFormat.cleanDouble(order.subDisTotal);
+      order.subTotal = ValueFormat.cleanDouble(order.subTotal);
 
       /// 计算订单总价【有折扣时按折扣价计算】
       if (order.subDisTotal != 0) {

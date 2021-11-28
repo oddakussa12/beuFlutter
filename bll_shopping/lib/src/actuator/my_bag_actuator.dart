@@ -249,10 +249,11 @@ class MyBagActuator extends RefreshActuator {
         if (shop.goods != null) {
           /// 遍历当前商铺下的商品
           shop.goods!.forEach((product) {
+            
             product.isChecked = isCheckByProductId(product.id);
             if (product.isChecked!) {
               currency = currency == "" ? shop.currency! : currency;
-              total += product.price! * product.goodsNumber!;
+              total += product.discountPrice! * product.goodsNumber!;
 
               /// 不同的币种【对每个商品都需要检查】
               if (currency != "" &&

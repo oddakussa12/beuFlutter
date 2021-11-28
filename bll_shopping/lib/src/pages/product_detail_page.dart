@@ -107,20 +107,41 @@ class _ProductDetailPageState
               /// 商品评分
               buildProductStar(),
  
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: 16, left: 16),
-                      child: Text(
-                        TextHelper.clean(actuator.product.formatPrice),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: AppColor.colorBE,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                           
-                      )),),
+                  Row(
+                    children: [
+                  (actuator.product.discountPrice?? null) != null ?      Container(
+      alignment: Alignment.centerLeft,
+        margin: EdgeInsets.only(top: 16, left: 16),
+      child: Text(
+        "${actuator.product.discountPrice} ${actuator.product.currency}",
+        textAlign: TextAlign.left,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: AppColor.colorF7551D,
+            fontSize: 14,
+            fontWeight: FontWeight.bold),
+      ),
+    ): Container(),
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(top: 16, left: 16),
+                          child: Text(
+                            TextHelper.clean(actuator.product.formatPrice),
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: AppColor.colorBE,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                               
+                          )),),
+           
+    
+                    ],
+                  ),
+  
                   
                   // Container(
                   //         child: Text(

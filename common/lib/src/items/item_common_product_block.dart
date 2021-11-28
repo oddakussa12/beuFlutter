@@ -63,10 +63,14 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
           ),
 
           /// 商品价格
-          buildProductPrice(widget.product),
+         Row(
+           children: [
+              buildProductPrice(widget.product),
 
           ///商品折扣价
-          buildProductDiscountPrice(widget.product),
+   widget.product.discountPrice! >0? buildProductDiscountPrice(widget.product ):Container(),
+           ],
+         ),
 
           /// 商品标题
           buildProductTitle(widget.product),
@@ -189,13 +193,16 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                decoration: product.isGFCategory()
+                decoration:product.discountPrice! >0 
                     ? TextDecoration.lineThrough
                     : TextDecoration.none,
                 decorationThickness: 2,
                 color: AppColor.colorBE,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+               
+                
+                ),
           ),
         ),
         // (product.discountPrice?? 0)!= 0?  Container(
@@ -224,25 +231,42 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
   /**
    * 商品价格
    */
+
   Widget buildProductDiscountPrice(Product product) {
-    return Offstage(
-      offstage: !product.isGFCategory(),
-      child: Container(
-        alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(top: 6, left: 5, right: 5),
-        child: Text(
-          TextHelper.clean(product.formatDisPrice),
-          textAlign: TextAlign.left,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: AppColor.colorBE,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
-        ),
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 8, left: 5, right: 5),
+      child: Text(
+        "${product.discountPrice}${product.currency}",
+        textAlign: TextAlign.left,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: AppColor.colorF7551D,
+            fontSize: 12,
+            fontWeight: FontWeight.bold),
       ),
     );
   }
+  // Widget buildProductDiscountPrice(Product product) {
+  //   return Offstage(
+  //     offstage: !product.isGFCategory(),
+  //     child: Container(
+  //       alignment: Alignment.centerLeft,
+  //       margin: EdgeInsets.only(top: 6, left: 5, right: 5),
+  //       child: Text(
+  //         TextHelper.clean(product.discountPrice.toString()),
+  //         textAlign: TextAlign.left,
+  //         maxLines: 1,
+  //         overflow: TextOverflow.ellipsis,
+  //         style: TextStyle(
+  //             color: AppColor.colorBE,
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.bold),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   /**
    * 商品名称
