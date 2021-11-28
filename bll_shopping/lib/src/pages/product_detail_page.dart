@@ -109,7 +109,7 @@ class _ProductDetailPageState
  
                   Row(
                     children: [
-                  (actuator.product.discountPrice?? null) != null ?      Container(
+                  (actuator.product.discountPrice?? 0) != 0 ?      Container(
       alignment: Alignment.centerLeft,
         margin: EdgeInsets.only(top: 16, left: 16),
       child: Text(
@@ -135,6 +135,7 @@ class _ProductDetailPageState
                                 color: AppColor.colorBE,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                decoration: actuator.product.discountPrice! >0? TextDecoration.lineThrough:TextDecoration.none
                                
                           )),),
            
