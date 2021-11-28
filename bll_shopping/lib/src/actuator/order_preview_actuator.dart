@@ -152,7 +152,7 @@ class OrderPreviewActuator extends RetryActuator {
       if (body != null && body.data != null && body.data.isNotEmpty) {
         orderItems.clear();
         orderItems.addAll(body.data);
-        
+
         orderP.data = orderItems;
 
         /// 优惠码状态
@@ -184,12 +184,12 @@ class OrderPreviewActuator extends RetryActuator {
     double previewTotal = 0.0;
 
     orderItems.forEach((order) {
-     
       order.currency = TextHelper.clean(order.currency);
 
       /// 整理数值，避免出现 null 【派送费，包装费，折扣，小计】
       order.deliveryCoast = ValueFormat.cleanDouble(order.deliveryCoast);
       order.packageFee = ValueFormat.cleanDouble(order.packageFee);
+      print(order.subDisTotal);
       order.subDisTotal = ValueFormat.cleanDouble(order.subDisTotal);
       order.subTotal = ValueFormat.cleanDouble(order.subTotal);
 
@@ -305,6 +305,7 @@ class OrderPreviewActuator extends RetryActuator {
     if (!isSpecial() && TextHelper.isNotEmpty(promoCode)) {
       requestBody.fields.add(MapEntry("promo_code", promoCode));
     }
+     
 
     bool orderCreated = false;
     DioClient().post(ShoppingUrl.apiOrder,

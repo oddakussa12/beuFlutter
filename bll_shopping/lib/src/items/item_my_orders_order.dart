@@ -55,7 +55,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
       child: Column(
         children: [
           /// 商铺图标及标题
-          buildShopTitle(context),
+         buildShopTitle(context),
 
           /// 购物车中商品列表
           buildShopProducts(),

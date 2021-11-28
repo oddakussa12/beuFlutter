@@ -198,7 +198,7 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
                     : TextDecoration.none,
                 decorationThickness: 2,
                 color: AppColor.colorBE,
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                
                 
@@ -243,7 +243,7 @@ class _ItemCommonProductBlockState extends State<ItemCommonProductBlock> {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
             color: AppColor.colorF7551D,
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold),
       ),
     );

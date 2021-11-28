@@ -39,7 +39,7 @@ Map<String, dynamic> _$ProductDetailBodyToJson(ProductDetailBody instance) =>
     };
 
 Product _$ProductFromJson(Map<String, dynamic> json) {
-  print(json);
+ 
   return Product(
     id: json['id'] as String,
     userId: json['user_id'] as String?,

@@ -120,7 +120,7 @@ class UserCentreState
           ),
 
           /// 操作按钮
-          buildOptionButton(),
+         buildOptionButton(),
 
           Container(
             alignment: Alignment.centerLeft,
