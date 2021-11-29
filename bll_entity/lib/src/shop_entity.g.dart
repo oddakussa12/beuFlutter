@@ -160,10 +160,9 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     avatarLink: json['user_avatar_link'] as String?,
     callCenter: json['callCenter'] as String?,
     isChecked: json['isChecked'] as bool?,
-    deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
-    distance: (json['distance'] as num?)?.toDouble(),
-    orderCount: json['orderCount'] as int?,
-    averagePrice: json['averagePrice'] as List<dynamic>?,
+ 
+ 
+   
     openTime: json['open_time'] as String?,
     closeTime: json['close_time'] as String?,
   )
