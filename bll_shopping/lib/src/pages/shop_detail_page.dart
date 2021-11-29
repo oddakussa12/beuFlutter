@@ -71,7 +71,7 @@ class _ShopDetailPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Toolbar(
-        title: TextHelper.clean(actuator.shopDetail.name),
+        title: TextHelper.clean(actuator.shopDetail.nickName),
         obiter: Offstage(
           offstage: actuator.shopDetail.level != 1,
           child: Image.asset(
@@ -521,7 +521,7 @@ class _ShopDetailPageState
           margin: EdgeInsets.only(left: 16, right: 16),
           alignment: Alignment.centerLeft,
           child: Text(
-            S.of(context).discover_product,
+            S.of(context).discover_meal,
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColor.black,

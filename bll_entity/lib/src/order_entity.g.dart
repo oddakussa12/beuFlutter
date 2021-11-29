@@ -45,6 +45,7 @@ Map<String, dynamic> _$RespPromoCodeToJson(RespPromoCode instance) =>
     };
 
 PreviewOrdersBody _$PreviewOrdersBodyFromJson(Map<String, dynamic> json) {
+  print(json['data']);
   return PreviewOrdersBody(
     (json['data'] as List<dynamic>)
         .map((e) => PreOrder.fromJson(e as Map<String, dynamic>))
@@ -134,6 +135,7 @@ Map<String, dynamic> _$OrderDetailBodyToJson(OrderDetailBody instance) =>
     };
 
 Order _$OrderFromJson(Map<String, dynamic> json) {
+  
   return Order(
     json['order_id'] as String,
     json['user_id'] as String,

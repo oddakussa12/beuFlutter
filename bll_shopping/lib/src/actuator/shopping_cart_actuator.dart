@@ -73,6 +73,7 @@ class ShoppingCartActuator extends ReactActuator {
       double coast = 0;
       int productNumber = 0;
       String currency = "";
+
       cart.data.forEach((shop) {
         if (shop.goods != null) {
           currency = currency == "" ? shop.currency! : currency;
@@ -82,9 +83,17 @@ class ShoppingCartActuator extends ReactActuator {
                 ValueFormat.cleanDouble(product.disPrice, def: -1);
 
             /// 折扣计算
+            ///
+            //
+            // print(product.discountPrice);
+
             if (product.disPrice != -1) {
               total += product.disPrice! * product.goodsNumber!;
+            } else if (product.discountPrice! > 0) {
+              total += product.discountPrice! * product.goodsNumber!;
             } else {
+              // total += product.price! * product.goodsNumber!;
+
               total += product.price! * product.goodsNumber!;
             }
 
@@ -120,6 +129,7 @@ class ShoppingCartActuator extends ReactActuator {
    */
   void outsideAppendProduct(Shop shop, Product product) {
     /// 商品数量以购物车为主，避免出现置零 bug
+
     var cartP = cartProducts[product.id];
     if (cartP != null) {
       if (cartP.goodsNumber! >= 50) {
@@ -150,7 +160,7 @@ class ShoppingCartActuator extends ReactActuator {
         toast(message: S.of(context).shopcart_product_rule);
         return;
       }
-
+      // print("object");
       product.goodsNumber = product.goodsNumber! + 1;
     }
 
@@ -186,7 +196,9 @@ class ShoppingCartActuator extends ReactActuator {
         success: (ShoppingCart body) {
       if (body != null) {
         /// 处理购物车
+
         processCartUpdateSuccessResult(body, shop, product);
+
         LogDog.d("appendProduct: ${shopCart}");
       } else {
         processCartUpdateFailureResult(context, isAppend, shop, product);
@@ -205,6 +217,7 @@ class ShoppingCartActuator extends ReactActuator {
   void processCartUpdateSuccessResult(
       ShoppingCart result, Shop shop, Product product) {
     /// 当前操作的商品的购物车已被清空
+
     if (result.data == null || result.data.isEmpty) {
       /// 将当前的商品从本地购物车中移除
       if (shopCart.data != null && shopCart.data.contains(shop)) {

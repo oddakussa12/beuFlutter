@@ -9,15 +9,13 @@ import 'package:flutter/painting.dart';
  * @date: 2021/7/2
  */
 class ItemCommonProductBar extends StatefulWidget {
-
   /// 商铺信息
   final Shop shop;
 
   /// 商铺信息
   final Product product;
 
-  ItemCommonProductBar(
-      {Key? key, required this.shop, required this.product})
+  ItemCommonProductBar({Key? key, required this.shop, required this.product})
       : super(key: key);
 
   @override
@@ -108,23 +106,42 @@ class _ItemOrderPreviewProductState extends State<ItemCommonProductBar> {
               )),
 
           /// 商品原价
-          Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
-              alignment: Alignment.topLeft,
-              child: Text(
-                TextHelper.clean(widget.product.formatPrice),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: AppColor.colorBE,
-                    fontSize: 16,
-                    decoration: widget.product.isGFCategory()
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
-                    decorationThickness: 2),
-              )),
+          (widget.product.discountPrice ?? 0) > 0
+              ? Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    TextHelper.clean(widget.product.discountPrice.toString() +
+                        " " +
+                        widget.product.currency.toString()),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: AppColor.colorBE,
+                        fontSize: 16,
+                        // decoration:  widget.product.discountPrice!>0
+                        //     ? TextDecoration.lineThrough
+                        //     : TextDecoration.none,
+                        decorationThickness: 2),
+                  ))
+              : Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    TextHelper.clean(widget.product.formatPrice),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: AppColor.colorBE,
+                        fontSize: 16,
+                        // decoration:  widget.product.discountPrice!>0
+                        //     ? TextDecoration.lineThrough
+                        //     : TextDecoration.none,
+                        decorationThickness: 2),
+                  )),
 
           /// 官方分类下的商品展示折扣价
+
           Visibility(
             visible: widget.product.isGFCategory(),
             child: Container(

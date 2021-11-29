@@ -50,7 +50,7 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
         buildOrderNumber(),
 
         /// 订单商品信息
-        buildOrderProductInfo(context),
+       buildOrderProductInfo(context),
       ],
     );
   }
@@ -132,7 +132,7 @@ class _ItemOrderDetailState extends State<ItemOrderDetailWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(shop.name),
+                TextHelper.clean(shop.nickName),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

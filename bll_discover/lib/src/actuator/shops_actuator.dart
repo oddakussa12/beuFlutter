@@ -75,6 +75,7 @@ class ShopsActuator extends RefreshActuator {
     String url =
         DiscoverUrl.discoveryIndex + "?page=${page}&type=shop&order=popular";
     DioClient().get(url, (response) => ShopList.fromJson(response.data),
+    
         success: (ShopList body) {
       if (body != null && body.data != null) {
         if (page <= 1) {

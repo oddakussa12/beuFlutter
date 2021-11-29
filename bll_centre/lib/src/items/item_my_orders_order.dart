@@ -79,7 +79,7 @@ class _ItemMyOrdersOrderState extends State<ItemMyOrdersOrderWidget> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 8),
               child: Text(
-                TextHelper.clean(widget.shop.name),
+                TextHelper.clean(widget.shop.nickName),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

@@ -27,6 +27,7 @@ class DioClient {
 
   /// 正式 url
   static final String PRO_BASE_URL = "https://api.helloo.mantouhealth.com";
+  // static final String PRO_BASE_URL = "http://192.168.1.111";
 
   /// 文件下载地址
   static final String DOWNLOAD_BASE_URL = "https://qneventsource.mmantou.cn";
@@ -55,7 +56,6 @@ class DioClient {
   factory DioClient() => _instance;
 
   DioClient._internal() {
-     
     baseUrl = defBaseUrl();
 
     headerInterceptor = HttpHeaderInterceptor();
@@ -130,7 +130,6 @@ class DioClient {
             TextHelper.isNotEmpty(baseUrl)) {
           this._dio.options.baseUrl = baseUrl;
         }
-        
       }
 
       Response response = await _dio.get(url,
@@ -140,8 +139,6 @@ class DioClient {
             "DioClient-get: ${url}, count: ${count} : ${total} : ${count / total * 100}%");
       });
       if (response != null) {
-        
-
         if (response.data is DioError) {
           var error = response.data['code'];
           String message = await parseServiceError(error);

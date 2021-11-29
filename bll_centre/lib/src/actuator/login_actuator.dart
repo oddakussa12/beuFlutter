@@ -41,12 +41,16 @@ class LoginActuator extends ReactActuator {
     });
 
     LogDog.d("login: ${requestBody.fields}");
-
+    var user;
     await DioClient().post(
         CentreUrl.signIn, (response) => UserToken.fromJson(response.data),
         body: requestBody, success: (UserToken body) {
       if (body != null && TextHelper.isNotEmpty(body.token)) {
         UserManager().saveToken(body);
+        user = UserManager().getUser();
+        Storage.putString("user_address_name", user.nickName);
+        Storage.putString("user_address_phone", "");
+        Storage.putString("user_address_address", "");
 
         /// 加载用户信息
         UserInfoModel().loadUserInfo(callback);

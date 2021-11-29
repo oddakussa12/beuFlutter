@@ -39,6 +39,7 @@ Map<String, dynamic> _$ProductDetailBodyToJson(ProductDetailBody instance) =>
     };
 
 Product _$ProductFromJson(Map<String, dynamic> json) {
+ 
   return Product(
     id: json['id'] as String,
     userId: json['user_id'] as String?,
@@ -59,6 +60,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
         ? null
         : Shop.fromJson(json['user'] as Map<String, dynamic>),
     specPrice: (json['specialPrice'] as num?)?.toDouble(),
+    discountPrice: ((json['discount_price'] as int?)?.toDouble()),
     packageCoast: (json['packaging_cost'] as num?)?.toDouble(),
     disPrice: (json['discounted_price'] as num?)?.toDouble(),
     formatDisPrice: json['format_discounted_price'] as String?,

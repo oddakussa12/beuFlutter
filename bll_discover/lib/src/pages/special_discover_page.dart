@@ -37,18 +37,18 @@ class SpecialDiscoverPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (tabNames.isEmpty) {
-      tabNames.add(S.of(context).discover_shops);
-      tabNames.add(S.of(context).discover_product);
+      tabNames.add(S.of(context).Restorants_tab);
+      // tabNames.add(S.of(context).discover_product);
     }
     if (_pageWidgets.isEmpty) {
       _pageWidgets.add(ShopsPage(callback: () {
         retryLoadSpecial();
       }));
-      _pageWidgets.add(ProductsPage(
-        callback: () {
-          retryLoadSpecial();
-        },
-      ));
+      // _pageWidgets.add(ProductsPage(
+      //   callback: () {
+      //     retryLoadSpecial();
+      //   },
+      // ));
     }
 
     _tabController = TabController(length: _pageWidgets.length, vsync: this);
@@ -86,7 +86,7 @@ class SpecialDiscoverPageState
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 329,
+            expandedHeight: 326,
             pinned: true,
             floating: Constants.isTesting ? false : true,
             leading: Constants.isTesting
@@ -105,25 +105,38 @@ class SpecialDiscoverPageState
             flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 background: buildSpecialProductCover(context)),
-            bottom: PreferredSize(
+            bottom:     PreferredSize(
               child: Container(
                 color: AppColor.white,
-                child: TabBar(
-                  indicatorColor: AppColor.black,
-                  indicatorWeight: 1.3,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorPadding: EdgeInsets.symmetric(horizontal: 16),
-                  unselectedLabelColor: AppColor.colorBE,
-                  labelColor: AppColor.color0F0F17,
-                  labelStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  unselectedLabelStyle: TextStyle(fontSize: 14),
-                  controller: _tabController,
-                  tabs: tabNames.map((e) => Tab(text: e)).toList(),
-                ),
+                child:Card(
+                  elevation: 0.1,
+                  child: ListTile(
+                    title: Text(S.of(context).Restorants_tab,style:  TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                    subtitle: Divider(color: Colors.red,thickness: 3,endIndent:MediaQuery. of(context). size. width-110,),
+                  ),
+                )
               ),
-              preferredSize: Size.fromHeight(50),
+              preferredSize: Size.fromHeight(80),
             ),
+            //  PreferredSize(
+            //   child: Container(
+            //     color: AppColor.white,
+            //     child: TabBar(
+            //       indicatorColor: AppColor.black,
+            //       indicatorWeight: 1.3,
+            //       indicatorSize: TabBarIndicatorSize.tab,
+            //       indicatorPadding: EdgeInsets.symmetric(horizontal: 16),
+            //       unselectedLabelColor: AppColor.colorBE,
+            //       labelColor: AppColor.color0F0F17,
+            //       labelStyle:
+            //           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            //       unselectedLabelStyle: TextStyle(fontSize: 14),
+            //       controller: _tabController,
+            //       tabs: tabNames.map((e) => Tab(text: e)).toList(),
+            //     ),
+            //   ),
+            //   preferredSize: Size.fromHeight(50),
+            // ),
           ),
         ],
         body: TabBarView(

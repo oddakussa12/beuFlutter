@@ -27,7 +27,7 @@ abstract class RetryableState<A extends RetryActuator, T extends StatefulWidget>
     }
   }
 
-  EmptyWidget buildEmptyWidget(BuildContext context, {String? message, EdgeInsetsGeometry? margin}) {
+  EmptyWidget buildEmptyWidget(BuildContext context, {String? message, EdgeInsetsGeometry? margin , Icon? icon}) {
     return EmptyWidget.classics(
       state: actuator.emptyStatus,
       alignment: Alignment.topCenter,

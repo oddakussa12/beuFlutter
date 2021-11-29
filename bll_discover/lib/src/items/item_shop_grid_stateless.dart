@@ -35,21 +35,42 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
     }
   }
 
+  String distance(double? distance_value) {
+    if ((distance_value ?? 0) == 0) return "- m";
+    if ((distance_value ?? 0) >= 1)
+      return (double.parse(((distance_value ?? 0)).toStringAsFixed(1))
+              .toString()) +
+          " km";
+    else if ((distance_value ?? 0) < 1) {
+      return (double.parse(((distance_value ?? 0) * 1000).toStringAsFixed(0))
+              .toInt()
+              .toString()) +
+          " m";
+    }
+
+    return "";
+  }
+
+  String delivery_time(double? time) {
+    // if ((time ?? 0) > 60) {
+    //   return (double.parse(((time ?? 0) / 60).toStringAsFixed(0)).toInt().toString()) +
+    //       " hours";
+    // } else if ((time ?? 0) <= 60) {
+    //   return (double.parse(((time ?? 0)).toStringAsFixed(0)).toInt().toString()) +
+    //       " min";
+    // }
+
+    return ((time ?? 0) == 0
+            ? "-"
+            : double.parse(((time ?? 0)).toStringAsFixed(0))
+                .toInt()
+                .toString()) +
+        " mins";
+  }
+
   @override
   Widget build(BuildContext context) {
     LogDog.d("ItemShopGrid-shop: ${shop.id}");
-    double? min, sec, hours;
-
-    // double? sec = (json['deliveryTime'] as num?)?.toDouble();
-    // sec = (shop.deliveryTime)! / (24 * 3600);
-
-    // min = ((shop.deliveryTime)! % (24 * 3600 * 3600)) / 60;
-    min = ((shop.deliveryTime ?? 0) / 60);
-    // ignore: deprecated_member_use
-
-    // if (hours > 0) hours = hours * 60;
-    // double? seconds = ((sec?.) % (24 * 3600 * 3600 * 60)) / 60;
-    // print("${sec} sec ${min} min ${hours} hours ");
 
     return Container(
       alignment: Alignment.topCenter,
@@ -74,7 +95,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
 
           /// 商铺标题
           Container(
-            margin: EdgeInsets.only(top: 5),
+            //  margin: EdgeInsets.only(top: 1),
             child: Text(
               TextHelper.clean(shop.nickName),
               textAlign: TextAlign.center,
@@ -82,7 +103,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: AppColor.h1,
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -104,178 +125,172 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
           // ),
 
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Consumer<SettingsModel>(
-                  builder: (context, settings, child) {
-                    Row iconResource = Row(children: [
-                      Image.asset("res/icons/ic_flame_icon.png",
-                          package: "resources",
-                          width: 15,
-                          height: 15,
-                          color: Colors.transparent)
-                    ]);
-                    if (shop.orderCount != null) {
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().unpopularRestaurant) {
-                        iconResource = Row(children: [
-                          Image.asset(
-                            "res/icons/ic_flame_icon.png",
-                            package: "resources",
-                            width: 15,
-                            height: 15,
-                          )
-                        ]);
-                      }
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().popularRestaurant) {
-                        iconResource = Row(
-                          children: [
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            )
-                          ],
-                        );
-                      }
-                      if (shop.orderCount! >=
-                          settings.getViewSettings().superPopularRestaurant) {
-                        iconResource = Row(
-                          children: [
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            ),
-                            Image.asset(
-                              "res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                            )
-                          ],
-                        );
-                      }
-                      if (shop.orderCount! >
-                          settings.getViewSettings().blackHouseRestaurant) {
-                        iconResource = Row(children: [
-                          Image.asset("res/icons/ic_flame_icon.png",
-                              package: "resources",
-                              width: 15,
-                              height: 15,
-                              color: Colors.black)
-                        ]);
-                      }
-                    }
-
-                    return iconResource;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  TextHelper.clean(
-                      "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
-                          S.of(context).number_of_orders_in_amharic),
-                  textAlign: TextAlign.center,
-                  maxLines: PlatformSupport.ios() ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                ),
-              ),
-            ],
-          ),
-
-          // Expanded(
-          //   child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 1),
-                child: Image.asset(
-                  "res/icons/ic_shop_delivery.png",
-                  package: "resources",
-                  width: 15,
-                  height: 15,
-                ),
-              ),
-              Expanded(
-                child: Container(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  margin: EdgeInsets.symmetric(horizontal: 1,  vertical: 7),
+                  child: Consumer<SettingsModel>(
+                    builder: (context, settings, child) {
+                      Row iconResource = Row(children: [
+                        Image.asset("res/icons/ic_flame_icon.png",
+                            package: "resources",
+                            width: 12,
+                            height: 12,
+                            color: Colors.transparent)
+                      ]);
+                      if (shop.orderCount != null) {
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().unpopularRestaurant) {
+                          iconResource = Row(children: [
+                            Image.asset(
+                              "res/icons/ic_flame_icon.png",
+                              package: "resources",
+                              width: 15,
+                              height: 15,
+                            )
+                          ]);
+                        }
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().popularRestaurant) {
+                          iconResource = Row(
+                            children: [
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              )
+                            ],
+                          );
+                        }
+                        if (shop.orderCount! >=
+                            settings.getViewSettings().superPopularRestaurant) {
+                          iconResource = Row(
+                            children: [
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              ),
+                              Image.asset(
+                                "res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                              )
+                            ],
+                          );
+                        }
+                        if (shop.orderCount! >
+                            settings.getViewSettings().blackHouseRestaurant) {
+                          iconResource = Row(children: [
+                            Image.asset("res/icons/ic_flame_icon.png",
+                                package: "resources",
+                                width: 15,
+                                height: 15,
+                                color: Colors.black)
+                          ]);
+                        }
+                      }
+
+                      return iconResource;
+                    },
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 5 , vertical: 7),
                   child: Text(
-                    TextHelper.clean(double.parse((min).toStringAsFixed(2)) < 0
-                        ? double.parse((min).toStringAsFixed(1)).toString() +
-                            " hours"
-                        : double.parse((min).toStringAsFixed(1)).toString() +
-                            " min"),
+                    TextHelper.clean(
+                        "${(shop.orderCount ?? 0) == 0 ? "-" : shop.orderCount ?? 0} " +
+                            S.of(context).number_of_orders_in_amharic),
                     textAlign: TextAlign.center,
                     maxLines: PlatformSupport.ios() ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.yellow[900], fontSize: 15),
+                    style: TextStyle(color: Colors.yellow[900], fontSize: 13),
                   ),
                 ),
-              ),
-              Text(
-                " | ",
-                style: TextStyle(color: Colors.yellow[900], fontSize: 12),
-              ),
-              Expanded(
-                child: Container(
+              ],
+            ),
+          
+           Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: 1),
+                  child: Image.asset(
+                    "res/icons/ic_shop_delivery.png",
+                    package: "resources",
+                    width: 15,
+                    height: 15,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 2),
+                  //  margin: EdgeInsets.symmetric(horizontal: 1),
                     child: Text(
-                      TextHelper.clean(((shop.distance ?? 0) / 1000)
-                              .toStringAsFixed(2)) +
-                          " Km",
+                      TextHelper.clean(
+                          delivery_time(((shop.deliveryTime ?? 0) / 60))),
                       textAlign: TextAlign.center,
                       maxLines: PlatformSupport.ios() ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.yellow[900], fontSize: 15),
-                    )),
-              )
-            ],
-          ),
-          // ),
-          // Expanded(
-          //   child: Container(
-          //     // padding: EdgeInsets.only(top: 15),
-          //     alignment: Alignment.center,
-          //     //   margin: EdgeInsets.symmetric(horizontal: 5),
+                      style: TextStyle(color: Colors.yellow[900], fontSize: 13),
+                    ),
+                  ),
+                ),
+                Text(
+                  " | ",
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 13),
+                ),
+                Expanded(
+                  child: Container(
+                      alignment: Alignment.center,
+                 //     margin: EdgeInsets.symmetric(horizontal: 1),
+                      child: Text(
+                        TextHelper.clean(
+                            distance(((shop.distance ?? 0) / 1000))),
+                        textAlign: TextAlign.center,
+                        maxLines: PlatformSupport.ios() ? 2 : 1,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(color: Colors.yellow[900], fontSize: 13),
+                      )),
+                )
+              ],
+            ),
+          
+          Container(
+              // padding: EdgeInsets.only(top: 15),
+              alignment: Alignment.center,
+             margin: EdgeInsets.symmetric(horizontal: 5, vertical: 7),
 
-          //     child: Text(
-          //       TextHelper.clean(
-          //           "${((shop.averagePrice ?? []).length) == 0 ? "-" : (double.parse((shop.averagePrice ?? [])[0]['avg_check']).toStringAsFixed(2))}  " +
-          //               S.of(context).average_price_in_amharic),
-          //       textAlign: TextAlign.center,
-          //       maxLines: PlatformSupport.ios() ? 2 : 1,
-          //       overflow: TextOverflow.ellipsis,
-          //       style: TextStyle(color: Colors.black54, fontSize: 15),
-          //     ),
-          //   ),
-          // )
+              child: Text(
+                TextHelper.clean(
+                    "${(shop.averagePrice ?? 0) == 0 ? "- " : (double.parse(((shop.averagePrice ?? 0)).toStringAsFixed(0)).toInt().toString())} " +
+                        S.of(context).average_price_in_amharic),
+                textAlign: TextAlign.center,
+                maxLines: PlatformSupport.ios() ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black54, fontSize: 13),
+              ),
+            ),
+          
         ],
       ),
     );
@@ -322,8 +337,8 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
                 height: 100,
                 gaplessPlayback: true,
                 width: MediaQuery.of(context).size.width),
-            height: 100,
-            width: MediaQuery.of(context).size.width,
+            height: 95,
+            width: MediaQuery.of(context).size.width-10,
             fit: BoxFit.cover,
           ),
         ));
@@ -362,7 +377,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
    */
   Widget buildShopAvatarByCache(Shop shop) {
     return Container(
-      margin: EdgeInsets.only(top: 68),
+      margin: EdgeInsets.only(top: 48),
       alignment: Alignment.topCenter,
       child: Container(
         height: 64,
@@ -405,7 +420,7 @@ class ItemShopGridStatelessWidget extends StatelessWidget {
    */
   Container buildShopAvatar(Shop shop) {
     return Container(
-      margin: EdgeInsets.only(top: 68),
+      margin: EdgeInsets.only(top: 38),
       alignment: Alignment.topCenter,
       child: Container(
         height: 64,

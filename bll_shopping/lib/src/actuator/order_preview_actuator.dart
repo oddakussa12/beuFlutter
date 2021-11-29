@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:common/common.dart';
 import 'package:dio/dio.dart';
 import 'package:shopping/shopping.dart';
+import 'package:shopping/src/actuator/delivery_address_actuator.dart';
 import 'package:shopping/src/entity/user_address.dart';
 
 /**
@@ -13,6 +14,7 @@ import 'package:shopping/src/entity/user_address.dart';
  */
 class OrderPreviewActuator extends RetryActuator {
   /// 预览订单类型【特价】
+  DeliveryAddressActuator deliveryINfo = new DeliveryAddressActuator();
   String type = "";
 
   /// 配送费参数
@@ -48,6 +50,10 @@ class OrderPreviewActuator extends RetryActuator {
     return TextHelper.isEqual("special", type);
   }
 
+  void confirm(data) {
+    deliveryINfo.confirmUserInfo(data);
+  }
+
   /// 显示 Promo code 提示消息
   bool showPromoMessage() {
     return (orderP.code == 0 && TextHelper.isNotEmpty(promoCode)) ||
@@ -69,7 +75,13 @@ class OrderPreviewActuator extends RetryActuator {
         params.shopIds = shopIds;
       }
     }
+
     success.call(params);
+  }
+
+  void getStoredValue() async {
+    List<String>? adress = await Storage.getStrings("user_adress");
+    print((adress)![0]);
   }
 
   /// 用户填写地址后更加经纬度信息更新预览订单
@@ -77,8 +89,12 @@ class OrderPreviewActuator extends RetryActuator {
     orderP.name = result.name;
     orderP.phone = result.phone;
     orderP.address = result.address;
+
     deliveryCoastParam = result.deliveryCost ?? "";
     orderP.avatar = UserManager().getUser().avatarLink;
+    print(orderP.name);
+    userAddressSeeder((orderP.name)!, (orderP.phone)!, (orderP.address)!);
+    // getSavedUserAddress("user_address_name");
     notifySetState();
 
     /// 从新加载订单信息
@@ -87,11 +103,11 @@ class OrderPreviewActuator extends RetryActuator {
         TextHelper.isNotEmpty(deliveryCoastParam)) {
       // if the information is relevant we can update User cash in local storage
       // todo: update that on backend side and for future request
-      var user = UserManager().getUser();
-      user.phone = orderP.phone;
-      UserManager().saveUser(user); // todo: review by Flutter developer
+      // var user = UserManager().getUser();
+      // user.phone = orderP.phone;
+      // UserManager().saveUser(user); // todo: review by Flutter developer
 
-      loadPreviewOrder();
+      // loadPreviewOrder();
     }
   }
 
@@ -136,6 +152,7 @@ class OrderPreviewActuator extends RetryActuator {
       if (body != null && body.data != null && body.data.isNotEmpty) {
         orderItems.clear();
         orderItems.addAll(body.data);
+
         orderP.data = orderItems;
 
         /// 优惠码状态
@@ -146,6 +163,7 @@ class OrderPreviewActuator extends RetryActuator {
           orderP.code = null;
           orderP.message = null;
         }
+
         _processOrderInfo();
       }
     }, fail: (message, error) {
@@ -171,6 +189,7 @@ class OrderPreviewActuator extends RetryActuator {
       /// 整理数值，避免出现 null 【派送费，包装费，折扣，小计】
       order.deliveryCoast = ValueFormat.cleanDouble(order.deliveryCoast);
       order.packageFee = ValueFormat.cleanDouble(order.packageFee);
+      print(order.subDisTotal);
       order.subDisTotal = ValueFormat.cleanDouble(order.subDisTotal);
       order.subTotal = ValueFormat.cleanDouble(order.subTotal);
 
@@ -221,7 +240,24 @@ class OrderPreviewActuator extends RetryActuator {
    * 2：加载进度条
    * 3：订单创建完成
    * 4: 下单失败
+   * 
    */
+  void userAddressSeeder(name, phone, address_description) async {
+    // List<String?> address = [];
+    // address[0] = name;
+    // address[1] = phone;
+    // address[3] = address_description;
+
+    Storage.putString("user_address_name", name);
+    Storage.putString("user_address_phone", phone);
+    Storage.putString("user_address_address", address_description);
+  }
+
+  void getSavedUserAddress(String key) async {
+    String? value = await Storage.getString(key);
+    print(value);
+  }
+
   void checkoutPreviewOrder(StatusAction action) async {
     /// 检查预览订单信息
     if (orderP == null || orderItems == null || orderItems.isEmpty) {
@@ -269,6 +305,7 @@ class OrderPreviewActuator extends RetryActuator {
     if (!isSpecial() && TextHelper.isNotEmpty(promoCode)) {
       requestBody.fields.add(MapEntry("promo_code", promoCode));
     }
+     
 
     bool orderCreated = false;
     DioClient().post(ShoppingUrl.apiOrder,

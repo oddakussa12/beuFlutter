@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:common/common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:shopping/shopping.dart';
 import 'package:shopping/src/entity/user_address.dart';
@@ -36,25 +37,37 @@ class DeliveryAddressActuator extends RetryActuator {
   @override
   void toRetry() {}
 
-  void init(UserAddress params) {
+  void getSavedUserAddress(context) async {
+    String? stored_name =
+        await Storage.getString(S.of(context).user_address_name);
+    String? stored_phone =
+        await Storage.getString(S.of(context).user_address_phone);
+    String? stored_address =
+        await Storage.getString(S.of(context).user_address_address);
+    name = stored_name;
+    phone = stored_phone;
+    address = stored_address;
+    if (name == "" || phone == "") {
+      var user = UserManager().getUser();
+      if (name == "") name = user.nickName;
+      if (phone == "") phone = "";
+      if (address == "") address = "";
+    }
+  }
+
+  Future<void> init(UserAddress params, BuildContext context) async {
     if (!alreadyInit) {
       alreadyInit = true;
-      if (params != null) {
-        name = params.name;
-        phone = params.phone;
-        address = params.address;
-        shopIds = params.shopIds;
-        if (name == "" || phone == "") {
-          var user = UserManager().getUser();
-          if (name == "") name = user.nickName;
-          if (phone == "") phone = user.phone;
-        }
-      }
-      if (Constants.isTesting) {
-        name = "XMT-beU";
-        phone = "1314520999";
-        address = "太阳系地球村中国北京市";
-      }
+      getSavedUserAddress(context);
+
+      // if (params != null) {
+      // name = params.name;
+      // phone = params.phone;
+      // address = params.address;
+      // shopIds = params.shopIds;
+
+      // }
+
     }
   }
 

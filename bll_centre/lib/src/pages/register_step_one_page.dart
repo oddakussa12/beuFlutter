@@ -126,7 +126,6 @@ class _RegisterStepOnePageState
 
                       /// 登录按钮
                       buildNextStep(context),
-                   
                     ],
                   ),
                 ),
@@ -141,6 +140,11 @@ class _RegisterStepOnePageState
   }
 
   Widget buildPhoneAreaCode() {
+    setState(() {
+      country.code = S.of(context).ethiopian_country_code;
+      country.areaCode = S.of(context).ethiopian_country_areaCode;
+      country.name = S.of(context).ethiopian_country_name;
+    });
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -159,13 +163,13 @@ class _RegisterStepOnePageState
                 minHeight: 42,
                 minWidth: 42,
               ),
-              suffixIcon: Padding(
-                padding: EdgeInsets.only(left: 12, right: 12),
-                child: Image.asset(
-                  "res/icons/ic_arrow_down_red.png",
-                  package: 'resources',
-                ),
-              ),
+              // suffixIcon: Padding(
+              //   padding: EdgeInsets.only(left: 12, right: 12),
+              //   child: Image.asset(
+              //     "res/icons/ic_arrow_down_red.png",
+              //     package: 'resources',
+              //   ),
+              // ),
               border: OutlineInputBorder(borderSide: BorderSide.none),
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
@@ -185,7 +189,8 @@ class _RegisterStepOnePageState
           },
           controller: TextEditingController.fromValue(TextEditingValue(
               //判断 name 是否为空
-              text: '${this.country.name == null ? "" : this.country.name}',
+              text:
+                  '${S.of(context).ethiopian_country_name} (+${S.of(context).ethiopian_country_areaCode})',
               // 保持光标在最后
 
               selection: TextSelection.fromPosition(TextPosition(
@@ -193,13 +198,13 @@ class _RegisterStepOnePageState
                   offset: '${this.country.name}'.length)))),
         ),
       ),
-      onTap: () {
-        Navigator.push(
-                context,
-                PageTransition(
-                    type: TransitionType.rightToLeft, child: CountryCodePage()))
-            .then((value) => receivedCountryCode(value));
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //           context,
+      //           PageTransition(
+      //               type: TransitionType.rightToLeft, child: CountryCodePage()))
+      //       .then((value) => receivedCountryCode(value));
+      // },
     );
   }
 

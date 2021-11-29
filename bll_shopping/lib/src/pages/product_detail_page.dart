@@ -26,11 +26,16 @@ class _ProductDetailPageState
       new ShoppingCartBarController();
 
   _ProductDetailPageState(ProductDetailActuator actuator) : super(actuator);
-
+  // late var specialPrice;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     var id = ModalRoute.of(context)!.settings.arguments;
+    //  specialPrice = ModalRoute.of(context)!.settings.arguments;
+    // List<dynamic> parameters =
+    //     ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+    // var id = parameters[0];
+    // specialPrice = parameters[1];
     actuator.productId = id as String;
     actuator.loadProductDetail();
   }
@@ -51,6 +56,8 @@ class _ProductDetailPageState
   void appendShopCart() {
     isShoppingCartChanged = true;
     var product = actuator.product;
+    var temp;
+
     if (product != null && product.shop != null) {
       barController.outsideAddProduct(product, product.shop!);
     }
@@ -58,8 +65,7 @@ class _ProductDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    return  
-    Material(
+    return Material(
         child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],
@@ -71,7 +77,6 @@ class _ProductDetailPageState
   /// 购物车
   Widget buildShoppingCartBar() {
     if (actuator.product == null || actuator.product.shop == null) {
-      
       return Container();
     }
 
@@ -100,17 +105,54 @@ class _ProductDetailPageState
               /// 商品评分
               buildProductStar(),
 
-              Container(
-                child: Text(
-                  TextHelper.clean(actuator.product.formatPrice),
-                  style: TextStyle(
-                    color: AppColor.colorBE,
-                    fontSize: 24,
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 16, left: 16),
+                    child: Text(TextHelper.clean(actuator.product.formatPrice),
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: AppColor.colorBE,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            decoration: actuator.product.discountPrice! > 0
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none)),
                   ),
-                ),
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+                  (actuator.product.discountPrice ?? 0) != 0
+                      ? Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(top: 16, left: 16),
+                          child: Text(
+                            "${actuator.product.discountPrice} ${actuator.product.currency}",
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: AppColor.colorF7551D,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
+
+              // Container(
+              //         child: Text(
+              //           TextHelper.clean(actuator.product.formatPrice),
+              //           style: TextStyle(
+              //             color: AppColor.colorBE,
+              //             fontSize: 24,
+              //           ),
+              //         ),
+
+              //         alignment: Alignment.centerLeft,
+              //         margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+              //       ),
 
               Container(
                 margin: EdgeInsets.only(top: 16, right: 16, left: 16),

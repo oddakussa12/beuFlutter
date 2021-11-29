@@ -103,6 +103,12 @@ class Product {
   @JsonKey(name: "format_discounted_price")
   String? formatDisPrice;
 
+  @JsonKey(name: "discount_price")
+  double? discountPrice;
+
+  
+
+
   /// 1.1.0: 格式化包装费
   @JsonKey(name: "format_packaging_cost")
   String? formatPackagePrice;
@@ -146,7 +152,8 @@ class Product {
       this.disPrice,
       this.formatDisPrice,
       this.formatPackagePrice,
-      this.freeDelivery});
+      this.freeDelivery,
+      this.discountPrice});
 
   factory Product.create() {
     return Product(
@@ -161,7 +168,8 @@ class Product {
         price: 0.0,
         averagePoint: 0.0,
         like: 0,
-        status: 0);
+        status: 0,
+        discountPrice:0);
   }
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -256,6 +264,7 @@ class SpecProduct {
   String? formatPrice;
 
   double? price;
+
 
   @JsonKey(name: "average_point")
   double? averagePoint;

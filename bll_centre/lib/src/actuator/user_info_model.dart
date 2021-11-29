@@ -24,7 +24,9 @@ class UserInfoModel {
         CentreUrl.userProfile, (response) => UserBody.fromJson(response.data),
         success: (UserBody body) {
       if (body != null && body.data != null) {
+         
         UserManager().saveUser(body.data);
+
         if (callback != null) {
           callback.call(2);
         }

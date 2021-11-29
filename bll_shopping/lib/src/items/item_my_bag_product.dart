@@ -139,7 +139,7 @@ class _ItemMyBagProductState extends State<ItemMyBagProductWidget> {
                   margin: EdgeInsets.only(left: 10, right: 10),
                   alignment: Alignment.topLeft,
                   child: Text(
-                    TextHelper.clean(widget.product.formatPrice),
+                    TextHelper.clean(widget.product.discountPrice.toString()+ " "+ widget.product.currency.toString()),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

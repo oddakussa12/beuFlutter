@@ -28,6 +28,7 @@ class _ShoppingMyBagState
   void didChangeDependencies() {
     super.didChangeDependencies();
     actuator.pullDown();
+     
   }
 
   @override
@@ -79,7 +80,8 @@ class _ShoppingMyBagState
 
           /// 购物车商品列表
           child: actuator.isNotNormal()
-              ? buildEmptyWidget(context)
+              ? buildEmptyWidget(context,
+                  message: S.of(context).shopping_cart_empty_data)
               : buildCartProducts()),
       bottomNavigationBar: buildCartMeter(),
     );

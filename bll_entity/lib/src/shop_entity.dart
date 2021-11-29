@@ -266,7 +266,7 @@ class Shop {
   double? distance;
 
   @JsonKey(name: "averagePrice")
-  List<dynamic>? averagePrice;
+  double? averagePrice;
 
   @JsonKey(name: "orderCount")
   int? orderCount;

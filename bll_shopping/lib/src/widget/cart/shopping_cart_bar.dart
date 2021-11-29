@@ -124,10 +124,10 @@ class ShoppingCartBarState
       alignment: Alignment.bottomCenter,
       children: [
         /// 商品列表
-        buildShoppingCartProducts(context),
+      buildShoppingCartProducts(context),
 
-        /// 购物车
-        buildShoppingCartBar(context),
+      //   /// 购物车
+       buildShoppingCartBar(context),
       ],
     );
   }
@@ -328,6 +328,7 @@ class ShoppingCartBarState
       onTap: () {
         actuator.previewOrder(
             (BuildContext context, Map<String, String> idNumbers) {
+                
           openOrderPreview(context, idNumbers);
         });
       },

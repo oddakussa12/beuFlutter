@@ -3043,7 +3043,7 @@ class S {
   /// `Order Info`
   String get order_info {
     return Intl.message(
-      'Order Info',
+      'Order Information',
       name: 'order_info',
       desc: '',
       args: [],
@@ -3083,7 +3083,7 @@ class S {
   /// `Your Info`
   String get order_beneficiary {
     return Intl.message(
-      'Your Info',
+      'Your Information',
       name: 'order_beneficiary',
       desc: '',
       args: [],
@@ -3523,6 +3523,130 @@ class S {
     return Intl.message(
       ' ብር አማካይ ዋጋ',
       name: 'average_price_in_amharic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get Restorants_tab {
+    return Intl.message(
+      'Restaurants',
+      name: 'Restorants_tab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_code {
+    return Intl.message(
+      'et',
+      name: 'ethiopian_country_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_areaCode {
+    return Intl.message(
+      '251',
+      name: 'ethiopian_country_areaCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ethiopian_country_name {
+    return Intl.message(
+      'Ethiopia',
+      name: 'ethiopian_country_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_name {
+    return Intl.message(
+      'user_address_name',
+      name: 'user_address_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_phone {
+    return Intl.message(
+      'user_address_phone',
+      name: 'user_address_phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get user_address_address {
+    return Intl.message(
+      'user_address_address',
+      name: 'user_address_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get your_information {
+    return Intl.message(
+      'Your Information',
+      name: 'your_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get order_information {
+    return Intl.message(
+      'Order Information',
+      name: 'order_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name_validation_empty {
+    return Intl.message(
+      'Please insert your name',
+      name: 'name_validation_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone_validation_empty {
+    return Intl.message(
+      'Please insert your phone number',
+      name: 'phone_validation_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get address_validation_empty {
+    return Intl.message(
+      'Please insert your address',
+      name: 'address_validation_empty',
+      desc: '',
+      args: [],
+    );
+  }
+    String get discover_meal {
+    return Intl.message(
+      'Meal',
+      name: 'discover_meal',
+      desc: '',
+      args: [],
+    );
+  } 
+    String get shopping_cart_empty_data {
+    return Intl.message(
+      'Nothing yet. The cart is hungry ',
+      name: 'shopping_cart_empty_data',
       desc: '',
       args: [],
     );
