@@ -30,7 +30,7 @@ class _ProductDetailPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-      var id = ModalRoute.of(context)!.settings.arguments;
+    var id = ModalRoute.of(context)!.settings.arguments;
     //  specialPrice = ModalRoute.of(context)!.settings.arguments;
     // List<dynamic> parameters =
     //     ModalRoute.of(context)!.settings.arguments as List<dynamic>;
@@ -58,7 +58,6 @@ class _ProductDetailPageState
     var product = actuator.product;
     var temp;
 
-    
     if (product != null && product.shop != null) {
       barController.outsideAddProduct(product, product.shop!);
     }
@@ -66,8 +65,7 @@ class _ProductDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    return 
-     Material(
+    return Material(
         child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],
@@ -106,57 +104,56 @@ class _ProductDetailPageState
 
               /// 商品评分
               buildProductStar(),
- 
-                  Row(
-                    children: [
-                  (actuator.product.discountPrice?? 0) != 0 ?      Container(
-      alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(top: 16, left: 16),
-      child: Text(
-        "${actuator.product.discountPrice} ${actuator.product.currency}",
-        textAlign: TextAlign.left,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-            color: AppColor.colorF7551D,
-            fontSize: 14,
-            fontWeight: FontWeight.bold),
-      ),
-    ): Container(),
-                      Container(
+
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 16, left: 16),
+                    child: Text(TextHelper.clean(actuator.product.formatPrice),
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: AppColor.colorBE,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            decoration: actuator.product.discountPrice! > 0
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none)),
+                  ),
+                  (actuator.product.discountPrice ?? 0) != 0
+                      ? Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.only(top: 16, left: 16),
                           child: Text(
-                            TextHelper.clean(actuator.product.formatPrice),
+                            "${actuator.product.discountPrice} ${actuator.product.currency}",
                             textAlign: TextAlign.left,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color: AppColor.colorBE,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                decoration: actuator.product.discountPrice! >0? TextDecoration.lineThrough:TextDecoration.none
-                               
-                          )),),
-           
-    
-                    ],
-                  ),
-  
-                  
-                  // Container(
-                  //         child: Text(
-                  //           TextHelper.clean(actuator.product.formatPrice),
-                  //           style: TextStyle(
-                  //             color: AppColor.colorBE,
-                  //             fontSize: 24,
-                  //           ),
-                  //         ),
+                                color: AppColor.colorF7551D,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
 
-                  //         alignment: Alignment.centerLeft,
-                  //         margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-                  //       ),
-              
+              // Container(
+              //         child: Text(
+              //           TextHelper.clean(actuator.product.formatPrice),
+              //           style: TextStyle(
+              //             color: AppColor.colorBE,
+              //             fontSize: 24,
+              //           ),
+              //         ),
+
+              //         alignment: Alignment.centerLeft,
+              //         margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+              //       ),
+
               Container(
                 margin: EdgeInsets.only(top: 16, right: 16, left: 16),
                 color: AppColor.color08000,

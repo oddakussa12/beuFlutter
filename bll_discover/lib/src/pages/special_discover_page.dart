@@ -86,7 +86,7 @@ class SpecialDiscoverPageState
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: MediaQuery. of(context). size.height-300,
+            expandedHeight: 326,
             pinned: true,
             floating: Constants.isTesting ? false : true,
             leading: Constants.isTesting
