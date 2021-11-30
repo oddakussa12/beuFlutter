@@ -224,8 +224,12 @@ class _ShopDetailPageState
     String? workingHoursLabel = null;
     if (actuator.shopDetail.openTime != null &&
         actuator.shopDetail.closeTime != null) {
-      workingHoursLabel =
-          "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
+      if (actuator.shopDetail.openTime == actuator.shopDetail.closeTime) {
+        workingHoursLabel = "24h"; //todo: use some localization resources
+      } else {
+        workingHoursLabel =
+            "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
+      }
     }
     if (workingHoursLabel != null) {
       return Center(
