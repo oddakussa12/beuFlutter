@@ -70,7 +70,7 @@ class _ProductDetailPageState
       CustomScrollView(
         slivers: [buildSliverAppBar(context), buildProductInfo()],
       ),
-      buildShoppingCartBar()
+     buildShoppingCartBar()
     ]));
   }
 
@@ -90,8 +90,9 @@ class _ProductDetailPageState
 
   /// 商品信息
   Widget buildProductInfo() {
-    print(actuator.product);
+    // ignore: unnecessary_null_comparison
     if (actuator.product == null) {
+       
       return SliverPadding(padding: EdgeInsets.all(0));
     }
     return SliverList(
@@ -226,7 +227,8 @@ class _ProductDetailPageState
                 topRight: Radius.circular(0)),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: buildBackgroundWidget(
+              child:  actuator.product.image![0].url == null ?Text("text"): 
+              buildBackgroundWidget(
                   context, 0, expandedHeight, actuator.product.image![0].url),
               /*BannerSwiper(
                 length: actuator.product.image != null

@@ -20,6 +20,7 @@ class ProductDetailActuator extends RetryActuator {
   @override
   void attachViewer(Viewer view) {
     super.attachViewer(view);
+
     /// 监听订单创建完成的事件，并刷新数据
     appendSubscribe(BusClient().subscribe<OrderCreatedEvent>((event) {
       if (event != null) {
@@ -47,7 +48,7 @@ class ProductDetailActuator extends RetryActuator {
             success: (ProductDetailBody detail) {
       if (detail != null && detail.data != null) {
         product = detail.data;
-         
+       
 
         LogDog.d("loadShopDetail-bg: ${detail}");
       } else {
