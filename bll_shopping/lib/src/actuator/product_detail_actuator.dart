@@ -48,8 +48,7 @@ class ProductDetailActuator extends RetryActuator {
             success: (ProductDetailBody detail) {
       if (detail != null && detail.data != null) {
         product = detail.data;
-       
-
+         
         LogDog.d("loadShopDetail-bg: ${detail}");
       } else {
         isNeedRefreshDetail = true;

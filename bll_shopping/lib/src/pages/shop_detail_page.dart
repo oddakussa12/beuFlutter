@@ -110,8 +110,8 @@ class _ShopDetailPageState
 
           /// 底部购物车
           ShoppingCartBar(
-            isShowBar: UserManager().delivery(actuator.shopDetail) 
-              && actuator.shopDetail.availableForOrder(),
+            isShowBar: UserManager().delivery(actuator.shopDetail) &&
+                actuator.shopDetail.availableForOrder(),
             isCartProducts: UserManager().delivery(actuator.shopDetail),
             shopId: actuator.shopDetail.id,
             controller: barController,
@@ -138,39 +138,34 @@ class _ShopDetailPageState
                 children: [
                   /// 商铺背景
                   ColorFiltered(
-                    colorFilter: 
-                    (actuator.shopDetail.availableForOrder() ? 
-                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
-                    child :
-                     buildShopBackground(context)),
+                      colorFilter: (actuator.shopDetail.availableForOrder()
+                          ? ViewHelper.filterNone
+                          : ViewHelper.filterGreyscale),
+                      child: buildShopBackground(context)),
 
                   /// 派送图标: shop.delivery
                   ColorFiltered(
-                    colorFilter: 
-                    (actuator.shopDetail.availableForOrder() ? 
-                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
-                    child :
-                      buildDeliveryIcon(actuator.shopDetail.delivery)),
+                      colorFilter: (actuator.shopDetail.availableForOrder()
+                          ? ViewHelper.filterNone
+                          : ViewHelper.filterGreyscale),
+                      child: buildDeliveryIcon(actuator.shopDetail.delivery)),
 
                   /// 商铺头像
                   ColorFiltered(
-                    colorFilter: 
-                    (actuator.shopDetail.availableForOrder() ? 
-                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
-                    child :
-                    buildShopAvatar()),
+                      colorFilter: (actuator.shopDetail.availableForOrder()
+                          ? ViewHelper.filterNone
+                          : ViewHelper.filterGreyscale),
+                      child: buildShopAvatar()),
                   // Text("data")
 
                   buildShopOpenHours()
                 ],
               ),
-                ColorFiltered(
-                    colorFilter: 
-                      (actuator.shopDetail.availableForOrder() ? 
-                        ViewHelper.filterNone : ViewHelper.filterGreyscale), 
-                    child :
-                  Column( 
-                    children: <Widget>[
+              ColorFiltered(
+                  colorFilter: (actuator.shopDetail.availableForOrder()
+                      ? ViewHelper.filterNone
+                      : ViewHelper.filterGreyscale),
+                  child: Column(children: <Widget>[
                     /// 商铺标题
                     buildShopNickName(),
 
@@ -199,9 +194,8 @@ class _ShopDetailPageState
                     buildProductsHeadline(),
 
                     /// 商铺商品列表
-                    buildShopProducts(context)]
-                  )
-                )
+                    buildShopProducts(context)
+                  ]))
             ],
           ),
           onTap: () {
@@ -217,44 +211,44 @@ class _ShopDetailPageState
     return Container(
         alignment: Alignment.topCenter,
         margin: EdgeInsets.only(left: 16, right: 16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                fadeInDuration: const Duration(milliseconds: 50),
-                fadeOutDuration: const Duration(milliseconds: 50),
-                imageUrl: TextHelper.clean(actuator.shopDetail.bg),
-                placeholder: (context, url) => Image.asset(
-                    "res/images/def_shop_image.png",
-                    package: 'resources',
-                    fit: BoxFit.cover,
-                    height: 176,
-                    gaplessPlayback: true,
-                    width: MediaQuery.of(context).size.width),
-                errorWidget: (context, url, error) => Image.asset(
-                    "res/images/def_shop_image.png",
-                    package: 'resources',
-                    fit: BoxFit.cover,
-                    height: 176,
-                    gaplessPlayback: true,
-                    width: MediaQuery.of(context).size.width),
-                height: 176,
-                width: MediaQuery.of(context).size.width,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(milliseconds: 50),
+            fadeOutDuration: const Duration(milliseconds: 50),
+            imageUrl: TextHelper.clean(actuator.shopDetail.bg),
+            placeholder: (context, url) => Image.asset(
+                "res/images/def_shop_image.png",
+                package: 'resources',
                 fit: BoxFit.cover,
-              ),
-            ));
+                height: 176,
+                gaplessPlayback: true,
+                width: MediaQuery.of(context).size.width),
+            errorWidget: (context, url, error) => Image.asset(
+                "res/images/def_shop_image.png",
+                package: 'resources',
+                fit: BoxFit.cover,
+                height: 176,
+                gaplessPlayback: true,
+                width: MediaQuery.of(context).size.width),
+            height: 176,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+        ));
   }
 
   Widget buildShopOpenHours() {
     String? workingHoursLabel = null;
-    if (actuator.shopDetail.openTime != null &&
-        actuator.shopDetail.closeTime != null) {
-      if (actuator.shopDetail.openTime == actuator.shopDetail.closeTime) {
-        workingHoursLabel = "24h"; //todo: use some localization resources
-      } else {
-        workingHoursLabel =
-            "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
-      }
+    if (actuator.shopDetail.is24hourOpen()) {
+      workingHoursLabel = "24h"; //todo: use some localization resources
+    } else if (actuator.shopDetail.isWorkingTimeUndefined()) {
+      // keep it null
+    } else {
+      workingHoursLabel =
+          "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
     }
+
     if (workingHoursLabel != null) {
       return Center(
           child: Container(
@@ -276,55 +270,52 @@ class _ShopDetailPageState
     }
   }
 
-
   /**
    * 构建商铺头像
    */
   Widget buildShopAvatar() {
     return Container(
-      margin: EdgeInsets.only(top: 122),
-      alignment: Alignment.topCenter,
-      child: Container(
-        height: 105,
-        width: 105,
-        decoration: BoxDecoration(
-            color: AppColor.colorEF,
-            border: Border.all(color: Colors.white, width: 3.82),
-            borderRadius: BorderRadius.circular(105)),
-        child:
-          ColorFiltered(
-            colorFilter: 
-            (actuator.shopDetail.availableForOrder() ? 
-              ViewHelper.filterNone : ViewHelper.filterGreyscale), 
-            child :
-          ClipRRect(
-          borderRadius: BorderRadius.circular(105),
-          child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 50),
-            fadeOutDuration: const Duration(milliseconds: 50),
-            imageUrl: TextHelper.clean(actuator.shopDetail.avatarLink),
-            placeholder: (context, url) => Image.asset(
-              "res/images/def_avatar.png",
-              package: 'resources',
-              fit: BoxFit.cover,
-              height: 105,
-              width: 105,
-              gaplessPlayback: true,
-            ),
-            errorWidget: (context, url, error) => Image.asset(
-                "res/images/def_avatar.png",
-                package: 'resources',
-                fit: BoxFit.cover,
+        margin: EdgeInsets.only(top: 122),
+        alignment: Alignment.topCenter,
+        child: Container(
+          height: 105,
+          width: 105,
+          decoration: BoxDecoration(
+              color: AppColor.colorEF,
+              border: Border.all(color: Colors.white, width: 3.82),
+              borderRadius: BorderRadius.circular(105)),
+          child: ColorFiltered(
+            colorFilter: (actuator.shopDetail.availableForOrder()
+                ? ViewHelper.filterNone
+                : ViewHelper.filterGreyscale),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(105),
+              child: CachedNetworkImage(
+                fadeInDuration: const Duration(milliseconds: 50),
+                fadeOutDuration: const Duration(milliseconds: 50),
+                imageUrl: TextHelper.clean(actuator.shopDetail.avatarLink),
+                placeholder: (context, url) => Image.asset(
+                  "res/images/def_avatar.png",
+                  package: 'resources',
+                  fit: BoxFit.cover,
+                  height: 105,
+                  width: 105,
+                  gaplessPlayback: true,
+                ),
+                errorWidget: (context, url, error) => Image.asset(
+                    "res/images/def_avatar.png",
+                    package: 'resources',
+                    fit: BoxFit.cover,
+                    height: 105,
+                    width: 105,
+                    gaplessPlayback: true),
                 height: 105,
                 width: 105,
-                gaplessPlayback: true),
-            height: 105,
-            width: 105,
-            fit: BoxFit.cover,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   /**
@@ -590,8 +581,7 @@ class _ShopDetailPageState
 
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                child: 
-                  ItemCommonProductBlock(
+                child: ItemCommonProductBlock(
                     key: Key(
                         "${product.name}-${product.id}-${DateTime.now().microsecond}"),
                     product: product,
@@ -602,11 +592,10 @@ class _ShopDetailPageState
                         LoginDialog.show(context);
                       }
                     },
-                    showOptions: 
-                      UserManager().delivery(actuator.shopDetail) 
-                      && actuator.shopDetail.availableForOrder()),
+                    showOptions: UserManager().delivery(actuator.shopDetail) &&
+                        actuator.shopDetail.availableForOrder()),
                 onTap: () {
-                  if(actuator.shopDetail.availableForOrder()) {
+                  if (actuator.shopDetail.availableForOrder()) {
                     barController.closeShopCart();
                     Navigator.pushNamed(context, Routes.shopping.ProductDetail,
                         arguments: product.id);
