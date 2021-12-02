@@ -265,10 +265,10 @@ class Shop {
   @JsonKey(name: "distance")
   double? distance;
 
-  @JsonKey(name: "averagePrice")
+  @JsonKey(name: "average_price")
   double? averagePrice;
 
-  @JsonKey(name: "orderCount")
+  @JsonKey(name: "orders_count")
   int? orderCount;
 
   @JsonKey(name: "user_shop")
