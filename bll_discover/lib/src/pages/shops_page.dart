@@ -98,8 +98,13 @@ class _ShopsState extends RefreshableState<ShopsActuator, ShopsPage>
           return GestureDetector(
             behavior: HitTestBehavior.deferToChild,
             
-            child: ItemShopGridStatelessWidget(
-                key: Key("${shop.id}-${shop.name}"), shop: shop),
+            child: ColorFiltered(
+                    colorFilter: 
+                      (shop.availableForOrder() ? 
+                        ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+                    child : ItemShopGridStatelessWidget(
+                key: Key("${shop.id}-${shop.name}"), shop: shop)
+            ),
             onTap: () => clickShop(context, shop),
           );
         });

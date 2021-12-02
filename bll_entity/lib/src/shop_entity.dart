@@ -421,9 +421,22 @@ class Shop {
     return userPoint!;
   }
 
+
   bool availableForOrder() {
+    return isOpen() || isWorkingTimeUndefined();
+  }
+
+  bool isOpen() {
     return openLeftTimeMinutes != null && openLeftTimeMinutes! > 0;
-  } 
+  }
+
+  bool is24hourOpen() {
+    return isOpen() && closeTime == openTime;
+  }
+
+  bool isWorkingTimeUndefined() {
+    return !isOpen() && closeTime == openTime;
+  }
 
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 
