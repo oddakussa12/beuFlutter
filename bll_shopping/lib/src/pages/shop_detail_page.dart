@@ -110,7 +110,8 @@ class _ShopDetailPageState
 
           /// 底部购物车
           ShoppingCartBar(
-            isShowBar: UserManager().delivery(actuator.shopDetail),
+            isShowBar: UserManager().delivery(actuator.shopDetail) 
+              && actuator.shopDetail.availableForOrder(),
             isCartProducts: UserManager().delivery(actuator.shopDetail),
             shopId: actuator.shopDetail.id,
             controller: barController,
@@ -136,48 +137,71 @@ class _ShopDetailPageState
               Stack(
                 children: [
                   /// 商铺背景
-                  buildShopBackground(context),
+                  ColorFiltered(
+                    colorFilter: 
+                    (actuator.shopDetail.availableForOrder() ? 
+                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+                    child :
+                     buildShopBackground(context)),
 
                   /// 派送图标: shop.delivery
-                  buildDeliveryIcon(actuator.shopDetail.delivery),
+                  ColorFiltered(
+                    colorFilter: 
+                    (actuator.shopDetail.availableForOrder() ? 
+                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+                    child :
+                      buildDeliveryIcon(actuator.shopDetail.delivery)),
 
                   /// 商铺头像
-                  buildShopAvatar(),
+                  ColorFiltered(
+                    colorFilter: 
+                    (actuator.shopDetail.availableForOrder() ? 
+                      ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+                    child :
+                    buildShopAvatar()),
                   // Text("data")
 
                   buildShopOpenHours()
                 ],
               ),
+                ColorFiltered(
+                    colorFilter: 
+                      (actuator.shopDetail.availableForOrder() ? 
+                        ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+                    child :
+                  Column( 
+                    children: <Widget>[
+                    /// 商铺标题
+                    buildShopNickName(),
 
-              /// 商铺标题
-              buildShopNickName(),
+                    /// 商铺评分
+                    buildShopStarBar(actuator.shopDetail),
 
-              /// 商铺评分
-              buildShopStarBar(actuator.shopDetail),
+                    /// 商铺地址
+                    buildShopAddress(),
 
-              /// 商铺地址
-              buildShopAddress(),
+                    /// 商铺电话
+                    buildShopContact(),
 
-              /// 商铺电话
-              buildShopContact(),
+                    /// 商铺介绍
+                    buildShopDesc(),
 
-              /// 商铺介绍
-              buildShopDesc(),
+                    /// Follow
+                    buildFollowButton(),
 
-              /// Follow
-              buildFollowButton(),
+                    Container(
+                      height: 2,
+                      margin: EdgeInsets.symmetric(vertical: 16),
+                      color: AppColor.color08000,
+                    ),
 
-              Container(
-                height: 2,
-                margin: EdgeInsets.symmetric(vertical: 16),
-                color: AppColor.color08000,
-              ),
+                    /// 商品列表标题
+                    buildProductsHeadline(),
 
-              /// 商品列表标题
-              buildProductsHeadline(),
-
-              /// 商铺商品列表
-              buildShopProducts(context)
+                    /// 商铺商品列表
+                    buildShopProducts(context)]
+                  )
+                )
             ],
           ),
           onTap: () {
@@ -193,39 +217,43 @@ class _ShopDetailPageState
     return Container(
         alignment: Alignment.topCenter,
         margin: EdgeInsets.only(left: 16, right: 16),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: CachedNetworkImage(
-            fadeInDuration: const Duration(milliseconds: 50),
-            fadeOutDuration: const Duration(milliseconds: 50),
-            imageUrl: TextHelper.clean(actuator.shopDetail.bg),
-            placeholder: (context, url) => Image.asset(
-                "res/images/def_shop_image.png",
-                package: 'resources',
-                fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                fadeInDuration: const Duration(milliseconds: 50),
+                fadeOutDuration: const Duration(milliseconds: 50),
+                imageUrl: TextHelper.clean(actuator.shopDetail.bg),
+                placeholder: (context, url) => Image.asset(
+                    "res/images/def_shop_image.png",
+                    package: 'resources',
+                    fit: BoxFit.cover,
+                    height: 176,
+                    gaplessPlayback: true,
+                    width: MediaQuery.of(context).size.width),
+                errorWidget: (context, url, error) => Image.asset(
+                    "res/images/def_shop_image.png",
+                    package: 'resources',
+                    fit: BoxFit.cover,
+                    height: 176,
+                    gaplessPlayback: true,
+                    width: MediaQuery.of(context).size.width),
                 height: 176,
-                gaplessPlayback: true,
-                width: MediaQuery.of(context).size.width),
-            errorWidget: (context, url, error) => Image.asset(
-                "res/images/def_shop_image.png",
-                package: 'resources',
+                width: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
-                height: 176,
-                gaplessPlayback: true,
-                width: MediaQuery.of(context).size.width),
-            height: 176,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-        ));
+              ),
+            ));
   }
 
   Widget buildShopOpenHours() {
     String? workingHoursLabel = null;
     if (actuator.shopDetail.openTime != null &&
         actuator.shopDetail.closeTime != null) {
-      workingHoursLabel =
-          "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
+      if (actuator.shopDetail.openTime == actuator.shopDetail.closeTime) {
+        workingHoursLabel = "24h"; //todo: use some localization resources
+      } else {
+        workingHoursLabel =
+            "${actuator.shopDetail.openTime} - ${actuator.shopDetail.closeTime}";
+      }
     }
     if (workingHoursLabel != null) {
       return Center(
@@ -248,6 +276,7 @@ class _ShopDetailPageState
     }
   }
 
+
   /**
    * 构建商铺头像
    */
@@ -262,7 +291,13 @@ class _ShopDetailPageState
             color: AppColor.colorEF,
             border: Border.all(color: Colors.white, width: 3.82),
             borderRadius: BorderRadius.circular(105)),
-        child: ClipRRect(
+        child:
+          ColorFiltered(
+            colorFilter: 
+            (actuator.shopDetail.availableForOrder() ? 
+              ViewHelper.filterNone : ViewHelper.filterGreyscale), 
+            child :
+          ClipRRect(
           borderRadius: BorderRadius.circular(105),
           child: CachedNetworkImage(
             fadeInDuration: const Duration(milliseconds: 50),
@@ -289,7 +324,7 @@ class _ShopDetailPageState
           ),
         ),
       ),
-    );
+    ));
   }
 
   /**
@@ -555,7 +590,8 @@ class _ShopDetailPageState
 
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                child: ItemCommonProductBlock(
+                child: 
+                  ItemCommonProductBlock(
                     key: Key(
                         "${product.name}-${product.id}-${DateTime.now().microsecond}"),
                     product: product,
@@ -566,11 +602,15 @@ class _ShopDetailPageState
                         LoginDialog.show(context);
                       }
                     },
-                    showOptions: UserManager().delivery(actuator.shopDetail)),
+                    showOptions: 
+                      UserManager().delivery(actuator.shopDetail) 
+                      && actuator.shopDetail.availableForOrder()),
                 onTap: () {
-                  barController.closeShopCart();
-                  Navigator.pushNamed(context, Routes.shopping.ProductDetail,
-                      arguments: product.id);
+                  if(actuator.shopDetail.availableForOrder()) {
+                    barController.closeShopCart();
+                    Navigator.pushNamed(context, Routes.shopping.ProductDetail,
+                        arguments: product.id);
+                  }
                 },
               );
             });
