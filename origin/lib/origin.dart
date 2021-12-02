@@ -11,6 +11,7 @@ export 'src/global_share.dart';
 export 'src/platform_support.dart';
 
 /// helper
+export 'src/helper/view_helper.dart';
 export 'src/helper/text_helper.dart';
 export 'src/helper/value_helper.dart';
 export 'src/helper/storage_helper.dart';
