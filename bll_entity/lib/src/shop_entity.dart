@@ -298,6 +298,9 @@ class Shop {
   @JsonKey(name: "close_time")
   String? closeTime;
 
+  @JsonKey(name: "open_left_time_minutes")
+  double? openLeftTimeMinutes;
+
   double? subTotal;
 
   List<Product>? goods;
@@ -362,7 +365,8 @@ class Shop {
       this.orderCount,
       this.averagePrice,
       this.openTime,
-      this.closeTime});
+      this.closeTime,
+      this.openLeftTimeMinutes});
 
   factory Shop.create(Shop shop) {
     return Shop(shop.id,
@@ -383,7 +387,8 @@ class Shop {
         orderCount: shop.orderCount,
         averagePrice: shop.averagePrice,
         openTime: shop.openTime,
-        closeTime: shop.closeTime);
+        closeTime: shop.closeTime,
+        openLeftTimeMinutes: shop.openLeftTimeMinutes);
   }
 
   bool isNotEmpty() {
@@ -415,6 +420,10 @@ class Shop {
     }
     return userPoint!;
   }
+
+  bool availableForOrder() {
+    return openLeftTimeMinutes != null && openLeftTimeMinutes! > 0;
+  } 
 
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 

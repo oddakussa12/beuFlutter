@@ -37,7 +37,6 @@ Map<String, dynamic> _$DiscoverShopEntityToJson(DiscoverShopEntity instance) =>
     };
 
 ShoppingCart _$ShoppingCartFromJson(Map<String, dynamic> json) {
-  print(json);
   return ShoppingCart(
     (json['data'] as List<dynamic>)
         .map((e) => Shop.fromJson(e as Map<String, dynamic>))
@@ -143,13 +142,6 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     userPoint: json['userPoint'] == null
         ? null
         : UserPoint.fromJson(json['userPoint']),
-    deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
-    distance: (json['distance'] as num?)?.toDouble(),
-    orderCount: (json['orders_count'] as int?),
-    averagePrice: (json['average_price'] as num?)?.toDouble(),
-
-    // orderCount:(json['orderCount'] as int?) ,
-    // averagePrice:(json['averagePrice'] as num?)?.toDouble(),
     currency: json['user_currency'] as String?,
     coast: (json['deliveryCoast'] as num?)?.toDouble(),
     subTotal: (json['subTotal'] as num?)?.toDouble(),
@@ -160,11 +152,13 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
     avatarLink: json['user_avatar_link'] as String?,
     callCenter: json['callCenter'] as String?,
     isChecked: json['isChecked'] as bool?,
- 
- 
-   
+    deliveryTime: (json['deliveryTime'] as num?)?.toDouble(),
+    distance: (json['distance'] as num?)?.toDouble(),
+    orderCount: json['orderCount'] as int?,
+    averagePrice: (json['averagePrice'] as num?)?.toDouble(),
     openTime: json['open_time'] as String?,
     closeTime: json['close_time'] as String?,
+    openLeftTimeMinutes: (json['open_left_time_minutes'] as num?)?.toDouble(),
   )
     ..friendCount = json['friendCount'] as int?
     ..likedCount = json['likedCount'] as int?
@@ -205,6 +199,7 @@ Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
       'deliveryCoast': instance.coast,
       'open_time': instance.openTime,
       'close_time': instance.closeTime,
+      'open_left_time_minutes': instance.openLeftTimeMinutes,
       'subTotal': instance.subTotal,
       'goods': instance.goods,
       'friendCount': instance.friendCount,
